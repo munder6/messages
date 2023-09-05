@@ -98,10 +98,10 @@ class _LoginProfileInfoScreenState extends State<LoginProfileInfoScreen> {
                       ),
                       onPressed: () {
                         if (nameController.text.length > 3) {
-                        //  String fcmToken = FirebaseService.fcmToken!; // Assuming you have a function to retrieve the FCM token
+                          String fcmToken = FirebaseService.fcmToken!; // Assuming you have a function to retrieve the FCM token
                           cubit.saveUserDataToFirebase(
                             name: nameController.text,
-                            fcmToken: "fcmToken",
+                            fcmToken: fcmToken,
                           );
                         }
                       },

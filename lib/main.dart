@@ -43,37 +43,37 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // String? fcmToken = await FirebaseMessaging.instance.getToken();
-  // FirebaseService.fcmToken = fcmToken ?? '';
-  // print('FCM Token: ${FirebaseService.fcmToken}');
-  //
-  // FirebaseMessaging.instance.getToken().then((token) {
-  //   print('The Token $token');
-  // }).catchError((error) {
-  //   print('Failed to get token: $error');
-  // });
-  //
-  // FirebaseMessaging.instance.subscribeToTopic('chats').then((value) {
-  //   print('Subscribed to topic: chats');
-  // }).catchError((error) {
-  //   print('Failed to subscribe to topic: $error');
-  // });
-  //
-  // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //   print('Received a foreground message: ${message.messageId}');
-  //
-  //   if (!AppRoutes.isChatScreenActive) {
-  //     Fluttertoast.showToast(
-  //       msg: 'You Have a new message',
-  //       toastLength: Toast.LENGTH_LONG,
-  //       gravity: ToastGravity.TOP,
-  //     );
-  //   }
-  // });
-  //
-  // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-  //   print('Opened app from background notification: ${message.messageId}');
-  // });
+  String? fcmToken = await FirebaseMessaging.instance.getToken();
+  FirebaseService.fcmToken = fcmToken ?? '';
+  print('FCM Token: ${FirebaseService.fcmToken}');
+
+  FirebaseMessaging.instance.getToken().then((token) {
+    print('The Token $token');
+  }).catchError((error) {
+    print('Failed to get token: $error');
+  });
+
+  FirebaseMessaging.instance.subscribeToTopic('chats').then((value) {
+    print('Subscribed to topic: chats');
+  }).catchError((error) {
+    print('Failed to subscribe to topic: $error');
+  });
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print('Received a foreground message: ${message.messageId}');
+
+    if (!AppRoutes.isChatScreenActive) {
+      Fluttertoast.showToast(
+        msg: 'You Have a new message',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+      );
+    }
+  });
+
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    print('Opened app from background notification: ${message.messageId}');
+  });
 
    await requestNotificationPermission();
 
