@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "979461619749",
+    "project_id": "messages-4aa4f",
+    "storage_bucket": "messages-4aa4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979461619749:android:6a5b982dbbc8ede9403fcc",
+        "android_client_info": {
+          "package_name": "com.glare.messages"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs_pWN5MPO2Ss69uFa6R-DFt3izlq8eiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

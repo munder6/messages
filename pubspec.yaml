@@ -1,0 +1,104 @@
+name: message_me_app
+description: A new Flutter application.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  android_intent_plus: ^4.0.1
+  cupertino_icons: ^1.0.2
+  country_picker: ^2.0.16
+  equatable: ^2.0.5
+  dartz: ^0.10.1
+  flutter_bloc: ^8.1.1
+  get_it: ^7.2.0
+  shared_preferences: ^2.0.15
+  flutter_svg: ^1.1.6
+  flutter_contacts: ^1.1.5+1
+  uuid: ^3.0.7
+  intl: 0.18.1
+  cached_network_image: ^3.2.3
+  #giphy_get: ^3.1.1
+  emoji_picker_flutter: ^1.5.1
+  camera: ^0.10.1
+  path_provider: ^2.0.11
+  image_picker: ^0.8.4
+  video_player: ^2.4.9
+  shimmer: ^2.0.0
+  audioplayers: ^1.1.1
+  swipe_to: ^1.0.2
+  sms_autofill: ^2.2.0
+  image_cropper: ^3.0.1
+  extended_image: ^8.0.1
+  lottie: ^2.3.2
+  permission_handler: ^10.2.0
+  firebase_auth: ^4.2.5
+  firebase_core: ^2.1.1
+  cloud_firestore: ^4.3.1
+  firebase_storage: ^11.0.3
+  flutter_otp_text_field: ^1.1.1
+  rive: ^0.11.0
+  path: ^1.8.3
+  flutter_sound: ^8.0.1
+  flutter_xlider: ^3.5.0
+  eva_icons_flutter: ^3.1.0
+  fluentui_system_icons: ^1.1.201
+  flutter_launcher_icons: ^0.13.1
+  firebase_messaging: ^14.6.1
+  flutter_cache_manager: ^3.2.0
+  image_gallery_saver: ^2.0.1
+  fluttertoast: ^8.2.2
+
+
+
+
+
+dev_dependencies:
+  flutter_lints: ^1.0.0
+  flutter_test:
+    sdk: flutter
+
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+  fonts:
+    - family: Tajawal
+      fonts:
+        - asset: assets/fonts/Tajawal-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Tajawal-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Tajawal-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Tajawal-Light.ttf
+          weight: 300
+    - family: Arabic
+      fonts:
+        - asset: assets/fonts/ArabicUITextMedium.otf
