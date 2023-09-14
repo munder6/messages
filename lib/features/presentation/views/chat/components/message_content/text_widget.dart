@@ -60,7 +60,7 @@ class _TextWidgetState extends State<TextWidget> {
                 style: TextStyle(
                   letterSpacing: 0,
                   height: 1.1,
-                  fontSize: regexEmoji.allMatches(t).isNotEmpty ? (Platform.isAndroid ? 15.0 : 17.0) : 15.0,
+                  fontSize: regexEmoji.allMatches(t).isNotEmpty ? (Platform.isAndroid ? 15.0 : 20.0) : 15.0,
                   fontFamily: 'Arabic',
                   color: widget.isMe ? Colors.white : AppColorss.textColor1,
                 ),

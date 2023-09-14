@@ -119,7 +119,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget>
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            width: 100,
+                            width: 80,
                             child: FlutterSlider(
                               handlerHeight: 16,
                               handlerWidth: 16,

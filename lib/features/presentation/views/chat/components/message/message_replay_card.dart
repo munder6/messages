@@ -134,7 +134,7 @@ class ReplayMessageCardForBottomField extends StatelessWidget {
       child: Container(padding: const EdgeInsets.only(left: 10, right: 5, top: 5, bottom: 8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(0),
-          color:  AppColorss.replyContainerFieldColor,
+          color:  AppColorss.thirdColor,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -149,7 +149,7 @@ class ReplayMessageCardForBottomField extends StatelessWidget {
                     isMe ? 'Replying to Yourself' : 'Replying to $repliedTo',
                     style: TextStyle(
                       fontSize: 12,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.normal,
                       color: AppColorss.textColor2.withOpacity(0.7),
                       fontFamily: 'Arabic'
                     ),

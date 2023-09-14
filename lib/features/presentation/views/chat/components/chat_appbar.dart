@@ -75,7 +75,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                       Row(
                         children: [
                           Text(
-                            userdata.isTyping ? ' Typing...' : (userdata.isOnline ? 'Online' : userdata.lastSeen.lastSeen),
+                            userdata.isOnline ? 'Online' : userdata.lastSeen.lastSeen,
                             style: TextStyle(
                               fontSize: 9,
                               fontWeight: FontWeight.normal,

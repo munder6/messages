@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lottie/lottie.dart';
 import 'package:swipe_to/swipe_to.dart';
 import 'package:message_me_app/core/enums/messge_type.dart';
 import '../../../../../../core/extensions/extensions.dart';
@@ -110,7 +111,7 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
       msg: 'Message Copied',
       toastLength: Toast.LENGTH_LONG,
       textColor: AppColorss.textColor1,
-      backgroundColor: AppColorss.secondaryColor,
+      backgroundColor: AppColorss.thirdColor,
       gravity: ToastGravity.CENTER,
     );
     // scaffoldMessenger.showSnackBar(
@@ -135,7 +136,7 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
         msg: 'Message Deleted For Me',
         toastLength: Toast.LENGTH_LONG,
         textColor: AppColorss.textColor1,
-        backgroundColor: AppColorss.secondaryColor,
+        backgroundColor: AppColorss.thirdColor,
         gravity: ToastGravity.CENTER,
       );
     } catch (e) {
@@ -144,7 +145,7 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
         msg: 'Error Message Deleted For Me',
         toastLength: Toast.LENGTH_LONG,
         textColor: AppColorss.textColor1,
-        backgroundColor: AppColorss.secondaryColor,
+        backgroundColor: AppColorss.thirdColor,
         gravity: ToastGravity.CENTER,
       );
     }
@@ -299,5 +300,118 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
     );
   }
 }
+
+
+
+
+class TypingMessageCard extends StatefulWidget {
+  final Message message;
+  final bool isFirst;
+  final bool isLast;
+
+  const TypingMessageCard({
+    Key? key,
+    required this.message,
+    required this.isFirst,
+    required this.isLast,
+  }) : super(key: key);
+
+  @override
+  _TypingMessageCardState createState() => _TypingMessageCardState();
+}
+
+class _TypingMessageCardState extends State<TypingMessageCard> {
+  String profilePic = 'https://cdn.landesa.org/wp-content/uploads/default-user-image.png';
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserImage();
+  }
+
+  void _getUserImage() async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final userId = widget.message.senderId;
+      final userSnapshot = await firestore.collection('users').doc(userId).get();
+
+      if (userSnapshot.exists) {
+        final userData = userSnapshot.data();
+        setState(() {
+          profilePic = userData?['profilePic'] as String? ?? 'https://cdn.landesa.org/wp-content/uploads/default-user-image.png';
+        });
+      }
+    } catch (e) {
+      print('Error getting user image: $e');
+    }
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 5
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Padding(padding: EdgeInsets.symmetric(horizontal: 9)),
+                widget.isLast
+                    ? MyCachedNetImage(
+                  imageUrl: profilePic,
+                  radius: 13,
+                )
+                    : const Padding(padding: EdgeInsets.symmetric(horizontal: 13)),
+                const SizedBox(width: 5),
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: context.width(0.6),
+                    maxHeight: 600,
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
+                    decoration: BoxDecoration(
+                      color: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video
+                          ? Colors.transparent
+                          : AppColorss.senderMessageColor,
+                      borderRadius: BorderRadius.only(
+                        topRight:  const Radius.circular(20),
+                        bottomLeft: widget.isLast ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
+                        bottomRight: const Radius.circular(20),
+                        topLeft: widget.isFirst ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5),
+                          child: Lottie.asset("assets/images/typing.json", width: 40),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
+
+
+
+
 
 

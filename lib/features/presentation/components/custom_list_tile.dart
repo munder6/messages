@@ -63,7 +63,7 @@ class CustomListTile extends StatelessWidget {
                           child: Text(
                             title,
                             //style: context.headlineSmall,
-                            style: TextStyle(color: AppColorss.textColor1, fontFamily: 'Arabic', fontSize: 16, fontWeight: numOfMessageNotSeen >0 ? FontWeight.bold : FontWeight.normal),
+                            style: TextStyle(color: AppColorss.textColor1, fontFamily: 'Arabic', fontSize: 16, fontWeight: FontWeight.normal),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
@@ -72,8 +72,8 @@ class CustomListTile extends StatelessWidget {
                           Text(
                             time!,
                             style: numOfMessageNotSeen>0
-                                ? TextStyle(color: AppColorss.textColor1, fontSize: 12, fontWeight: numOfMessageNotSeen >0 ? FontWeight.bold : FontWeight.normal)
-                                : TextStyle(fontSize: 12, color: AppColorss.textColor2, fontWeight: numOfMessageNotSeen >0 ? FontWeight.bold : FontWeight.normal),
+                                ? TextStyle(color: AppColorss.textColor1, fontSize: 12, fontWeight : FontWeight.normal)
+                                : TextStyle(fontSize: 12, color: AppColorss.textColor2, fontWeight : FontWeight.normal),
                           ),
                         if (titleButton != null)
                           SizedBox(
@@ -90,7 +90,7 @@ class CustomListTile extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 subTitle!,
-                                style: TextStyle(fontFamily: 'Arabic',color: numOfMessageNotSeen >0  ?  AppColorss.textColor1 : AppColorss.textColor2, fontWeight: numOfMessageNotSeen >0 ? FontWeight.bold : FontWeight.normal),
+                                style: TextStyle(fontFamily: 'Arabic',color: numOfMessageNotSeen >0  ?  AppColorss.textColor1 : AppColorss.textColor2, fontWeight:  FontWeight.normal),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),

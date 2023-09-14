@@ -15,12 +15,14 @@ class MyMessageCard extends StatefulWidget {
   final Message message;
   final bool isFirst;
   final bool isLast;
+  final bool isLastForSeen;
 
   const MyMessageCard({
     Key? key,
     required this.message,
     required this.isFirst,
     required this.isLast,
+    required this.isLastForSeen,
   }) : super(key: key);
 
   @override
@@ -80,54 +82,71 @@ class _MyMessageCardState extends State<MyMessageCard> {
             alignment: Alignment.centerRight,
             child: Padding(
               padding: EdgeInsets.only(top: 2, right: widget.isFirst ? 5 : 15),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: context.width(0.6),
-                      maxHeight: 600,
-                    ),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
-                      decoration: BoxDecoration(
-                        gradient: (widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video)
-                            ? const LinearGradient(
-                          colors: [Colors.transparent, Colors.transparent], // Define your gradient colors
-                          begin: Alignment.topLeft, // Adjust the gradient's start position
-                          end: Alignment.bottomRight, // Adjust the gradient's end position
-                        )
-                            : const LinearGradient(
-                          stops: [
-                            0,
-                            1,
-                            2
-                          ],
-                          colors: [AppColorss.myMessageColor2,AppColorss.myMessageColor1, AppColorss.myMessageColor], // Define your gradient colors
-                          begin: Alignment.topLeft, // Adjust the gradient's start position
-                          end: Alignment.bottomRight, // Adjust the gradient's end position
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: context.width(0.6),
+                          maxHeight: 600,
                         ),
-                        borderRadius: BorderRadius.only(
-                          topLeft: const Radius.circular(20),
-                          bottomLeft: const Radius.circular(20),
-                          bottomRight: widget.isLast ? const Radius.circular(20) : const Radius.circular(5),
-                          topRight: widget.isFirst ? const Radius.circular(20) : const Radius.circular(5),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
+                          decoration: BoxDecoration(
+                            gradient: (widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video)
+                                ? const LinearGradient(
+                              colors: [Colors.transparent, Colors.transparent], // Define your gradient colors
+                              begin: Alignment.topLeft, // Adjust the gradient's start position
+                              end: Alignment.bottomRight, // Adjust the gradient's end position
+                            )
+                                : const LinearGradient(
+                              stops: [
+                                0,
+                                1,
+                                2
+                              ],
+                              colors: [AppColorss.myMessageColor2,AppColorss.myMessageColor1, AppColorss.myMessageColor], // Define your gradient colors
+                              begin: Alignment.topLeft, // Adjust the gradient's start position
+                              end: Alignment.bottomRight, // Adjust the gradient's end position
+                            ),
+                            borderRadius: BorderRadius.only(
+                              topLeft: const Radius.circular(20),
+                              bottomLeft: const Radius.circular(20),
+                              bottomRight: widget.isLast ? const Radius.circular(20) : const Radius.circular(5),
+                              topRight: widget.isFirst ? const Radius.circular(20) : const Radius.circular(5),
+                            ),
+                          ),
+                          child: GestureDetector(
+                            onLongPress: () {
+                              _showMessageMenu(context);
+                            },
+                            child: MessageContent(
+                              message: widget.message,
+                              isMe: true,
+                              isLast : widget.isLast
+                            ),
+                          ),
                         ),
                       ),
-                      child: GestureDetector(
-                        onLongPress: () {
-                          _showMessageMenu(context);
-                        },
-                        child: MessageContent(
-                          message: widget.message,
-                          isMe: true,
-                          isLast : widget.isLast
-                        ),
-                      ),
-                    ),
+                      if (widget.isFirst) const Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                    ],
                   ),
-                  if (widget.isFirst) const Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                  widget.isLastForSeen  && widget.message.isSeen ?   Padding(
+                    padding:  EdgeInsets.only(right: 5, top: 4),
+                    child:  Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text("Seen", style: TextStyle(fontSize: 10, fontWeight: FontWeight.w300),),
+                        SizedBox(width: widget.isFirst ? 10 : 0,),
+                      ],
+                    ),
+                  ) : const SizedBox(),
+
                 ],
               ),
             ),
@@ -187,7 +206,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
     Fluttertoast.showToast(
       msg: 'Message Copied',
       textColor: AppColorss.textColor1,
-      backgroundColor: AppColorss.secondaryColor,
+      backgroundColor: AppColorss.thirdColor,
       gravity: ToastGravity.CENTER,
     );
   }
@@ -203,7 +222,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
           title: Text('Edit Message', style: TextStyle(color: AppColorss.textColor1),),
           content: Container(
             decoration: BoxDecoration(
-                color: AppColorss.secondaryColor,
+                color: AppColorss.thirdColor,
                 borderRadius: BorderRadius.circular(15)
             ),
             child: TextField(
@@ -314,7 +333,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
           .delete();
       Fluttertoast.showToast(
         textColor: AppColorss.textColor1,
-        backgroundColor: AppColorss.secondaryColor,
+        backgroundColor: AppColorss.thirdColor,
         gravity: ToastGravity.CENTER,
         msg: 'Message Deleted For Me',
         toastLength: Toast.LENGTH_LONG,
@@ -325,7 +344,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
         msg: 'Error Deleting Message',
         toastLength: Toast.LENGTH_LONG,
         textColor: AppColorss.textColor1,
-        backgroundColor: AppColorss.secondaryColor,
+        backgroundColor: AppColorss.thirdColor,
         gravity: ToastGravity.CENTER,
       );
     }
@@ -356,7 +375,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
         msg: 'Message Deleted Fo All',
         toastLength: Toast.LENGTH_LONG,
         textColor: AppColorss.textColor1,
-        backgroundColor: AppColorss.secondaryColor,
+        backgroundColor: AppColorss.thirdColor,
         gravity: ToastGravity.CENTER,
       );
 
@@ -366,7 +385,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
         msg: 'Error deleting message',
         toastLength: Toast.LENGTH_LONG,
         textColor: AppColorss.textColor1,
-        backgroundColor: AppColorss.secondaryColor,
+        backgroundColor: AppColorss.thirdColor,
         gravity: ToastGravity.CENTER,
       );
     }
@@ -401,7 +420,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
         msg: 'Message Updated',
         toastLength: Toast.LENGTH_LONG,
         textColor: AppColorss.textColor1,
-        backgroundColor: AppColorss.secondaryColor,
+        backgroundColor: AppColorss.thirdColor,
         gravity: ToastGravity.CENTER,
       );
     } catch (e) {
@@ -409,7 +428,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
         msg: 'Error update message',
         toastLength: Toast.LENGTH_LONG,
         textColor: AppColorss.textColor1,
-        backgroundColor: AppColorss.secondaryColor,
+        backgroundColor: AppColorss.thirdColor,
         gravity: ToastGravity.CENTER,
       );
       print('Error updating message: $e');

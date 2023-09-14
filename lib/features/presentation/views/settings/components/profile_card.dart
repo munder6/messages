@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import '../../../../../core/utils/thems/my_colors.dart';
@@ -5,11 +6,13 @@ import '../../../../../core/functions/navigator.dart';
 import '../../../../../core/utils/constants/assets_manager.dart';
 import '../../../../../core/utils/routes/routes_manager.dart';
 import '../../../../domain/entities/user.dart';
+import '../../../components/loader.dart';
 import '../../../components/my_cached_net_image.dart';
 import '../../../controllers/auth_cubit/auth_cubit.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +37,22 @@ class ProfileCard extends StatelessWidget {
                     elevation: 0,
                     color:  AppColorss.thirdColor,
                     child: Padding(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(16.5),
                       child: Row(
                         children: [
-                          Hero(
-                            tag: user.uId,
-                            child: MyCachedNetImage(
-                              radius: 30,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child:  CachedNetworkImage(
                               imageUrl: user.profilePic,
+                              placeholder: (context, url) => Stack(
+                                children: [
+                                  Image.asset(AppImage.genericProfileImage, fit: BoxFit.fill,),
+                                ],
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  Image.asset(AppImage.genericProfileImage),
+                              //height: 180.0,
+                              fit: BoxFit.cover,
                             ),
                           ),
                           const SizedBox(
@@ -55,9 +66,9 @@ class ProfileCard extends StatelessWidget {
                                   user.name,
                                   style: TextStyle(color:AppColorss.textColor1, fontSize: 20),
                                 ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
+                                // const SizedBox(
+                                //   height: 5,
+                                // ),
                                 Text(
                                   user.status,
                                   style: TextStyle(color: AppColorss.textColor3),
@@ -69,7 +80,7 @@ class ProfileCard extends StatelessWidget {
                           //const Spacer(),
                           CircleAvatar(
                             radius: 18,
-                            backgroundColor: Colors.black,
+                            backgroundColor: AppColorss.primaryColor,
                             child: Image.asset(
                               AppImage.qrCode,
                               width: 20,

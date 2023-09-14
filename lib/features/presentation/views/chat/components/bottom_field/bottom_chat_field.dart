@@ -64,20 +64,24 @@ class _BottomChatFieldState extends State<BottomChatField> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 35,
-                child: IconButton(
-                  onPressed: widget.toggleEmojiKeyboard,
-                  color: Colors.grey,
-                  iconSize: 25,
-                  icon: Icon(
-                    widget.isShowEmoji
-                        ? Icons.keyboard
-                        : Icons.emoji_emotions_outlined,
-                    color:AppColorss.iconsColors,
-                  ),
-                ),
-              ),
+              // Container(
+              //   height: 30,
+              //   width: 30,
+              //   decoration: BoxDecoration(
+              //     color: AppColorss.myMessageColor,
+              //     borderRadius: BorderRadius.circular(50)
+              //   ),
+              //
+              //   child: IconButton(
+              //     onPressed: widget.toggleEmojiKeyboard,
+              //     color: Colors.grey,
+              //     iconSize: 25,
+              //     icon: const Icon(
+              //       FluentIcons.camera_24_regular,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              // ),
               Flexible(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(
@@ -101,7 +105,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
                       textInputAction: TextInputAction.newline,
                       style:  TextStyle(
                         fontSize: 17,
-                        height: 1.4,
+                        height: 1,
                         fontFamily: 'Arabic',
                         //color: AppColors.blackLight,
                         color: AppColorss.textColor1,

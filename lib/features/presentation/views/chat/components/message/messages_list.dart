@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:message_me_app/core/enums/messge_type.dart';
 import 'package:message_me_app/core/utils/thems/my_colors.dart';
 import '/core/extensions/time_extension.dart';
 import '../../../../../../core/functions/date_converter.dart';
@@ -9,6 +12,9 @@ import 'sender_message_card.dart';
 import 'my_message_card.dart';
 
 class MessagesList extends StatefulWidget {
+
+
+
   final String receiverId;
 
   const MessagesList({
@@ -21,9 +27,13 @@ class MessagesList extends StatefulWidget {
 }
 
 class _MessagesListState extends State<MessagesList> {
+
+
+
   late ScrollController messageController = ScrollController();
   DateTime? lastFetchedMessageTime;
   int limit = 5;
+  bool loadLast70Messages = false;
 
   @override
   void dispose() {
@@ -35,25 +45,37 @@ class _MessagesListState extends State<MessagesList> {
     final bottomOffset = messageController.position.maxScrollExtent;
     messageController.animateTo(
       bottomOffset,
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
   }
 
   void loadMoreMessages() {
-    // Increase the limit when swiping up to load more messages
-    setState(() {
-      limit += 5;
-    });
+    // Check the flag and load the last 70 messages if necessary
+    if (loadLast70Messages) {
+      setState(() {
+        limit = 70;
+        loadLast70Messages = false;
+      });
+    } else {
+      // Increment the limit by 5 when swiping up
+      setState(() {
+        limit += 5;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+
+
+
     return Expanded(
       child: GestureDetector(
         onVerticalDragEnd: (details) {
           // Check if swiped up and load more messages
           if (details.primaryVelocity! < 0) {
+            loadLast70Messages = true;
             loadMoreMessages();
           }
         },
@@ -80,6 +102,8 @@ class _MessagesListState extends State<MessagesList> {
                 ////////////////////////////////////////////
                 bool isFirst = false;
                 bool isLast = false;
+                bool isLastForSeen = false;
+                bool isLastFromSender = false;
                 var previousMessage =
                 (index > 0) ? snapshot.data![index - 1] : null;
 
@@ -94,6 +118,23 @@ class _MessagesListState extends State<MessagesList> {
                     (index < snapshot.data!.length - 1 &&
                         message.senderId !=
                             snapshot.data![index + 1].senderId);
+
+                isLastForSeen = (index == snapshot.data!.length - 1);
+
+                String targetSenderId = message.senderId; // Replace 'desiredSenderId' with the senderId you want to check
+
+
+                for (int i = index + 1; i < snapshot.data!.length; i++) {
+                  if (snapshot.data![i].senderId == targetSenderId) {
+                    // The next message in the snapshot is from the target sender
+                    isLastFromSender = false;
+                    break;
+                  } else {
+                    // The next message is from a different sender, so this is the last message from the target sender
+                    isLastFromSender = true;
+                  }
+                }
+
 
                 /////////////////////////////////////////////
                 // Set chat message seen
@@ -123,7 +164,7 @@ class _MessagesListState extends State<MessagesList> {
                           AnimatedMessageCard(
                             message: message,
                             isFirst: isFirst,
-                            isLast: isLast,
+                            isLast: isLast, isLastForSeen: isLastForSeen,
                           ),
                         ],
                       ),
@@ -136,6 +177,36 @@ class _MessagesListState extends State<MessagesList> {
                             isLast: isLast,
                           ),
                         ],
+                      ),
+
+                    if (index == snapshot.data!.length - 1)
+                      StreamBuilder<DocumentSnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(widget.receiverId)
+                            .snapshots(),
+                        builder: (context, userSnapshot) {
+                          if (userSnapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const SizedBox();
+                          }
+
+                          final bool isTyping =
+                              userSnapshot.data?['isTyping'] ?? false;
+
+                          // Scroll to the bottom when the FakeSenderMessageCard is displayed
+                          if (isTyping) {
+                            WidgetsBinding.instance?.addPostFrameCallback((_) {
+                              scrollToBottom();
+                            });
+                          }
+
+                          return isTyping
+                              ? FakeSenderMessageCard(
+                            senderId: widget.receiverId,
+                          )
+                              : const SizedBox();
+                        },
                       ),
                   ],
                 );
@@ -152,11 +223,13 @@ class AnimatedMessageCard extends StatefulWidget {
   final Message message;
   final bool isFirst;
   final bool isLast;
+  final bool isLastForSeen;
 
   const AnimatedMessageCard({
     required this.message,
     required this.isFirst,
     required this.isLast,
+    required this.isLastForSeen,
     Key? key,
   }) : super(key: key);
 
@@ -195,6 +268,7 @@ class _AnimatedMessageCardState extends State<AnimatedMessageCard>
         message: widget.message,
         isFirst: widget.isFirst,
         isLast: widget.isLast,
+        isLastForSeen: widget.isLastForSeen,
       ),
     );
   }
@@ -287,3 +361,32 @@ class ChatTimeCard extends StatelessWidget {
     );
   }
 }
+
+
+class FakeSenderMessageCard extends StatelessWidget {
+  final String senderId;
+  const FakeSenderMessageCard({super.key, required this.senderId});
+
+  @override
+  Widget build(BuildContext context) {
+    return TypingMessageCard(
+      // Customize the appearance of the fake message card as needed
+      message: Message(
+        messageId: 'fakeMessageId',
+        senderId: senderId,
+        text: '... Typing',
+        timeSent: DateTime.now(),
+        isSeen: true,
+        receiverId: 'receiverId',
+        messageType: MessageType.text,
+        repliedMessage: '',
+        repliedTo: '',
+        repliedMessageType: MessageType.text,
+        senderName: '', // Replace with the actual receiverId
+      ),
+      isFirst: true, // You can customize this based on your design
+      isLast: true, // It's the last message, so set it to true
+    );
+  }
+}
+

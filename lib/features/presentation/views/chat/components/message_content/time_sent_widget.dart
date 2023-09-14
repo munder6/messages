@@ -22,19 +22,7 @@ class TimeSentWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if(message.isSeen == false )
-          Text(
-            message.timeSent.amPmMode,
-            style:  TextStyle(
-              fontSize: 10,
-              color: isMe ? AppColorss.timeSentColor : AppColorss.textColor3,
-              fontWeight: FontWeight.normal
-            ),
-          ),
-           if(isMe && message.isSeen)
-            Text("seen ${message.timeSent.amPmMode}", style: TextStyle(color: Colors.white, fontSize: 10,fontFamily: 'Arabic'),),
-          if(isMe == false)
-            Text('${message.timeSent.amPmMode}', style: TextStyle(color: Colors.white, fontSize: 10,fontFamily: 'Arabic'),)
+            Text(message.timeSent.amPmMode, style: const TextStyle(color: Colors.white, fontSize: 10,fontFamily: 'Arabic'),),
         ],
       ),
     );
