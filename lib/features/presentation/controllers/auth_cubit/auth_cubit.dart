@@ -80,13 +80,15 @@ class AuthCubit extends Cubit<AuthState> {
     required String name,
     File? profilePic,
     required String fcmToken,
-    bool isTyping = false, // Default value is false
+    bool isTyping = false,
+    bool isEnglish = true,
   }) async {
     emit(SaveUserDataToFirebaseLoadingState());
     final result = await _saveUserDataToFirebaseUseCase(UserDataParameters(
       isTyping: isTyping,
+      isEnglish: isEnglish,
       name: name,
-      profilePic: profilePic,
+      //profilePic: profilePic,
       fcmToken: fcmToken,
      // Pass the isTyping value here
     ));

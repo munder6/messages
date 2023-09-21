@@ -11,6 +11,7 @@ class UserEntity extends Equatable {
   final String phoneNumber;
   final bool isOnline;
   final bool isTyping;
+  final bool isEnglish;
   final List<String> groupId;
   final DateTime lastSeen;
 
@@ -25,6 +26,7 @@ class UserEntity extends Equatable {
     required this.groupId,
     required this.lastSeen,
     required this.isTyping,
+    required this.isEnglish,
   });
 
 
@@ -41,6 +43,7 @@ class UserEntity extends Equatable {
     String? profilePic,
     String? phoneNumber,
     bool? isOnline,
+    bool? isEnglish,
     bool? isTyping,
     List<String>? groupId,
     DateTime? lastSeen,
@@ -56,6 +59,7 @@ class UserEntity extends Equatable {
       groupId: groupId ?? this.groupId,
       lastSeen: lastSeen ?? this.lastSeen,
       isTyping: isTyping ?? this.isTyping,
+      isEnglish: isEnglish ?? this.isEnglish,
     );
   }
 
@@ -71,5 +75,6 @@ class UserEntity extends Equatable {
     groupId,
     lastSeen,
     isTyping,
+    isEnglish,
   ];
 }

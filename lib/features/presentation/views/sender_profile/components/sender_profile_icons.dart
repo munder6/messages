@@ -12,12 +12,12 @@ class SenderProfileIcons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        ButtonWidget(text: AppStrings.call,icon: FluentIcons.call_24_regular),
+      children:  [
+        ButtonWidget(text: AppStringss.call,icon: FluentIcons.call_24_regular),
         SizedBox(width: 20),
-        ButtonWidget(text: AppStrings.video,icon: FluentIcons.video_24_regular),
+        ButtonWidget(text: AppStringss.video,icon: FluentIcons.video_24_regular),
         SizedBox(width: 20),
-        ButtonWidget(text: AppStrings.search,icon: FluentIcons.search_24_regular),
+        ButtonWidget(text: AppStringss.search,icon: FluentIcons.search_24_regular),
 
       ],
     );

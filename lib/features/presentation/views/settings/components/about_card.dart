@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import '../../../../../core/utils/constants/strings_manager.dart';
 import '../../../../../core/utils/thems/my_colors.dart';
@@ -105,26 +106,26 @@ class _AboutCardState extends State<AboutCard> {
       children: [
         InkWell(
           onTap: _showAboutDialog,
-          child: ListTile(
-            leading:  Icon(Icons.info_outline_rounded, color: AppColorss.iconsColors),
-            title:   Text(AppStrings.about, style: TextStyle(color: AppColorss.textColor3)),
-            subtitle: Text(
-              widget.user.status,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color:AppColorss.textColor1, fontSize: 20),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: AppColorss.thirdColor
             ),
-            trailing: Icon(
-              Icons.edit,
-              color: AppColorss.iconsColors,
-            ),
+            margin: const EdgeInsets.symmetric(horizontal: 30),
+            child: ListTile(
+              leading:  Icon(FluentIcons.info_24_regular, color: AppColorss.iconsColors),
+              title:   Text(
+                widget.user.status,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color:AppColorss.textColor1, fontSize: 20),
+              ),
+              trailing: Icon(
+                FluentIcons.edit_24_regular,
+                color: AppColorss.iconsColors,
+              ),
 
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 70),
-          child: Divider(
-            color: AppColorss.dividersColor,
+            ),
           ),
         ),
       ],

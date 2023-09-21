@@ -37,7 +37,9 @@ class ProfileScreen extends StatelessWidget {
               ProfilePicCircleCard(user: user),
               const SizedBox(height: 20),
               NameCard(user: user),
+              const SizedBox(height: 10),
               AboutCard(user: user),
+              const SizedBox(height: 10),
               PhoneCard(user: user)
             ],
           ),

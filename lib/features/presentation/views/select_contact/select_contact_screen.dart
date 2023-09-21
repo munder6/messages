@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/utils/constants/strings_manager.dart';
 import '../../../../core/utils/thems/my_colors.dart';
 import '../../controllers/select_contact_cubit/select_contact_cubit.dart';
 import 'components/contacts_not_on_whatsapp_list.dart';
@@ -34,11 +35,11 @@ class SelectContactScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const NewGroupContactCommunityButtonsList(),
-                  const SmallText("Contact on Message Me"),
+                  SmallText(AppStringss.contactOnMessageMe),
                   ContactsOnMessageMeList(
                     contactOnWhats: cubit.contactOnWhats,
                   ),
-                  const SmallText("Invite To Message Me"),
+                   SmallText(AppStringss.inviteToMessageMe),
                   ContactsNotOnMessageMeList(
                     contactNotMessageMe: cubit.contactNotOnMessageMe,
                   ),

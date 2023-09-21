@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:message_me_app/core/utils/constants/strings_manager.dart';
 import 'package:message_me_app/core/utils/thems/my_colors.dart';
 
 import '/core/extensions/extensions.dart';
@@ -18,7 +19,6 @@ class PhoneAndName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children:  [
         const SizedBox(height: 35),
@@ -28,12 +28,12 @@ class PhoneAndName extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text(
-          "Phone Number : ${phoneNum}",
+          phoneNum,
           style: context.bodyMedium!.copyWith(color: AppColorss.textColor1),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
-          "Status : ${status}",
+          status,
           style: context.bodyMedium!.copyWith(color: AppColorss.textColor1),
         ),
         const SizedBox(height: 30),

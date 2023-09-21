@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import '../../../../../core/utils/constants/strings_manager.dart';
 import '../../../../../core/utils/thems/my_colors.dart';
@@ -47,7 +48,7 @@ class _NameCardState extends State<NameCard> {
             decoration:  InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   width: 0,
                   style: BorderStyle.none,
                 ),
@@ -90,7 +91,7 @@ class _NameCardState extends State<NameCard> {
 
               Navigator.pop(context); // Close the dialog
             },
-            child: Text('Save', style: TextStyle(color: Colors.blue),),
+            child: const Text('Save', style: TextStyle(color: Colors.blue),),
           ),
         ],
       ),
@@ -105,29 +106,22 @@ class _NameCardState extends State<NameCard> {
       onTap: _showNameDialog,
       child: Column(
         children: [
-          ListTile(
-            leading: Icon(Icons.person, color: AppColorss.iconsColors),
-            title: Text(AppStrings.name, style: TextStyle(color: AppColorss.textColor2),),
-            subtitle: Text(
-              widget.user.name,
-              style: TextStyle(color: AppColorss.textColor1, fontSize: 20),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: AppColorss.thirdColor
             ),
-            trailing: Icon(
-              Icons.edit,
-              color: AppColorss.iconsColors,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 70, right: 20, bottom: 10),
-            child: Text(
-              AppStrings.thisIsNotYourUser,
-              style:  TextStyle(color:AppColorss.textColor2, fontSize: 14),
-            ),
-          ),
-           Padding(
-            padding: EdgeInsets.only(left: 70),
-            child: Divider(
-              color: AppColorss.dividersColor,
+            margin: const EdgeInsets.symmetric(horizontal: 30),
+            child: ListTile(
+              leading: Icon(FluentIcons.person_24_regular, color: AppColorss.iconsColors),
+              title: Text(
+                widget.user.name,
+                style: TextStyle(color: AppColorss.textColor1, fontSize: 20),
+              ),
+              trailing: Icon(
+                FluentIcons.edit_24_regular,
+                color: AppColorss.iconsColors,
+              ),
             ),
           ),
         ],

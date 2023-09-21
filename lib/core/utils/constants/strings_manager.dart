@@ -1,3 +1,9 @@
+
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 class AppStrings {
   static const String appName = "Message Me";
   static const String noRouteFound = "noRouteFound";
@@ -111,4 +117,76 @@ class AppStrings {
   static const String off = 'Off';
   static const String call = 'Call';
   static const String video = 'Video';
+}
+
+
+class AppStringss {
+  static bool isEnglish = true;
+
+  static String chats = isEnglish ? "Chats" : "المحادثات";
+  static String edit = isEnglish ? "Edit" : "تعديل";
+  static String search = isEnglish ? "Search" : "بحث";
+  static String call = isEnglish ? "Call" : "اتصال";
+  static String video = isEnglish ? "Video" : "مكالمة فيديو";
+  static String broadcast = isEnglish ? "Broadcast List" : "قائمة البث الصوتي";
+  static String newGroup = isEnglish ? "New Group" : "إنشاء مجموعة";
+  static String archived = isEnglish ? "Archived" : "الأرشيف";
+  static String settings = isEnglish ? "Settings" : "الإعدادات";
+  static String notifications = isEnglish ? "Notifications" : "الإشعارات";
+  static String privacy = isEnglish ? "Privacy" : "الخصوصية";
+  static String storeData = isEnglish ? "Storage and data" : "البيانات والتخزين";
+  static String lang = isEnglish ? "App language" : "لغة التطبيق";
+  static String help = isEnglish ? "Help" : "الحصول على مساعدة";
+  static String logout = isEnglish ? "Logout" : "تسجيل الخروج";
+  static String confirmLogout = isEnglish ? "Are you sure you want to logout?" : "هل تريد تسجيل الخروج ؟";
+  static String yes = isEnglish ? "yes" : "تسجيل الخروج";
+  static String no = isEnglish ? "Cancle" : "إلغاء";
+  static String save = isEnglish ? "Save" : "حفظ";
+  static String selectContact = isEnglish ? "Select Contact" : "اضافة مستخدم";
+  static String newCont = isEnglish ? "New Contact" : "مستخدم جديد";
+  static String contact = isEnglish ? "contact" : "جهة اتصال";
+  static String contactOnMessageMe = isEnglish ? "Contact on Message Me" : "جهات اتصال يستخدمون التطبيق";
+  static String inviteToMessageMe = isEnglish ? "Invite To Message Me" : "دعوة الاصدقاء للتطبيق";
+  static String newContact = isEnglish ? "New Contact" : "إضافة جهة اتصال";
+  static String phoneNumber = isEnglish ? "Phone Number" : "رقم الهاتف";
+  static String status = isEnglish ? "Status" : "الحالة";
+  static String copyMessage = isEnglish ? "Copy Message" : "نسخ الرسالة";
+  static String editMessage = isEnglish ? "Edit Message" : "تعديل الرسالة";
+  static String deleteMessage = isEnglish ? "Delete Message" : "حذف الرسالة";
+  static String messageCopied = isEnglish ? "Message Copied" : "تم نسخ الرسالة";
+  static String deleteForMe = isEnglish ? "Delete For Me" : "الحذف لدي";
+  static String deleteForAll = isEnglish ? "Delete For All" : "الحذف للجميع";
+  static String message = isEnglish ? "Message ..." : "";
+  static String today = isEnglish ? "Today" : "اليوم";
+  static String delete = isEnglish ? "Delete" : "حذف";
+  static String yesterday = isEnglish ? "Yesterday" : "أمس";
+  static String selectLang = isEnglish ? "Select Your Language" : "اختيار اللغة";
+  static String deleteConversation = isEnglish ? "Delete Conversation" : "حذف المحادثة";
+  static String doneDeleteForMe = isEnglish ? "Message Deleted For Me" : "تم حذف الرسالة لديك";
+  static String doneDelete = isEnglish ? "Conversation Deleted" : "تم حذف المحادثة";
+  static String doneDeleteForAll = isEnglish ? "Message Deleted For All" : "تم حذف الرسالة للجميع";
+  static String doneUpdate = isEnglish ? "Message Updated" : "تم تعديل الرسالة";
+  static String restartNow = isEnglish ? "Restart Now" : "إعادة التشغيل الأن";
+  static String restartRequired = isEnglish ? "Restart Required" : "مطلوب اعادة التشغيل";
+  static String totalDeviceStorage = isEnglish ? "Total Device Storage" : "مساحة الجهاز";
+  static String youNeedToRestartApp = isEnglish ? "You need to restart the app to apply changes." : "سيتم اعادة تشغيل التطبيق لتغيير اللغة";
+  static String storageAndDataInfo = isEnglish ? "Storage and Data Info" : "معلومات البيانات والتخزين";
+  static String confirmDelete = isEnglish ? "Are you sure you want to delete this message?" : "هل انت متأكد من حذف الرسالة؟";
+  static String confirmDeleteConversation = isEnglish ? "Are you sure you want to delete this conversation?" : "هل انت متأكد من حذف المحادثة؟";
+
+
+
+  static Future<void> fetchIsEnglishFromFirebase() async {
+    try {
+      final currentUser = FirebaseAuth.instance.currentUser;
+      final currentUserId = currentUser?.uid;
+      final snapshot = await FirebaseFirestore.instance.collection('users').doc(currentUserId).get();
+      final userData = snapshot.data();
+      if (userData != null && userData['isEnglish'] != null) {
+        isEnglish = userData['isEnglish'];
+      }
+    } catch (e) {
+      print('Error fetching isEnglish from Firebase: $e');
+    }
+  }
 }

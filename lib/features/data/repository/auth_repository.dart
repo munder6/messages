@@ -101,6 +101,7 @@ class AuthRepository extends BaseAuthRepository {
         groupId: result.groupId,
         lastSeen: result.lastSeen,
         isTyping: result.isTyping,
+        isEnglish: result.isEnglish,
       );
       return Right(userEntity);
     } on FirebaseAuthException catch (failure) {

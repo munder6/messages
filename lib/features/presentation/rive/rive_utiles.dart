@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:message_me_app/core/utils/constants/strings_manager.dart';
 import 'package:rive/rive.dart';
 import 'package:message_me_app/features/presentation/rive/pages/searchpage.dart';
 import 'package:message_me_app/features/presentation/views/main_layout/main_layout_screen.dart';
@@ -31,9 +32,9 @@ class RiveAssets {
 }
 
 List<RiveAssets> bottomNavs = [
-  RiveAssets("assets/images/riveicons.riv", artboard: "CHAT", stateMachineName: "CHAT_Interactivity", title: "Chat"),
+  RiveAssets("assets/images/riveicons.riv", artboard: "CHAT", stateMachineName: "CHAT_Interactivity", title: AppStringss.chats),
   //RiveAssets("assets/images/riveicons.riv", artboard: "BELL", stateMachineName: "BELL_Interactivity", title: "Calls"),
-  RiveAssets("assets/images/riveicons.riv", artboard: "SETTINGS", stateMachineName: "SETTINGS_Interactivity", title: "Settings"),
+  RiveAssets("assets/images/riveicons.riv", artboard: "SETTINGS", stateMachineName: "SETTINGS_Interactivity", title: AppStringss.settings),
 ];
 
 int currentPage = 0;

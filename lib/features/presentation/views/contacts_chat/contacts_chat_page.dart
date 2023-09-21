@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:message_me_app/core/functions/navigator.dart';
+import 'package:message_me_app/core/utils/constants/strings_manager.dart';
 import 'package:message_me_app/core/utils/routes/routes_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/utils/thems/my_colors.dart';
@@ -182,14 +183,14 @@ class ChatContactCard extends StatelessWidget {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(15.0))),
           backgroundColor: AppColorss.thirdColor,
-          title: const Text('Delete Conversation', style: TextStyle(color: Colors.red),),
-          content: Text('Are you sure you want to delete this conversation?', style: TextStyle(color: AppColorss.textColor1),),
+          title:  Text(AppStringss.deleteConversation, style: const TextStyle(color: Colors.red),),
+          content: Text(AppStringss.confirmDeleteConversation, style: TextStyle(color: AppColorss.textColor1),),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child:  Text('Cancel', style: TextStyle(color: AppColorss.textColor1),),
+              child:  Text(AppStringss.no, style: TextStyle(color: AppColorss.textColor1),),
             ),
             TextButton(
               onPressed: () {
@@ -197,14 +198,14 @@ class ChatContactCard extends StatelessWidget {
                 ChatCubit.get(context).deleteConversation(chatContact.contactId);
                 // Trigger screen refresh
                 Fluttertoast.showToast(
-                  msg: 'Deleted',
+                  msg: AppStringss.doneDelete,
                   textColor: AppColorss.textColor1,
                   backgroundColor: AppColorss.secondaryColor,
                   gravity: ToastGravity.CENTER,
                 );
 
               },
-              child: const Text('Delete', style: TextStyle(color: Colors.red),),
+              child:  Text(AppStringss.delete, style: const TextStyle(color: Colors.red),),
             ),
           ],
         );

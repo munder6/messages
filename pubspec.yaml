@@ -61,6 +61,8 @@ dependencies:
   system_info: ^1.0.1
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  restart_app: ^1.2.1
+  url_launcher: ^6.1.14
 
 
 

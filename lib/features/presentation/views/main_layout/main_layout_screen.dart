@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:message_me_app/core/functions/navigator.dart';
 import 'package:message_me_app/core/utils/routes/routes_manager.dart';
 import 'package:message_me_app/core/utils/thems/my_colors.dart';
+import '../../../../core/utils/constants/strings_manager.dart';
 import '../../controllers/auth_cubit/auth_cubit.dart';
 import '../contacts_chat/contacts_chat_page.dart';
 import 'components/sliver_appbar_actions.dart';
@@ -71,9 +72,9 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
           ],
           elevation: 0,
           centerTitle: false,
-          title: const Text(
-            "Edit",
-            style:  TextStyle(fontSize: 16, fontWeight: FontWeight.normal, fontFamily: 'Arabic', color: AppColorss.myMessageColor),
+          title:  Text(
+            AppStringss.edit,
+            style:  const TextStyle(fontSize: 16, fontWeight: FontWeight.normal, fontFamily: 'Arabic', color: AppColorss.myMessageColor),
           ),
           backgroundColor: AppColorss.primaryColor,
         ),
@@ -90,10 +91,10 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+           Row(
             children: [
-              SizedBox(width: 15),
-              Text("Chats", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+              const SizedBox(width: 15),
+              Text(AppStringss.chats, style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
             ],
           ),
           Padding(
@@ -127,7 +128,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
                           color: AppColorss.textColor3,
                           size: 23,
                         ),
-                        hintText: 'Search',
+                        hintText: AppStringss.search,
                         hintStyle: TextStyle(
                           color: AppColorss.textColor3,
                           fontFamily: 'Arabic',
@@ -148,13 +149,13 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
             ),
           ),
           const SizedBox(height: 5),
-          const Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Broadcast Lists", style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),),
-                Text("New Group", style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),)
+                Text(AppStringss.broadcast, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),),
+                Text(AppStringss.newGroup, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),)
               ],
             ),
           ),
@@ -165,7 +166,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
               children: [
                 Icon(FluentIcons.archive_28_filled, color: Colors.grey.shade600, size: 22,),
                 const SizedBox(width: 20),
-                Text("Archived", style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: AppColorss.textColor1),),
+                Text(AppStringss.archived, style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: AppColorss.textColor1),),
               ],
             ),
           ),

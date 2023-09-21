@@ -1,4 +1,6 @@
 
+import 'package:message_me_app/core/utils/constants/strings_manager.dart';
+
 class DateConverter{
 
   static String getChatContactTime(DateTime dateTime){
@@ -22,10 +24,10 @@ class DateConverter{
     DateTime localDateTime = dateTime.toLocal();
 
     if (localDateTime.day == now.day && localDateTime.month == now.month && localDateTime.year == now.year) {
-      return 'Today';
+      return AppStringss.today;
     }
     else if (localDateTime.day == yesterday.day && localDateTime.month == yesterday.month && localDateTime.year == yesterday.year) {
-      return 'Yesterday';
+      return AppStringss.yesterday;
     }else{
       return dateConverterMonth(dateTime.toString());
     }
@@ -36,10 +38,10 @@ class DateConverter{
     DateTime localDateTime = dateTime.toLocal();
 
     if (localDateTime.day == now.day && localDateTime.month == now.month && localDateTime.year == now.year) {
-      return 'today';
+      return AppStringss.today;
     }
     else if (localDateTime.day == yesterday.day && localDateTime.month == yesterday.month && localDateTime.year == yesterday.year) {
-      return 'yesterday';
+      return AppStringss.yesterday;
     }else{
       return dateConverterMonthNum(dateTime.toString());
     }

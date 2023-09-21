@@ -3,11 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/functions/navigator.dart';
 import '../../../../core/services/firebase_fcm_token.dart';
+import '../../../../core/utils/constants/strings_manager.dart';
 import '../../../../core/utils/routes/routes_manager.dart';
 import '../../../../core/utils/thems/my_colors.dart';
 import '../../controllers/auth_cubit/auth_cubit.dart';
+import '../setting_pages/select_Languges.dart';
 import '../setting_pages/storage_and_data.dart';
 import 'components/profile_card.dart';
 
@@ -91,12 +94,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+               Row(
                 children: [
-                  SizedBox(width: 21),
+                  const SizedBox(width: 21),
                   Text(
-                    "Settings",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    AppStringss.settings,
+                    style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -136,7 +139,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             color: AppColorss.textColor3,
                             size: 23,
                           ),
-                          hintText: 'Search',
+                          hintText: AppStringss.search,
                           hintStyle: TextStyle(
                             color: AppColorss.textColor3,
                             fontFamily: 'Arabic',
@@ -189,9 +192,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ),
                         const SizedBox(width: 10), // Adjust the spacing as needed
-                        const Text(
-                          "Notifications",
-                          style: TextStyle(fontSize: 15),
+                         Text(
+                          AppStringss.notifications,
+                          style: const TextStyle(fontSize: 15),
                         ),
                         const Spacer(), // This will push the switch to the rightmost side
                         Switch(
@@ -265,9 +268,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ),
                               ),
                               const SizedBox(width: 10), // Adjust the spacing as needed
-                              const Text(
-                                "Privacy",
-                                style: TextStyle(fontSize: 15),
+                               Text(
+                                AppStringss.privacy,
+                                style: const TextStyle(fontSize: 15),
                               ),
                             ],
                           ),
@@ -305,9 +308,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ),
                               ),
                               const SizedBox(width: 10), // Adjust the spacing as needed
-                              const Text(
-                                "Chats",
-                                style: TextStyle(fontSize: 15),
+                               Text(
+                                AppStringss.chats,
+                                style: const TextStyle(fontSize: 15),
                               ),
                             ],
                           ),
@@ -354,9 +357,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                 ),
                                 const SizedBox(width: 10), // Adjust the spacing as needed
-                                const Text(
-                                  "Storage and data",
-                                  style: TextStyle(fontSize: 15),
+                                 Text(
+                                  AppStringss.storeData,
+                                  style: const TextStyle(fontSize: 15),
                                 ),
                               ],
                             ),
@@ -376,41 +379,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     borderRadius: BorderRadius.circular(12)),
                 child: Column(
                   children: [
-                    Container(
-                      margin: const EdgeInsets.only(left: 0, right: 20, top: 0, bottom: 0),
-                      height: 50,
-                      decoration: BoxDecoration(
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const LanguageSelector()),
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 0, right: 20, top: 0, bottom: 0),
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: AppColorss.thirdColor,
+                            borderRadius: BorderRadius.circular(10)),
+                        width: MediaQuery.of(context).size.width - 18,
+                        child: Card(
+                          elevation: 0,
                           color: AppColorss.thirdColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      width: MediaQuery.of(context).size.width - 18,
-                      child: Card(
-                        elevation: 0,
-                        color: AppColorss.thirdColor,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.deepOrangeAccent,
-                                    borderRadius: BorderRadius.circular(5)),
-                                height: 30,
-                                width: 27,
-                                padding: const EdgeInsets.all(0),
-                                child: const Icon(
-                                  FluentIcons.local_language_24_regular,
-                                  size: 20,
-                                  color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.deepOrangeAccent,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  height: 30,
+                                  width: 27,
+                                  padding: const EdgeInsets.all(0),
+                                  child: const Icon(
+                                    FluentIcons.local_language_24_regular,
+                                    size: 20,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 10), // Adjust the spacing as needed
-                              const Text(
-                                "App language",
-                                style: TextStyle(fontSize: 15),
-                              ),
-                            ],
+                                const SizedBox(width: 10), // Adjust the spacing as needed
+                                 Text(
+                                  AppStringss.lang,
+                                  style: const TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -423,34 +434,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: AppColorss.thirdColor,
                           borderRadius: BorderRadius.circular(10)),
                       width: MediaQuery.of(context).size.width - 18,
-                      child: Card(
-                        elevation: 0,
-                        color: AppColorss.thirdColor,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.blue.shade700,
-                                    borderRadius: BorderRadius.circular(5)),
-                                height: 30,
-                                width: 27,
-                                padding: const EdgeInsets.all(0),
-                                child: const Icon(
-                                  FluentIcons.chat_help_24_regular,
-                                  size: 20,
-                                  color: Colors.white,
+                      child: InkWell(
+                        onTap: (){
+                           launchUrl(Uri.parse("tel:+970599987676"));
+                        },
+                        child: Card(
+                          elevation: 0,
+                          color: AppColorss.thirdColor,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.blue.shade700,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  height: 30,
+                                  width: 27,
+                                  padding: const EdgeInsets.all(0),
+                                  child: const Icon(
+                                    FluentIcons.chat_help_24_regular,
+                                    size: 20,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 10), // Adjust the spacing as needed
-                              const Text(
-                                "Help",
-                                style: TextStyle(fontSize: 15),
-                              ),
-                            ],
+                                const SizedBox(width: 10),
+                                 Text(
+                                  AppStringss.help,
+                                  style: const TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -475,14 +491,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             return AlertDialog(
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                               backgroundColor: AppColorss.thirdColor,
-                              title: const Text('Logout', style: TextStyle(color: Colors.red)),
-                              content: Text('Are you sure you want to logout?', style: TextStyle(color: AppColorss.textColor1),),
+                              title:  Text(AppStringss.logout, style: const TextStyle(color: Colors.red)),
+                              content: Text(AppStringss.confirmLogout, style: TextStyle(color: AppColorss.textColor1),),
                               actions: [
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pop(); // Close the dialog
                                   },
-                                  child: const Text('Cancel', style: TextStyle(color: Colors.blue),),
+                                  child:  Text(AppStringss.no, style: const TextStyle(color: Colors.blue),),
                                 ),
                                 TextButton(
                                   onPressed: () async {
@@ -505,7 +521,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     // Sign out the user
                                     cubit.signOut();
                                   },
-                                  child: const Text('Logout', style: TextStyle(color: Colors.red),),
+                                  child:  Text(AppStringss.yes, style: const TextStyle(color: Colors.red),),
                                 ),
                               ],
                             );
@@ -542,9 +558,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                 ),
                                 const SizedBox(width: 10), // Adjust the spacing as needed
-                                const Text(
-                                  "Logout",
-                                  style: TextStyle(fontSize: 15),
+                                 Text(
+                                  AppStringss.logout,
+                                  style: const TextStyle(fontSize: 15),
                                 ),
                               ],
                             ),

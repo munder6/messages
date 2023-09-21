@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:message_me_app/core/utils/constants/strings_manager.dart';
 import 'package:swipe_to/swipe_to.dart';
 import '../../../../../../core/enums/messge_type.dart';
 import '../../../../../../core/utils/thems/my_colors.dart';
@@ -172,7 +173,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
             if (isTextMessage)
               ListTile(
                 leading: Icon(Icons.copy, color: AppColorss.iconsColors),
-                title: Text('Copy Message', style: TextStyle(color:AppColorss.textColor1)),
+                title: Text(AppStringss.copyMessage, style: TextStyle(color:AppColorss.textColor1)),
                 onTap: () {
                   Navigator.pop(context); // Close the bottom sheet
                   _copyMessageText(context, messageText);
@@ -181,7 +182,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
             if (isTextMessage)
               ListTile(
                 leading: Icon(Icons.edit, color: AppColorss.iconsColors),
-                title: Text('Edit Message', style: TextStyle(color: AppColorss.textColor1)),
+                title: Text(AppStringss.editMessage, style: TextStyle(color: AppColorss.textColor1)),
                 onTap: () {
                   Navigator.pop(context); // Close the bottom sheet
                   _editMessage(context);
@@ -189,7 +190,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
               ),
             ListTile(
               leading: const Icon(Icons.delete, color: Colors.red),
-              title: Text('Delete Message', style: TextStyle(color: AppColorss.textColor1)),
+              title: Text(AppStringss.deleteMessage, style: TextStyle(color: AppColorss.textColor1)),
               onTap: () {
                 Navigator.pop(context); // Close the bottom sheet
                 _deleteMessage(context);
@@ -204,7 +205,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
   void _copyMessageText(BuildContext context, String messageText) {
     Clipboard.setData(ClipboardData(text: messageText));
     Fluttertoast.showToast(
-      msg: 'Message Copied',
+      msg: AppStringss.messageCopied,
       textColor: AppColorss.textColor1,
       backgroundColor: AppColorss.thirdColor,
       gravity: ToastGravity.CENTER,
@@ -219,10 +220,10 @@ class _MyMessageCardState extends State<MyMessageCard> {
         return AlertDialog(
           backgroundColor:  AppColorss.thirdColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: Text('Edit Message', style: TextStyle(color: AppColorss.textColor1),),
+          title: Text(AppStringss.editMessage, style: TextStyle(color: AppColorss.textColor1),),
           content: Container(
             decoration: BoxDecoration(
-                color: AppColorss.thirdColor,
+                color: AppColorss.secondaryColor,
                 borderRadius: BorderRadius.circular(15)
             ),
             child: TextField(
@@ -246,12 +247,6 @@ class _MyMessageCardState extends State<MyMessageCard> {
                   Icons.edit,
                   color: AppColorss.iconsColors.withOpacity(0.54),
                 ),
-                hintText: 'Message ...',
-                hintStyle: TextStyle(
-                  color: AppColorss.textColor3,
-                  fontFamily: 'Nova',
-                  fontSize: 16,
-                ),
                 focusedBorder: InputBorder.none,
                 disabledBorder: InputBorder.none,
                 enabledBorder: InputBorder.none,
@@ -261,13 +256,13 @@ class _MyMessageCardState extends State<MyMessageCard> {
           ),
           actions: [
             TextButton(
-              child: Text('Cancel', style: TextStyle(color: AppColorss.textColor2),),
+              child: Text(AppStringss.no, style: TextStyle(color: AppColorss.textColor2),),
               onPressed: () {
                 Navigator.pop(context); // Close the dialog
               },
             ),
             TextButton(
-              child: const Text('Save',style: TextStyle(color: Color.fromRGBO(
+              child:  Text(AppStringss.save,style: const TextStyle(color: Color.fromRGBO(
                   18, 114, 210, 1.0),),),
               onPressed: () {
                 // Update the message in Firebase Firestore
@@ -288,17 +283,17 @@ class _MyMessageCardState extends State<MyMessageCard> {
         return AlertDialog(
           backgroundColor:  AppColorss.thirdColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: const Text('Delete Message', style: TextStyle(color: Colors.red),),
-          content: Text('Are you sure you want to delete this message?', style: TextStyle(color: AppColorss.textColor1),),
+          title:  Text(AppStringss.deleteMessage, style: TextStyle(color: Colors.red),),
+          content: Text(AppStringss.confirmDelete, style: TextStyle(color: AppColorss.textColor1),),
           actions: [
             TextButton(
-              child: Text('Cancel', style: TextStyle(color: AppColorss.textColor2),),
+              child: Text(AppStringss.no, style: TextStyle(color: AppColorss.textColor2),),
               onPressed: () {
                 Navigator.pop(context); // Close the dialog
               },
             ),
             TextButton(
-              child: const Text('Delete For Me' , style : TextStyle(color:  Color.fromRGBO(
+              child:  Text(AppStringss.deleteForMe , style : TextStyle(color:  Color.fromRGBO(
                   18, 114, 210, 1.0),),),
               onPressed: () {
                 _deleteMessageFromFirestoreForMe(context);
@@ -306,7 +301,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
               },
             ),
             TextButton(
-              child: const Text('Delete For All' , style : TextStyle(color: Colors.red)),
+              child:  Text(AppStringss.deleteForAll , style : TextStyle(color: Colors.red)),
               onPressed: () {
                 _deleteMessageFromFirestoreForAll(context);
                 Navigator.pop(context); // Close the dialog
@@ -335,7 +330,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
         textColor: AppColorss.textColor1,
         backgroundColor: AppColorss.thirdColor,
         gravity: ToastGravity.CENTER,
-        msg: 'Message Deleted For Me',
+        msg: AppStringss.doneDeleteForMe,
         toastLength: Toast.LENGTH_LONG,
       );
     } catch (e) {
@@ -372,7 +367,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
           .doc(widget.message.messageId)
           .delete();
       Fluttertoast.showToast(
-        msg: 'Message Deleted Fo All',
+        msg: AppStringss.doneDeleteForAll,
         toastLength: Toast.LENGTH_LONG,
         textColor: AppColorss.textColor1,
         backgroundColor: AppColorss.thirdColor,
@@ -417,7 +412,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
         'text': editedMessage,
       });
       Fluttertoast.showToast(
-        msg: 'Message Updated',
+        msg: AppStringss.doneUpdate,
         toastLength: Toast.LENGTH_LONG,
         textColor: AppColorss.textColor1,
         backgroundColor: AppColorss.thirdColor,

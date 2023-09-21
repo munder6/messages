@@ -2,6 +2,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:message_me_app/core/shared/commen.dart';
+import 'package:message_me_app/core/utils/constants/strings_manager.dart';
 import 'package:message_me_app/core/utils/thems/my_colors.dart';
 import '../../../../../../core/functions/navigator.dart';
 import '../../../../../../core/shared/message_replay.dart';
@@ -115,7 +116,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
                       decoration:  InputDecoration(
                         filled: true,
                         fillColor: Colors.transparent,
-                        hintText: 'Message ...',
+                        hintText: AppStringss.message,
                         hintStyle:  TextStyle(
                           color: AppColorss.textColor3,
                           fontFamily: 'Arabic',

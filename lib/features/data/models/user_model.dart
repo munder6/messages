@@ -14,6 +14,7 @@ class UserModel extends UserEntity {
     required super.lastSeen,
     required super.fcmToken,
     required super.isTyping,
+    required super.isEnglish,
   });
 
   Map<String, dynamic> toMap() {
@@ -27,7 +28,8 @@ class UserModel extends UserEntity {
       'groupId': groupId,
       'isTyping': isTyping,
       'lastSeen': lastSeen.millisecondsSinceEpoch,
-      'fcmToken' : FirebaseService.fcmToken
+      'fcmToken' : FirebaseService.fcmToken,
+      'isEnglish' : isEnglish,
     };
   }
 
@@ -41,6 +43,7 @@ class UserModel extends UserEntity {
       phoneNumber: map['phoneNumber'],
       isOnline: map['isOnline'] ?? false,
       isTyping: map['isTyping'] ?? false,
+      isEnglish: map['isEnglish'] ?? true,
       groupId: List<String>.from(map['groupId']),
       lastSeen: DateTime.fromMillisecondsSinceEpoch(map['lastSeen']),
     );

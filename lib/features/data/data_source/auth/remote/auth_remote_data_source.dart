@@ -108,6 +108,7 @@ class AuthRemoteDataSource extends BaseAuthRemoteDataSource {
       groupId: const [],
       lastSeen: DateTime.now(),
       isTyping: parameters.isTyping, // Set the isTyping value from parameters
+      isEnglish: parameters.isEnglish, // Set the isTyping value from parameters
     );
 
     var userDoc = await firestore.collection('users').doc(uId).get();

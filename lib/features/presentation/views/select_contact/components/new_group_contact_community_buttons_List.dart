@@ -20,10 +20,10 @@ class NewGroupContactCommunityButtonsList extends StatelessWidget {
             backgroundColor: AppColorss.iconsColors2,
             child:  Icon(
               Icons.person_add,
-              color: AppColorss.iconsColors,
+              color: Colors.grey.shade900,
             ),
           ),
-          title: AppStrings.newContact,
+          title: AppStringss.newContact,
           titleButton: GestureDetector(
             onTap: () {
             },

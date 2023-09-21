@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+import 'package:message_me_app/core/utils/constants/strings_manager.dart';
 import 'package:swipe_to/swipe_to.dart';
 import 'package:message_me_app/core/enums/messge_type.dart';
 import '../../../../../../core/extensions/extensions.dart';
@@ -76,7 +77,7 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                   color: AppColorss.iconsColors,
                 ),
                 title: Text(
-                  'Copy Message',
+                  AppStringss.copyMessage,
                   style: TextStyle(color: AppColorss.textColor1),
                 ),
                 onTap: () {
@@ -90,7 +91,7 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                   color: Colors.red,
                 ),
                 title: Text(
-                  'Delete Message',
+                  AppStringss.deleteMessage,
                   style: TextStyle(color: AppColorss.textColor1),
                 ),
                 onTap: () {
@@ -108,7 +109,7 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
   void _copyMessageText(BuildContext context, String messageText) {
     Clipboard.setData(ClipboardData(text: messageText));
     Fluttertoast.showToast(
-      msg: 'Message Copied',
+      msg: AppStringss.messageCopied,
       toastLength: Toast.LENGTH_LONG,
       textColor: AppColorss.textColor1,
       backgroundColor: AppColorss.thirdColor,
@@ -133,7 +134,7 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
           .doc(widget.message.messageId)
           .delete();
       Fluttertoast.showToast(
-        msg: 'Message Deleted For Me',
+        msg: AppStringss.doneDeleteForMe,
         toastLength: Toast.LENGTH_LONG,
         textColor: AppColorss.textColor1,
         backgroundColor: AppColorss.thirdColor,
@@ -158,18 +159,18 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
         return AlertDialog(
           backgroundColor: AppColorss.thirdColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: const Text(
-            'Delete Message',
+          title:  Text(
+            AppStringss.deleteMessage,
             style: TextStyle(color: Colors.red),
           ),
           content: Text(
-            'Are you sure you want to delete this message?',
+            AppStringss.confirmDelete,
             style: TextStyle(color: AppColorss.textColor1),
           ),
           actions: [
             TextButton(
               child: Text(
-                'Cancel',
+                AppStringss.no,
                 style: TextStyle(color: AppColorss.textColor2),
               ),
               onPressed: () {
@@ -178,7 +179,7 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
             ),
             TextButton(
               child: Text(
-                'Delete For Me',
+                AppStringss.deleteForMe,
                 style: TextStyle(
                   color: AppColorss.myMessageColor,
                 ),

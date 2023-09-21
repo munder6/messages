@@ -22,12 +22,14 @@ class UserDataParameters extends Equatable {
   final String fcmToken;
   final File? profilePic;
   final bool isTyping;
+  final bool isEnglish;
 
   const UserDataParameters({
     required this.name,
     this.profilePic,
     required this.fcmToken,
     this.isTyping = false,
+    this.isEnglish = false,
   });
 
   @override
@@ -36,6 +38,7 @@ class UserDataParameters extends Equatable {
     profilePic,
     fcmToken,
     isTyping,
+    isEnglish,
   ];
 }
 

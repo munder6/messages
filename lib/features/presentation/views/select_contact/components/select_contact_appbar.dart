@@ -25,12 +25,12 @@ class SelectContactAppBar extends StatelessWidget
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppStrings.selectContact,
+            AppStringss.selectContact,
             style: TextStyle(color: AppColorss.textColor1),
           ),
           const SizedBox(height: 3),
           Text(
-            '$numOfContacts ${AppStrings.contacts}',
+            '$numOfContacts ${AppStringss.contact}',
             style: context.bodySmall,
           ),
         ],

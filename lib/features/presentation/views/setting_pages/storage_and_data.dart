@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:message_me_app/core/utils/constants/strings_manager.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
@@ -37,7 +38,7 @@ class _StorageAndDataState extends State<StorageAndData> {
         elevation: 0,
         iconTheme: IconThemeData(color: AppColorss.iconsColors),
         backgroundColor: AppColorss.primaryColor,
-        title:  Text('Storage and Data Info', style: TextStyle(color: AppColorss.textColor1),),
+        title:  Text(AppStringss.storageAndDataInfo, style: TextStyle(color: AppColorss.textColor1),),
       ),
       body:
            SafeArea(
