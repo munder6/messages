@@ -197,6 +197,7 @@ class ChatRemoteDataSource extends BaseChatRemoteDataSource {
       messageId: messageId,
       timeSent: timeSent,
       isSeen: false,
+      isLiked: false,
       messageType: messageType,
       repliedMessage: messageReplay == null ? '' : messageReplay.message,
       senderName: senderUserName,

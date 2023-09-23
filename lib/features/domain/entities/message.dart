@@ -14,6 +14,7 @@ class Message extends Equatable {
   final String repliedMessage;
   final String repliedTo;
   final MessageType repliedMessageType;
+  final bool isLiked;
 
   Message({
     required this.senderId,
@@ -27,6 +28,7 @@ class Message extends Equatable {
     required this.repliedTo,
     required this.repliedMessageType,
     required this.senderName,
+    required this.isLiked,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,7 @@ class Message extends Equatable {
       messageId: json['messageId'] as String,
       timeSent: DateTime.fromMillisecondsSinceEpoch(json['timeSent'] as int),
       isSeen: json['isSeen'] as bool,
+      isLiked: json['isLiked'] as bool,
       messageType: MessageType.values[json['messageType'] as int],
       repliedMessage: json['repliedMessage'] as String,
       repliedTo: json['repliedTo'] as String,

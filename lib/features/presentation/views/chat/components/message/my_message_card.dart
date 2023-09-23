@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -90,47 +92,142 @@ class _MyMessageCardState extends State<MyMessageCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: context.width(0.6),
-                          maxHeight: 600,
-                        ),
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
-                          decoration: BoxDecoration(
-                            gradient: (widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video)
-                                ? const LinearGradient(
-                              colors: [Colors.transparent, Colors.transparent], // Define your gradient colors
-                              begin: Alignment.topLeft, // Adjust the gradient's start position
-                              end: Alignment.bottomRight, // Adjust the gradient's end position
-                            )
-                                : const LinearGradient(
-                              stops: [
-                                0,
-                                1,
-                                2
-                              ],
-                              colors: [AppColorss.myMessageColor2,AppColorss.myMessageColor1, AppColorss.myMessageColor], // Define your gradient colors
-                              begin: Alignment.topLeft, // Adjust the gradient's start position
-                              end: Alignment.bottomRight, // Adjust the gradient's end position
+                      InkWell(
+                        focusColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        onDoubleTap: ()async{
+                          final firestore = FirebaseFirestore.instance;
+                          final userId = widget.message.senderId;
+                          final chatId = widget.message.receiverId;
+                          await firestore
+                              .collection('users')
+                              .doc(userId)
+                              .collection('chats')
+                              .doc(chatId)
+                              .collection('messages')
+                              .doc(widget.message.messageId)
+                              .update({
+                            'isLiked': true,
+                          });
+                          final userId2 = widget.message.receiverId;
+                          final chatId2 = widget.message.senderId;
+                          await firestore
+                              .collection('users')
+                              .doc(userId2)
+                              .collection('chats')
+                              .doc(chatId2)
+                              .collection('messages')
+                              .doc(widget.message.messageId)
+                              .update({
+                            'isLiked': true,
+                          });
+                        },
+                        child: Stack(
+                          children: [
+                            ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxWidth: context.width(0.6),
+                                maxHeight: 600,
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
+                                decoration: BoxDecoration(
+                                  gradient: (widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video)
+                                      ? const LinearGradient(
+                                    colors: [Colors.transparent, Colors.transparent], // Define your gradient colors
+                                    begin: Alignment.topLeft, // Adjust the gradient's start position
+                                    end: Alignment.bottomRight, // Adjust the gradient's end position
+                                  )
+                                      : const LinearGradient(
+                                    stops: [
+                                      0,
+                                      1,
+                                      2
+                                    ],
+                                    colors: [AppColorss.myMessageColor2,AppColorss.myMessageColor1, AppColorss.myMessageColor], // Define your gradient colors
+                                    begin: Alignment.topLeft, // Adjust the gradient's start position
+                                    end: Alignment.bottomRight, // Adjust the gradient's end position
+                                  ),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: const Radius.circular(20),
+                                    bottomLeft: const Radius.circular(20),
+                                    bottomRight: widget.isLast ? const Radius.circular(20) : const Radius.circular(5),
+                                    topRight: widget.isFirst ? const Radius.circular(20) : const Radius.circular(5),
+                                  ),
+                                ),
+                                child: GestureDetector(
+                                  onLongPress: () {
+                                    _showMessageMenu(context);
+                                  },
+
+                                  child: MessageContent(
+                                    message: widget.message,
+                                    isMe: true,
+                                    isLast : widget.isLast
+                                  ),
+                                ),
+                              ),
                             ),
-                            borderRadius: BorderRadius.only(
-                              topLeft: const Radius.circular(20),
-                              bottomLeft: const Radius.circular(20),
-                              bottomRight: widget.isLast ? const Radius.circular(20) : const Radius.circular(5),
-                              topRight: widget.isFirst ? const Radius.circular(20) : const Radius.circular(5),
-                            ),
-                          ),
-                          child: GestureDetector(
-                            onLongPress: () {
-                              _showMessageMenu(context);
-                            },
-                            child: MessageContent(
-                              message: widget.message,
-                              isMe: true,
-                              isLast : widget.isLast
-                            ),
-                          ),
+                            widget.message.isLiked ?
+                            const SizedBox(height: 53) : const SizedBox(),
+                            widget.message.isLiked ?
+                             Positioned(
+                              top: (widget.message.messageType ==
+                                  MessageType.image || widget.message.messageType ==
+                                  MessageType.video) ? 262 : 30,
+                                left: (widget.message.messageType ==
+                                    MessageType.image || widget.message.messageType ==
+                                    MessageType.video) ? 2.5 : 5.5,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: AppColorss.primaryColor
+                                  ),
+                                  padding: EdgeInsets.all(2),
+                                  child: Container(
+                                    width: 25,
+                                    padding: const EdgeInsets.all(3),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: AppColorss.senderMessageColor
+                                    ),
+                                      child: InkWell(
+                                          focusColor: Colors.transparent,
+                                          splashColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                        onTap: ()async{
+                                          final firestore = FirebaseFirestore.instance;
+                                          final userId = widget.message.senderId;
+                                          final chatId = widget.message.receiverId;
+                                          await firestore
+                                              .collection('users')
+                                              .doc(userId)
+                                              .collection('chats')
+                                              .doc(chatId)
+                                              .collection('messages')
+                                              .doc(widget.message.messageId)
+                                              .update({
+                                            'isLiked': false,
+                                          });
+                                          final userId2 = widget.message.receiverId;
+                                          final chatId2 = widget.message.senderId;
+                                          await firestore
+                                              .collection('users')
+                                              .doc(userId2)
+                                              .collection('chats')
+                                              .doc(chatId2)
+                                              .collection('messages')
+                                              .doc(widget.message.messageId)
+                                              .update({
+                                            'isLiked': false,
+                                          });
+                                        },
+                                          child: const Icon(FluentIcons.heart_24_filled, size: 15,color: Colors.red,))),
+                                )) : SizedBox()
+                          ],
                         ),
                       ),
                       if (widget.isFirst) const Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
@@ -142,7 +239,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text("Seen", style: TextStyle(fontSize: 10, fontWeight: FontWeight.w300),),
+                        const Text("Seen", style: TextStyle(fontSize: 10, fontWeight: FontWeight.w300),),
                         SizedBox(width: widget.isFirst ? 10 : 0,),
                       ],
                     ),
@@ -293,7 +390,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
               },
             ),
             TextButton(
-              child:  Text(AppStringss.deleteForMe , style : TextStyle(color:  Color.fromRGBO(
+              child:  Text(AppStringss.deleteForMe , style : const TextStyle(color:  Color.fromRGBO(
                   18, 114, 210, 1.0),),),
               onPressed: () {
                 _deleteMessageFromFirestoreForMe(context);

@@ -9,6 +9,7 @@ class MessageModel extends Message {
     required String messageId,
     required DateTime timeSent,
     required bool isSeen,
+     required bool isLiked,
     required MessageType messageType,
     required String repliedMessage,
     required String repliedTo,
@@ -21,6 +22,7 @@ class MessageModel extends Message {
     messageId: messageId,
     timeSent: timeSent,
     isSeen: isSeen,
+    isLiked: isLiked,
     messageType: messageType,
     repliedMessage: repliedMessage,
     repliedTo: repliedTo,
@@ -36,6 +38,7 @@ class MessageModel extends Message {
       'messageId': messageId,
       'timeSent': timeSent.millisecondsSinceEpoch,
       'isSeen': isSeen,
+      'isLiked': isLiked,
       'messageType': messageType.type,
       'repliedMessage': repliedMessage,
       'repliedTo': repliedTo,
@@ -52,6 +55,7 @@ class MessageModel extends Message {
       messageId: map['messageId'] as String,
       timeSent: DateTime.fromMillisecondsSinceEpoch(map['timeSent'] as int),
       isSeen: map['isSeen'] as bool,
+      isLiked: map['isLiked'] as bool,
       messageType: MessageType.values.firstWhere(
             (type) => type.type == map['messageType'],
         orElse: () => MessageType.text, // Default to a sensible value

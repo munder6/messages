@@ -373,6 +373,7 @@ class FakeSenderMessageCard extends StatelessWidget {
       // Customize the appearance of the fake message card as needed
       message: Message(
         messageId: 'fakeMessageId',
+        isLiked: false,
         senderId: senderId,
         text: '... Typing',
         timeSent: DateTime.now(),

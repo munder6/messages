@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -32,6 +36,8 @@ class SenderMessageCard extends StatefulWidget {
 
 class _SenderMessageCardState extends State<SenderMessageCard> {
   String profilePic = 'https://cdn.landesa.org/wp-content/uploads/default-user-image.png';
+
+
 
   @override
   void initState() {
@@ -259,37 +265,139 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                   )
                       : const Padding(padding: EdgeInsets.symmetric(horizontal: 13)),
                   const SizedBox(width: 5),
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: context.width(0.6),
-                      maxHeight: 600,
-                    ),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
-                      decoration: BoxDecoration(
-                        color: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video
-                            ? Colors.transparent
-                            : AppColorss.senderMessageColor,
-                        borderRadius: BorderRadius.only(
-                          topRight:  const Radius.circular(20),
-                          bottomLeft: widget.isLast ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
-                          bottomRight: const Radius.circular(20),
-                          topLeft: widget.isFirst ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
+                  InkWell(
+                    focusColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    onDoubleTap: ()async{
+                      final firestore = FirebaseFirestore.instance;
+                      final userId = widget.message.senderId;
+                      final chatId = widget.message.receiverId;
+                      await firestore
+                          .collection('users')
+                          .doc(userId)
+                          .collection('chats')
+                          .doc(chatId)
+                          .collection('messages')
+                          .doc(widget.message.messageId)
+                          .update({
+                        'isLiked': true,
+                      });
+                      final userId2 = widget.message.receiverId;
+                      final chatId2 = widget.message.senderId;
+                      await firestore
+                          .collection('users')
+                          .doc(userId2)
+                          .collection('chats')
+                          .doc(chatId2)
+                          .collection('messages')
+                          .doc(widget.message.messageId)
+                          .update({
+                        'isLiked': true,
+                      });
 
-                          GestureDetector(
-                            onLongPress: () {
-                              _showMessageMenu(context);
-                            },
-                            child: MessageContent(message: widget.message, isMe: false, isLast: widget.isLast,),
+                      await sendNotification(
+                        receiverId: widget.message.receiverId,
+                        notificationTitle: 'Liked Message',
+                        notificationBody: 'You received a liked message from ',
+                      );
+
+                    },
+                    child: Stack(
+                      children: [
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: context.width(0.6),
+                            maxHeight: 600,
                           ),
-                        ],
-                      ),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
+                            decoration: BoxDecoration(
+                              color: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video
+                                  ? Colors.transparent
+                                  : AppColorss.senderMessageColor,
+                              borderRadius: BorderRadius.only(
+                                topRight:  const Radius.circular(20),
+                                bottomLeft: widget.isLast ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
+                                bottomRight: const Radius.circular(20),
+                                topLeft: widget.isFirst ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+
+                                GestureDetector(
+                                  onLongPress: () {
+                                    _showMessageMenu(context);
+                                  },
+                                  child: MessageContent(message: widget.message, isMe: false, isLast: widget.isLast,),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        widget.message.isLiked ?
+                        const SizedBox(height: 53) : const SizedBox(),
+                        widget.message.isLiked ?
+                        Positioned(
+                            top: (widget.message.messageType ==
+                                MessageType.image || widget.message.messageType ==
+                                MessageType.video) ? 262 : 30,
+                            left: (widget.message.messageType ==
+                                MessageType.image || widget.message.messageType ==
+                                MessageType.video) ? 2.5 : 5.5,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: AppColorss.primaryColor
+                              ),
+                              padding: EdgeInsets.all(2),
+                              child: InkWell(
+                                focusColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                onTap: ()async{
+                                  final firestore = FirebaseFirestore.instance;
+                                  final userId = widget.message.senderId;
+                                  final chatId = widget.message.receiverId;
+                                  await firestore
+                                      .collection('users')
+                                      .doc(userId)
+                                      .collection('chats')
+                                      .doc(chatId)
+                                      .collection('messages')
+                                      .doc(widget.message.messageId)
+                                      .update({
+                                    'isLiked': false,
+                                  });
+                                  final userId2 = widget.message.receiverId;
+                                  final chatId2 = widget.message.senderId;
+                                  await firestore
+                                      .collection('users')
+                                      .doc(userId2)
+                                      .collection('chats')
+                                      .doc(chatId2)
+                                      .collection('messages')
+                                      .doc(widget.message.messageId)
+                                      .update({
+                                    'isLiked': false,
+                                  });
+                                },
+                                child: Container(
+                                    width: 25,
+                                    padding: const EdgeInsets.all(3),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: AppColorss.senderMessageColor
+                                    ),
+                                    child: const Icon(FluentIcons.heart_24_filled, size: 15,color: Colors.red,)),
+                              ),
+                            )) : SizedBox()
+                      ],
                     ),
                   ),
                 ],
@@ -300,6 +408,102 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
       ],
     );
   }
+
+  Future<void> sendNotification({
+    String? receiverId,
+    String? notificationTitle,
+    String? notificationBody,
+    Map<String, dynamic>? additionalData,
+  }) async {
+    try {
+      // Initialize Firebase Cloud Messaging
+      final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+      if (receiverId != null) {
+        // Get the receiver's FCM token
+        String? receiverToken = await _getReceiverFCMToken(receiverId);
+
+        if (receiverToken != null) {
+          // Compose the notification message
+          final notificationMessage = RemoteNotification(
+            title: notificationTitle,
+            body: notificationBody,
+          );
+          var notificationPayload = {
+            'notification': {
+              'title': "عرض خاص",
+              'body': "لدينا عرض جديد من اجلك !",
+            },
+            'data': {
+              // You can include additional data in the notification payload if needed
+            },
+            'to': receiverToken,
+          };
+          // Send the notification
+          await _sendNotification(notificationPayload);
+          print(receiverToken);
+
+        }
+      }
+    } catch (e) {
+      print('Failed to send notification: $e');
+    }
+  }
+
+}
+Future<void> _sendNotification(Map<String, dynamic> notificationPayload) async {
+  // Replace 'YOUR_SERVER_KEY' with your FCM server key
+  String serverKey = 'AAAA5Ax2QCU:APA91bGlbVkZh6kdV1LDNM42PgOMEy1K3YWdVXSlg3d1WwpAbvegRfb8wUpk8G0wsiQ1y1L2pf3brbHxEbexbhW_HKma9cS0QFLb5h4cwGKb2krzaEu2QSpssB1C1HktDFu6mX7gVxrd';
+
+  // Send the notification to the FCM API
+  var response = await http.post(
+    Uri.parse('https://fcm.googleapis.com/fcm/send'),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'key=$serverKey',
+    },
+    body: jsonEncode(notificationPayload),
+  );
+
+  if (response.statusCode == 200) {
+    print('Notification sent successfully');
+  } else {
+    print('Failed to send notification');
+  }
+}
+
+Future<String?> _getReceiverFCMToken(String receiverId) async {
+  String? receiverToken;
+
+  try {
+    // Initialize Firestore
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Retrieve the receiver's FCM token from the Firestore database
+    final DocumentSnapshot receiverSnapshot =
+    await firestore.collection('users').doc(receiverId).get();
+
+    Map<String, dynamic>? receiverData =
+    receiverSnapshot.data() as Map<String, dynamic>?;
+
+    if (receiverData != null) {
+      // Assuming that 'fcmToken' is the field where the FCM token is stored
+      receiverToken = receiverData['fcmToken'] as String?;
+
+      if (receiverToken == null) {
+        print('Receiver FCM token is null');
+        return null;
+      }
+    } else {
+      print('Receiver data not found');
+      return null;
+    }
+  } catch (e) {
+    print('Failed to get receiver FCM token: $e');
+    return null;
+  }
+
+  return receiverToken;
 }
 
 
@@ -370,35 +574,40 @@ class _TypingMessageCardState extends State<TypingMessageCard> {
                 )
                     : const Padding(padding: EdgeInsets.symmetric(horizontal: 13)),
                 const SizedBox(width: 5),
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: context.width(0.6),
-                    maxHeight: 600,
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
-                    decoration: BoxDecoration(
-                      color: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video
-                          ? Colors.transparent
-                          : AppColorss.senderMessageColor,
-                      borderRadius: BorderRadius.only(
-                        topRight:  const Radius.circular(20),
-                        bottomLeft: widget.isLast ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
-                        bottomRight: const Radius.circular(20),
-                        topLeft: widget.isFirst ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
+                Stack(
+                  children: [
+
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: context.width(0.6),
+                        maxHeight: 600,
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
+                        decoration: BoxDecoration(
+                          color: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video
+                              ? Colors.transparent
+                              : AppColorss.senderMessageColor,
+                          borderRadius: BorderRadius.only(
+                            topRight:  const Radius.circular(20),
+                            bottomLeft: widget.isLast ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
+                            bottomRight: const Radius.circular(20),
+                            topLeft: widget.isFirst ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5),
+                              child: Lottie.asset("assets/images/typing.json", width: 40),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5),
-                          child: Lottie.asset("assets/images/typing.json", width: 40),
-                        )
-                      ],
-                    ),
-                  ),
+                  ],
                 ),
               ],
             ),
