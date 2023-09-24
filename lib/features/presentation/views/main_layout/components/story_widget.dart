@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:message_me_app/core/utils/thems/my_colors.dart';
 
 class StoryWidget extends StatelessWidget {
 
@@ -11,12 +12,12 @@ class StoryWidget extends StatelessWidget {
         padding: const EdgeInsets.only(left: 12.0),
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: 10,
+          itemCount: 8,
           itemBuilder: (context, index) {
             if (index == 0) {
               // Show button in the first CircleAvatar
               return Padding(
-                padding: EdgeInsets.only(right: 5.0),
+                padding: const EdgeInsets.only(right: 5.0),
                 child: GestureDetector(
                   onTap: () {
                     // navigateTo(context, Routes.cameraStoryRoute, arguments: {
@@ -24,9 +25,10 @@ class StoryWidget extends StatelessWidget {
                     // });
                     // print(userId);
                   },
-                  child: CircleAvatar(
+                  child:  CircleAvatar(
+                    backgroundColor: AppColorss.thirdColor,
                     radius: 35,
-                    child: Icon(
+                    child: const Icon(
                       Icons.add,
                       size: 35,
                     ),
@@ -36,14 +38,15 @@ class StoryWidget extends StatelessWidget {
             } else {
               // Show regular CircleAvatars for other items with a different button behavior
               return Padding(
-                padding: EdgeInsets.only(right: 5.0),
+                padding: const EdgeInsets.only(right: 5.0),
                 child: GestureDetector(
                   onTap: () {
                     // Perform the desired action when the CircleAvatar is pressed
                     // Add your code here
                     print('CircleAvatar pressed!');
                   },
-                  child: CircleAvatar(
+                  child:  CircleAvatar(
+                    backgroundColor: AppColorss.thirdColor,
                     radius: 35,
                     // Add any necessary properties to the CircleAvatar, such as image or initials
 

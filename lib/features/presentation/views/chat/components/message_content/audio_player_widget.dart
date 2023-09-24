@@ -157,18 +157,18 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget>
                         ],
                       ),
                     ),
-                    AnimatedSize(
-                    //  vsync: this,
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: showTimeSentWidget
-                          ? TimeSentWidget(
-                        message: widget.message,
-                        isMe: widget.isMe,
-                        textColor: Colors.white54,
-                      )
-                          : SizedBox.shrink(),
-                    ),
+                    // AnimatedSize(
+                    // //  vsync: this,
+                    //   duration: Duration(milliseconds: 300),
+                    //   curve: Curves.easeInOut,
+                    //   child: showTimeSentWidget
+                    //       ? TimeSentWidget(
+                    //     message: widget.message,
+                    //     isMe: widget.isMe,
+                    //     textColor: Colors.white54,
+                    //   )
+                    //       : SizedBox.shrink(),
+                    // ),
                   ],
                 ),
               ),

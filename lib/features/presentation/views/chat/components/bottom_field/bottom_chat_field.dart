@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:message_me_app/core/shared/commen.dart';
 import 'package:message_me_app/core/utils/constants/strings_manager.dart';
 import 'package:message_me_app/core/utils/thems/my_colors.dart';
+import 'package:message_me_app/focused_menu.dart';
 import '../../../../../../core/functions/navigator.dart';
 import '../../../../../../core/shared/message_replay.dart';
 import '../../../../../../core/utils/routes/routes_manager.dart';
+import '../../../../../../modals.dart';
 import '../../../../controllers/chat_cubit/chat_cubit.dart';
 import '../message/message_replay_preview.dart';
 
@@ -65,24 +67,6 @@ class _BottomChatFieldState extends State<BottomChatField> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Container(
-              //   height: 30,
-              //   width: 30,
-              //   decoration: BoxDecoration(
-              //     color: AppColorss.myMessageColor,
-              //     borderRadius: BorderRadius.circular(50)
-              //   ),
-              //
-              //   child: IconButton(
-              //     onPressed: widget.toggleEmojiKeyboard,
-              //     color: Colors.grey,
-              //     iconSize: 25,
-              //     icon: const Icon(
-              //       FluentIcons.camera_24_regular,
-              //       color: Colors.white,
-              //     ),
-              //   ),
-              // ),
               Flexible(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(
@@ -106,7 +90,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
                       textInputAction: TextInputAction.newline,
                       style:  TextStyle(
                         fontSize: 17,
-                        height: 1,
+                        height: 1.4,
                         fontFamily: 'Arabic',
                         //color: AppColors.blackLight,
                         color: AppColorss.textColor1,
@@ -132,81 +116,126 @@ class _BottomChatFieldState extends State<BottomChatField> {
                   ),
                 ),
               ),
-              Container(
-                color: AppColorss.thirdColor,
-                child: IgnorePointer(
-                  ignoring: false,
-                  child: PopupMenuButton<String>(
-                    position: PopupMenuPosition.under,
-                    icon: const Icon(FluentIcons.attach_24_regular),
-                    onSelected: (value) {
-                      if (value == 'video') {
-                      } else if (value == 'image') {
+              FocusedMenuHolder(
+                onPressed: (){},
+                openWithTap: true,
+                  menuWidth: MediaQuery.of(context).size.width * 0.48,
+                  blurSize: 9,
+                  animateMenuItems: true,
+                  menuOffset: 8,
+                  duration : const Duration(milliseconds: 300),
+                  menuBoxDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18.0), // Adjust the radius as needed
+                    color:AppColorss.thirdColor, // Change the background color as needed
+                  ),
+                menuItems: [
+                  FocusedMenuItem(
+                    backgroundColor : AppColorss.thirdColor2,
+                    trailingIcon: Icon(FluentIcons.camera_24_regular, color: AppColorss.iconsColors),
+                    title: Text("Photo"),
+                      onPressed: () {
+                        navigateTo(context, Routes.cameraRoute, arguments: {
+                          'uId': widget.receiverId,
+                        });
+                    },
+                  ),
+                  FocusedMenuItem(
+                    backgroundColor : AppColorss.thirdColor2,
+                    title: Text("Video"),
+                    trailingIcon: Icon(FluentIcons.video_24_regular, color: AppColorss.iconsColors),
+                    onPressed: () async {
+                      FileResult? videoResult = await pickVideoFromGallery(context);
+                      if (videoResult != null) {
+                        navigateTo(context, Routes.sendingVideoViewRoute, arguments: {
+                          'uId': widget.receiverId, // Use the variable here
+                          'path': videoResult.path,
+                        });
                       }
                     },
-                    itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                       PopupMenuItem<String>(
-                        value: 'video',
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              splashColor: Colors.transparent,
-                              icon : const Icon(FluentIcons.video_24_regular),
-                              onPressed: () async {
-                                FileResult? videoResult = await pickVideoFromGallery(context);
-                                if (videoResult != null) {
-                                  navigateTo(context, Routes.sendingVideoViewRoute, arguments: {
-                                    'uId': widget.receiverId, // Use the variable here
-                                    'path': videoResult.path,
-                                  });
-                                }
-                              },
-                            ),
-                            InkWell(
-                                splashColor: Colors.transparent,
-                              onTap: () async {
-                                FileResult? videoResult = await pickVideoFromGallery(context);
-                                if (videoResult != null) {
-                                  navigateTo(context, Routes.sendingVideoViewRoute, arguments: {
-                                    'uId': widget.receiverId, // Use the variable here
-                                    'path': videoResult.path,
-                                  });
-                                }
-                              },
-                                child: Text('Attach Video', style: TextStyle(color: AppColorss.textColor1),)),
-                          ],
-                        ),
-                      ),
-                       PopupMenuItem<String>(
-                        value: 'image',
-                        child: Row(
-                          children: [
-                            IconButton(
-                              splashColor: Colors.transparent,
-                              icon : const Icon(FluentIcons.image_28_regular),
-                              onPressed: () {
-                                navigateTo(context, Routes.cameraRoute, arguments: {
-                                  'uId': widget.receiverId,
-                                });
-                              },
-                            ),
-                            InkWell(
-                                splashColor: Colors.transparent,
-                              onTap: () {
-                                navigateTo(context, Routes.cameraRoute, arguments: {
-                                  'uId': widget.receiverId,
-                                });
-                              },
-                                child: Text('Attach Image', style: TextStyle(color: AppColorss.textColor1),)),
-                          ],
-                        ),
-                      ),
-                    ],
-
                   ),
+                ],
+                child: const Padding(
+                  padding:  EdgeInsets.only(right: 12.0),
+                  child:  Icon(
+                     FluentIcons.attach_24_regular),
+                )
                 ),
-              ),
+
+              // Container(
+              //   color: AppColorss.thirdColor,
+              //   child: IgnorePointer(
+              //     ignoring: false,
+              //     child: PopupMenuButton<String>(
+              //       position: PopupMenuPosition.under,
+              //       icon: const Icon(FluentIcons.attach_24_regular),
+              //       onSelected: (value) {
+              //         if (value == 'video') {
+              //         } else if (value == 'image') {
+              //         }
+              //       },
+              //       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              //          PopupMenuItem<String>(
+              //           value: 'video',
+              //           child: Row(
+              //             mainAxisSize: MainAxisSize.min,
+              //             children: [
+              //               IconButton(
+              //                 splashColor: Colors.transparent,
+              //                 icon : const Icon(FluentIcons.video_24_regular),
+              //                 onPressed: () async {
+              //                   FileResult? videoResult = await pickVideoFromGallery(context);
+              //                   if (videoResult != null) {
+              //                     navigateTo(context, Routes.sendingVideoViewRoute, arguments: {
+              //                       'uId': widget.receiverId, // Use the variable here
+              //                       'path': videoResult.path,
+              //                     });
+              //                   }
+              //                 },
+              //               ),
+              //               InkWell(
+              //                   splashColor: Colors.transparent,
+              //                 onTap: () async {
+              //                   FileResult? videoResult = await pickVideoFromGallery(context);
+              //                   if (videoResult != null) {
+              //                     navigateTo(context, Routes.sendingVideoViewRoute, arguments: {
+              //                       'uId': widget.receiverId, // Use the variable here
+              //                       'path': videoResult.path,
+              //                     });
+              //                   }
+              //                 },
+              //                   child: Text('Attach Video', style: TextStyle(color: AppColorss.textColor1),)),
+              //             ],
+              //           ),
+              //         ),
+              //          PopupMenuItem<String>(
+              //           value: 'image',
+              //           child: Row(
+              //             children: [
+              //               IconButton(
+              //                 splashColor: Colors.transparent,
+              //                 icon : const Icon(FluentIcons.image_28_regular),
+              //                 onPressed: () {
+              //                   navigateTo(context, Routes.cameraRoute, arguments: {
+              //                     'uId': widget.receiverId,
+              //                   });
+              //                 },
+              //               ),
+              //               InkWell(
+              //                   splashColor: Colors.transparent,
+              //                 onTap: () {
+              //                   navigateTo(context, Routes.cameraRoute, arguments: {
+              //                     'uId': widget.receiverId,
+              //                   });
+              //                 },
+              //                   child: Text('Attach Image', style: TextStyle(color: AppColorss.textColor1),)),
+              //             ],
+              //           ),
+              //         ),
+              //       ],
+              //
+              //     ),
+              //   ),
+              // ),
              // if (messageController.text.isEmpty || messageController.text.isNotEmpty)
               InkWell(
                 onTap:  () {

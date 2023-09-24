@@ -153,13 +153,13 @@ class AppStringss {
   static String status = isEnglish ? "Status" : "الحالة";
   static String copyMessage = isEnglish ? "Copy Message" : "نسخ الرسالة";
   static String editMessage = isEnglish ? "Edit Message" : "تعديل الرسالة";
-  static String deleteMessage = isEnglish ? "Delete Message" : "حذف الرسالة";
+  static String deleteMessage = isEnglish ? "Unsend" : "حذف الرسالة";
   static String messageCopied = isEnglish ? "Message Copied" : "تم نسخ الرسالة";
-  static String deleteForMe = isEnglish ? "Delete For Me" : "الحذف لدي";
-  static String deleteForAll = isEnglish ? "Delete For All" : "الحذف للجميع";
+  static String deleteForMe = isEnglish ? "Unsend For Me" : "الحذف لدي";
+  static String deleteForAll = isEnglish ? "Unsend For All" : "الحذف للجميع";
   static String message = isEnglish ? "Message ..." : "";
   static String today = isEnglish ? "Today" : "اليوم";
-  static String delete = isEnglish ? "Delete" : "حذف";
+  static String delete = isEnglish ? "Unsend" : "حذف";
   static String yesterday = isEnglish ? "Yesterday" : "أمس";
   static String selectLang = isEnglish ? "Select Your Language" : "اختيار اللغة";
   static String deleteConversation = isEnglish ? "Delete Conversation" : "حذف المحادثة";

@@ -48,24 +48,24 @@ class _SendingImageViewPageState extends State<SendingImageViewPage> {
                 });
               },
             ),
-            Positioned(
-              bottom: 5,
-              right: 0,
-              left: 0,
-              child: SendingImageVideoBottomRowWidget(
-                onSendButtonTaped: () {
-                  ChatCubit.get(context).sendFileMessage(
-                    receiverId: widget.receiverId,
-                    messageType: MessageType.image,
-                    file: File(widget.path),
-                  );
-                  //to back to chat screen
-                  int count = 0;
-                  Navigator.of(context).popUntil((route) => count++ >= 2);
-                  //navigatePop(context);
-                },
+           Positioned(
+                bottom: 5,
+                right: 0,
+                left: 0,
+                child: SendingImageVideoBottomRowWidget(
+                  onSendButtonTaped: () {
+                    ChatCubit.get(context).sendFileMessage(
+                      receiverId: widget.receiverId,
+                      messageType: MessageType.image,
+                      file: File(widget.path),
+                    );
+                    //to back to chat screen
+                    int count = 0;
+                    Navigator.of(context).popUntil((route) => count++ >= 2);
+                    //navigatePop(context);
+                  },
+                ),
               ),
-            ),
           ],
         ),
       ),

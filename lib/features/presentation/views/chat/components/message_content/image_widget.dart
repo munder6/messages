@@ -39,23 +39,23 @@ class ImageWidget extends StatelessWidget {
                   fit: BoxFit.contain,
                   placeholder: (context, url) => const SizedBox(),
                 ),
-                Positioned(
-                  bottom: 4,
-                  right: 8,
-                  child: Container(
-                    padding: EdgeInsets.only(top: 3, bottom: 0, right: 3, left: 3),
-                    decoration: BoxDecoration(
-                      color: AppColorss.myMessageColor.withOpacity(0.25),
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                  
-                    child: TimeSentWidget(
-                      message: message,
-                      isMe: isMe,
-                      textColor: Colors.white,
-                    ),
-                  ),
-                ),
+                // Positioned(
+                //   bottom: 4,
+                //   right: 8,
+                //   child: Container(
+                //     padding: EdgeInsets.only(top: 3, bottom: 0, right: 3, left: 3),
+                //     decoration: BoxDecoration(
+                //       color: AppColorss.myMessageColor.withOpacity(0.25),
+                //       borderRadius: BorderRadius.circular(20)
+                //     ),
+                //
+                //     child: TimeSentWidget(
+                //       message: message,
+                //       isMe: isMe,
+                //       textColor: Colors.white,
+                //     ),
+                //   ),
+                // ),
 
               ],
             ),

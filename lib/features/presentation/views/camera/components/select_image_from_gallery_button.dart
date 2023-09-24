@@ -22,7 +22,7 @@ class SelectImageFromGalleryButton extends StatelessWidget {
         selectImageFromGallery(context);
       },
       child: const CircleAvatar(
-        radius: 30,
+        radius: 25,
         backgroundColor: Colors.black38,
         child: Icon(
           FluentIcons.image_24_regular,

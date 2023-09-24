@@ -8,6 +8,7 @@ import '../../../../core/utils/constants/strings_manager.dart';
 import '../../controllers/auth_cubit/auth_cubit.dart';
 import '../contacts_chat/contacts_chat_page.dart';
 import 'components/sliver_appbar_actions.dart';
+import 'components/story_widget.dart';
 
 
 class MainLayoutScreen extends StatefulWidget {
@@ -79,15 +80,6 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
           backgroundColor: AppColorss.primaryColor,
         ),
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: () {
-      //     navigateTo(context, Routes.selectContactRoute);
-      //   },
-      //   icon: const Icon(FluentIcons.person_add_28_regular, color: Colors.white,),
-      //   label: const Text('Add', style: TextStyle(fontFamily: 'Arabic', color: Colors.white),),
-      //   backgroundColor: AppColorss.myMessageColor,
-      // ),
-
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -133,7 +125,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
                           color: AppColorss.textColor3,
                           fontFamily: 'Arabic',
                           fontSize: 17,
-                           height: 1.029                     ),
+                           height: 1.029),
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
@@ -142,36 +134,34 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
                       ),
                     ),
                   ),
-                  const Icon(FluentIcons.filter_24_regular, color: AppColorss.myMessageColor,),
-                  const SizedBox(width: 10,)
                 ],
               ),
             ),
           ),
-          const SizedBox(height: 5),
-           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(AppStringss.broadcast, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),),
-                Text(AppStringss.newGroup, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),)
-              ],
-            ),
-          ),
-          Divider(color: AppColorss.textColor1.withOpacity(0.4),height: 0,indent: 0,),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 34.0, vertical: 10),
-            child: Row(
-              children: [
-                Icon(FluentIcons.archive_28_filled, color: Colors.grey.shade600, size: 22,),
-                const SizedBox(width: 20),
-                Text(AppStringss.archived, style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: AppColorss.textColor1),),
-              ],
-            ),
-          ),
-          Divider(color: AppColorss.textColor1.withOpacity(0.4),height: 0,indent: 89,),
-         //  StoryWidget(),
+          // const SizedBox(height: 5),
+          //  Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Text(AppStringss.broadcast, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),),
+          //       Text(AppStringss.newGroup, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),)
+          //     ],
+          //   ),
+          // ),
+          //Divider(color: AppColorss.textColor1.withOpacity(0.4),height: 0,indent: 0,),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 34.0, vertical: 10),
+          //   child: Row(
+          //     children: [
+          //       Icon(FluentIcons.archive_28_filled, color: Colors.grey.shade600, size: 22,),
+          //       const SizedBox(width: 20),
+          //       Text(AppStringss.archived, style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: AppColorss.textColor1),),
+          //     ],
+          //   ),
+          // ),
+          // Divider(color: AppColorss.textColor1.withOpacity(0.4),height: 0,indent: 89,),
+          StoryWidget(),
           Expanded(
             child: ContactsChatPage(searchQuery: _searchController.text),
           ),

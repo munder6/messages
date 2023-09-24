@@ -42,10 +42,10 @@ class _CameraStoryScreenState extends State<CameraStoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(18, 32, 49, 1),
-      appBar: CameraAppBar(
-        isFlashOn: isFlashOn,
-        onFlashPressed: toggleFlash,
-      ),
+      // appBar: CameraAppBar(
+      //   isFlashOn: isFlashOn,
+      //   onFlashPressed: toggleFlash,
+      // ),
       body: Column(
         children: [
           Expanded(

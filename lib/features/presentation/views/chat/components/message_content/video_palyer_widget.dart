@@ -158,23 +158,23 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    bottom: 0,
-                    right: 4,
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 3, bottom: 0, right: 3, left: 3),
-                      decoration: BoxDecoration(
-                          color: AppColorss.myMessageColor.withOpacity(0.25),
-                          borderRadius: BorderRadius.circular(20)
-                      ),
-
-                      child: TimeSentWidget(
-                        message: widget.message,
-                        isMe: widget.isMe,
-                        textColor: Colors.white,
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   bottom: 0,
+                  //   right: 4,
+                  //   child: Container(
+                  //     padding: const EdgeInsets.only(top: 3, bottom: 0, right: 3, left: 3),
+                  //     decoration: BoxDecoration(
+                  //         color: AppColorss.myMessageColor.withOpacity(0.25),
+                  //         borderRadius: BorderRadius.circular(20)
+                  //     ),
+                  //
+                  //     child: TimeSentWidget(
+                  //       message: widget.message,
+                  //       isMe: widget.isMe,
+                  //       textColor: Colors.white,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

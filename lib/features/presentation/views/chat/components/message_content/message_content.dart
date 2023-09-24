@@ -37,7 +37,7 @@ class _MessageContentState extends State<MessageContent> {
         return VideoPlayerItem(message: widget.message, isMe: widget.isMe);
       case MessageType.audio:
         return SizedBox(
-            width: 240,
+            width: MediaQuery.of(context).size.width / 1.98,
             child: AudioPlayerWidget(message: widget.message, isMe: widget.isMe));
       default:
         return TextWidget(message: widget.message, isMe: widget.isMe, isLast: widget.isLast,);

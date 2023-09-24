@@ -30,19 +30,10 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           UserEntity userdata = snapshot.data!;
           return AppBar(
             elevation: 0.5,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
               shadowColor: AppColorss.iconsColors,
               iconTheme:  IconThemeData(color: AppColorss.iconsColors),
             backgroundColor: AppColorss.primaryColor,
-            // systemOverlayStyle:  SystemUiOverlayStyle(
-            //   statusBarColor: AppColorss.primaryColor,
-            //   statusBarIconBrightness: Brightness.light,
-            //   systemNavigationBarColor: AppColorss.primaryColor,
-            //   systemNavigationBarIconBrightness: Brightness.light,
-            //   statusBarBrightness: Brightness.dark,
-            //   systemNavigationBarDividerColor: AppColorss.primaryColor,
-            //   systemNavigationBarContrastEnforced: true,
-            //   systemStatusBarContrastEnforced: true,
-            // ),
             centerTitle: false,
             titleSpacing: 0,
             title: InkWell(
@@ -59,7 +50,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   MyCachedNetImage(
                     imageUrl: userdata.profilePic,
-                    radius: 17,
+                    radius: 19,
                   ),
                   const SizedBox(width: 5),
                   Column(
@@ -70,6 +61,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                         fontWeight: FontWeight.normal,
                         fontFamily: 'Arabic',
                         fontSize: 17,
+                        height: 1.1,
                         color: AppColorss.textColor1
                       ),),
                       Row(
@@ -103,40 +95,18 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                 color: AppColorss.iconsColors,
                 onPressed: () {},
                 splashRadius: 20,
-                icon: const Icon(FluentIcons.call_28_regular),
+                icon: const Icon(FluentIcons.call_28_regular, size: 28,),
               ),
               IconButton(
                 color: AppColorss.iconsColors,
                 onPressed: () {},
                 splashRadius: 20,
-                icon: const Icon(FluentIcons.video_28_regular),
+                icon: const Icon(FluentIcons.video_28_regular, size: 28,),
               ),
-              IconButton(
-                color: AppColorss.iconsColors,
-                onPressed: () {
-                  navigateTo(
-                    context,
-                    Routes.senderUserProfileRoute,
-                    arguments: userdata,
-                  );
-                },
-                splashRadius: 20,
-                icon: const Icon(FluentIcons.info_24_regular),
-              ),
-
             ],
           );
         });
   }
-  // List<PopUpMenuItemModel> _buttons(context) => [
-  //
-  //       PopUpMenuItemModel(
-  //         name: AppStrings.wallpaper,
-  //         onTap: () {
-  //           navigateTo(context, Routes.wallpaperRoute);
-  //         },
-  //       ),
-  //     ];
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);

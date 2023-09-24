@@ -142,7 +142,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
                               menuItems: [
                                 FocusedMenuItem(
                                   backgroundColor : AppColorss.thirdColor2,
-                                  title: Text(widget.message.timeSent.amPmMode),
+                                  title: Text(widget.message.timeSent.foucesdMenueCard, style: TextStyle(color: AppColorss.textColor2),),
                                   onPressed: () {},
                                 ),
                                 if(widget.message.isLiked)
@@ -199,7 +199,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
                                 FocusedMenuItem(
                                   backgroundColor : AppColorss.thirdColor2,
                                   trailingIcon: const Icon(FluentIcons.delete_24_regular, color: Colors.red),
-                                  title: Text(AppStringss.deleteMessage),
+                                  title: Text(AppStringss.deleteMessage, style: TextStyle(color: Colors.red),),
                                   onPressed: () {
                                     _deleteMessage(context);
                                   },
@@ -213,47 +213,47 @@ class _MyMessageCardState extends State<MyMessageCard> {
                                   maxHeight: 600
                                 ),
                                 child:
-                                widget.message.isLiked &&
-                                    widget.message.messageType
-                                        == MessageType.text
-                                || widget.message.isLiked && widget.message.messageType == MessageType.audio
-                                    ?
-                                AnimatedContainer(
-                                  padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
-                                  decoration: BoxDecoration(
-                                    image:  const DecorationImage(
-                                      image: AssetImage("assets/images/mylovedmessage.gif"),
-                                      fit: BoxFit.cover
-                                    ),
-                                    gradient: const LinearGradient(
-                                      stops: [
-                                        0,
-                                        1,
-                                        2
-                                      ],
-                                      colors: [AppColorss.myMessageColor2,AppColorss.myMessageColor1, AppColorss.myMessageColor], // Define your gradient colors
-                                      begin: Alignment.topLeft, // Adjust the gradient's start position
-                                      end: Alignment.bottomRight, // Adjust the gradient's end position
-                                    ),
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: const Radius.circular(20),
-                                      bottomLeft: const Radius.circular(20),
-                                      bottomRight: widget.isLast ? const Radius.circular(20) : const Radius.circular(5),
-                                      topRight: widget.isFirst ? const Radius.circular(20) : const Radius.circular(5),
-                                    ),
-                                  ),
-                                  duration: const Duration(milliseconds: 500),
-                                  child: GestureDetector(
-                                    onLongPress: () {
-                                     // _showMessageMenu(context);
-                                    },
-                                    child: MessageContent(
-                                        message: widget.message,
-                                        isMe: true,
-                                        isLast : widget.isLast
-                                    ),
-                                  ),
-                                ):
+                                // widget.message.isLiked &&
+                                //     widget.message.messageType
+                                //         == MessageType.text
+                                // || widget.message.isLiked && widget.message.messageType == MessageType.audio
+                                //     ?
+                                // AnimatedContainer(
+                                //   padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
+                                //   decoration: BoxDecoration(
+                                //     image:  const DecorationImage(
+                                //       image: AssetImage("assets/images/mylovedmessage.gif"),
+                                //       fit: BoxFit.cover
+                                //     ),
+                                //     gradient: const LinearGradient(
+                                //       stops: [
+                                //         0,
+                                //         1,
+                                //         2
+                                //       ],
+                                //       colors: [AppColorss.myMessageColor2,AppColorss.myMessageColor1, AppColorss.myMessageColor], // Define your gradient colors
+                                //       begin: Alignment.topLeft, // Adjust the gradient's start position
+                                //       end: Alignment.bottomRight, // Adjust the gradient's end position
+                                //     ),
+                                //     borderRadius: BorderRadius.only(
+                                //       topLeft: const Radius.circular(20),
+                                //       bottomLeft: const Radius.circular(20),
+                                //       bottomRight: widget.isLast ? const Radius.circular(20) : const Radius.circular(5),
+                                //       topRight: widget.isFirst ? const Radius.circular(20) : const Radius.circular(5),
+                                //     ),
+                                //   ),
+                                //   duration: const Duration(milliseconds: 500),
+                                //   child: GestureDetector(
+                                //     onLongPress: () {
+                                //      // _showMessageMenu(context);
+                                //     },
+                                //     child: MessageContent(
+                                //         message: widget.message,
+                                //         isMe: true,
+                                //         isLast : widget.isLast
+                                //     ),
+                                //   ),
+                                // ):
                                 Container(
                                   padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
                                   decoration: BoxDecoration(
@@ -288,6 +288,28 @@ class _MyMessageCardState extends State<MyMessageCard> {
                                 ),
                               ),
                             ),
+                            widget.message.isLiked ?
+                            Positioned(
+                              bottom: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video  ? -2 : 0,
+                              left: -1, // Align to the left edge
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: AppColorss.primaryColor
+                                ),
+                                padding: const EdgeInsets.all(2),
+                                child: Container(
+                                    width: 20,
+                                    padding: const EdgeInsets.all(3),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: AppColorss.senderMessageColor
+                                    ),
+                                    child: const Icon(FluentIcons.heart_28_filled, size: 12,color: Colors.red,)),
+                              ),
+                            ) : const SizedBox(),
+                            if (widget.message.isLiked)
+                              const SizedBox(height: 55,)
                           ],
                         ),
                       ),
@@ -305,7 +327,6 @@ class _MyMessageCardState extends State<MyMessageCard> {
                       ],
                     ),
                   ) : const SizedBox(),
-
                 ],
               ),
             ),

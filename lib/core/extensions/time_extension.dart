@@ -4,6 +4,9 @@ extension DateUtil on DateTime {
   String get lastSeen {
     return 'last seen ${DateConverter.getLastSeenDayTime(this)} at ${DateConverter.dateConverterHoursAmPmMode(this)}';
   }
+  String get foucesdMenueCard {
+    return '${DateConverter.getLastSeenDayTime(this)} at ${DateConverter.dateConverterHoursAmPmMode(this)}';
+  }
   String get amPmMode{
     return DateConverter.dateConverterHoursAmPmMode(this);
   }

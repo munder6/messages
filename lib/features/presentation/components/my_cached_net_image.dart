@@ -26,7 +26,7 @@ class MyCachedNetImage extends StatelessWidget {
             Image.asset(AppImage.genericProfileImage, fit: BoxFit.fill,),
             const Align(
               alignment: Alignment.center,
-              child: Loader(),
+              child: SizedBox(),
             )
           ],
         ),

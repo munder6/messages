@@ -24,10 +24,10 @@ class DateConverter{
     DateTime localDateTime = dateTime.toLocal();
 
     if (localDateTime.day == now.day && localDateTime.month == now.month && localDateTime.year == now.year) {
-      return AppStringss.today;
+      return "Today";
     }
     else if (localDateTime.day == yesterday.day && localDateTime.month == yesterday.month && localDateTime.year == yesterday.year) {
-      return AppStringss.yesterday;
+      return "Yesterday";
     }else{
       return dateConverterMonth(dateTime.toString());
     }
@@ -38,10 +38,10 @@ class DateConverter{
     DateTime localDateTime = dateTime.toLocal();
 
     if (localDateTime.day == now.day && localDateTime.month == now.month && localDateTime.year == now.year) {
-      return AppStringss.today;
+      return "Today";
     }
     else if (localDateTime.day == yesterday.day && localDateTime.month == yesterday.month && localDateTime.year == yesterday.year) {
-      return AppStringss.yesterday;
+      return "Yesterday";
     }else{
       return dateConverterMonthNum(dateTime.toString());
     }

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+import 'package:message_me_app/core/extensions/time_extension.dart';
 import 'package:message_me_app/core/utils/constants/strings_manager.dart';
 import 'package:swipe_to/swipe_to.dart';
 import 'package:message_me_app/core/enums/messge_type.dart';
@@ -319,6 +320,11 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                           ),
                           menuWidth: MediaQuery.of(context).size.width * 0.48,
                           menuItems:  <FocusedMenuItem>[
+                            FocusedMenuItem(
+                              backgroundColor : AppColorss.thirdColor2,
+                              title: Text(widget.message.timeSent.foucesdMenueCard, style: TextStyle(color: AppColorss.textColor2),),
+                              onPressed: () {},
+                            ),
                             if(widget.message.isLiked)
                               FocusedMenuItem(
                                 backgroundColor : AppColorss.thirdColor2,
@@ -388,9 +394,9 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                                   bottomRight: const Radius.circular(20),
                                   topLeft: widget.isFirst ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
                                 ),
-                                image: DecorationImage(
-                                    image: AssetImage( widget.message.isLiked ?  "assets/images/2MYJbKXE3g.gif" : "")
-                                )
+                                // image: DecorationImage(
+                                //     image: AssetImage( widget.message.isLiked ?  "assets/images/2MYJbKXE3g.gif" : "")
+                                // )
                               ),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -402,7 +408,28 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                             ),
                           ),
                         ),
-
+                        widget.message.isLiked ?
+                        Positioned(
+                          bottom: 0,
+                          right: 0, // Align to the left edge
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: AppColorss.primaryColor
+                            ),
+                            padding: const EdgeInsets.all(2),
+                            child: Container(
+                                width: 20,
+                                padding: const EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: AppColorss.senderMessageColor
+                                ),
+                                child: const Icon(FluentIcons.heart_28_filled, size: 12,color: Colors.red,)),
+                          ),
+                        ) : const SizedBox(),
+                        if (widget.message.isLiked)
+                          const SizedBox(height: 55,)
                       ],
                     ),
                   ),

@@ -1,9 +1,10 @@
 import 'package:camera/camera.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/functions/navigator.dart';
 import '../../../../core/utils/routes/routes_manager.dart';
 import '../../components/loader.dart';
-import 'components/camera_appbar.dart';
 import 'components/select_image_from_gallery_button.dart';
 
 late List<CameraDescription> cameras;
@@ -33,34 +34,65 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: Colors.transparent,
-      appBar: CameraAppBar(
-        isFlashOn: isFlashOn,
-        onFlashPressed: toggleFlash,
-      ),
+      // appBar: CameraAppBar(
+      //   isFlashOn: isFlashOn,
+      //   onFlashPressed: toggleFlash,
+      // ),
       body: Column(
         children: [
           Expanded(
             child: Stack(
               children: [
+
                 FutureBuilder(
                   future: _cameraValue,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       return SizedBox(
                         width: double.infinity,
-                        child: CameraPreview(_cameraController),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height ,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50)
+                          ),
+                            child: CameraPreview(_cameraController)),
                       );
                     } else {
                       return const Loader();
                     }
                   },
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: [
+                       SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                              onPressed: (){
+                                toggleFlash();
+                              },
+                              icon: Icon( isFlashOn ? FluentIcons.flash_24_regular : FluentIcons.flash_off_24_regular)
+                          ),
+                          IconButton(
+                              onPressed: (){
+                               Navigator.pop(context);
+                              },
+                              icon: const Icon(EvaIcons.close, size: 30,)
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -92,7 +124,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         GestureDetector(
                           onTap: toggleCameraFront,
                           child: const CircleAvatar(
-                            radius: 30,
+                            radius: 25,
                             backgroundColor: Colors.black38,
                             child: Icon(
                               Icons.flip_camera_ios_outlined,
@@ -104,7 +136,8 @@ class _CameraScreenState extends State<CameraScreen> {
                       ],
                     ),
                   ),
-                )
+                ),
+
               ],
             ),
           ),
@@ -115,16 +148,10 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   Icon cameraIcon() {
-    return isRecording
-        ? const Icon(
+    return  Icon(
             Icons.radio_button_on,
-            color: Colors.red,
+            color: isRecording ? Colors.red : Colors.white,
             size: 80,
-          )
-        : const Icon(
-            Icons.panorama_fish_eye,
-            size: 80,
-            color: Colors.white,
           );
   }
 

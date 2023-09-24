@@ -33,7 +33,7 @@ class _TextWidgetState extends State<TextWidget> {
       return Padding(
         padding: const EdgeInsets.all(7.0),
         child: Text(
-          textAlign: TextAlign.end,
+          textAlign: widget.isMe ?TextAlign.start : TextAlign.end,
           overflow:  TextOverflow.visible,
           textDirection: TextDirection.rtl,
           content,
@@ -87,12 +87,12 @@ class _TextWidgetState extends State<TextWidget> {
             padding: const EdgeInsets.all(3.0),
             child: _buildContent(widget.message.text),
           ),
-          if (showTimeSentWidget) // Conditionally show the TimeSentWidget
-            TimeSentWidget(
-              message: widget.message,
-              isMe: widget.isMe,
-              textColor: Colors.white54,
-            ),
+          // if (showTimeSentWidget) // Conditionally show the TimeSentWidget
+          //   TimeSentWidget(
+          //     message: widget.message,
+          //     isMe: widget.isMe,
+          //     textColor: Colors.white54,
+          //   ),
         ],
       ),
     );
