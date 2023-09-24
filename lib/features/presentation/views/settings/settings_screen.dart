@@ -9,6 +9,7 @@ import '../../../../core/services/firebase_fcm_token.dart';
 import '../../../../core/utils/constants/strings_manager.dart';
 import '../../../../core/utils/routes/routes_manager.dart';
 import '../../../../core/utils/thems/my_colors.dart';
+import '../../../../test.dart';
 import '../../controllers/auth_cubit/auth_cubit.dart';
 import '../setting_pages/select_Languges.dart';
 import '../setting_pages/storage_and_data.dart';
@@ -245,34 +246,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: AppColorss.thirdColor,
                           borderRadius: BorderRadius.circular(10)),
                       width: MediaQuery.of(context).size.width - 18,
-                      child: Card(
-                        elevation: 0,
-                        color: AppColorss.thirdColor,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.circular(5)),
-                                height: 30,
-                                width: 27,
-                                padding: const EdgeInsets.all(0),
-                                child: const Icon(
-                                  FluentIcons.lock_closed_24_regular,
-                                  size: 20,
-                                  color: Colors.white,
+                      child: InkWell(
+                        // onTap: (){
+                        //   Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => const Test()),
+                        //   );
+                        // },
+                        child: Card(
+                          elevation: 0,
+                          color: AppColorss.thirdColor,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  height: 30,
+                                  width: 27,
+                                  padding: const EdgeInsets.all(0),
+                                  child: const Icon(
+                                    FluentIcons.lock_closed_24_regular,
+                                    size: 20,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 10), // Adjust the spacing as needed
-                               Text(
-                                AppStringss.privacy,
-                                style: const TextStyle(fontSize: 15),
-                              ),
-                            ],
+                                const SizedBox(width: 10), // Adjust the spacing as needed
+                                 Text(
+                                  AppStringss.privacy,
+                                  style: const TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

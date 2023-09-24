@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
 import 'package:message_me_app/core/utils/constants/strings_manager.dart';
 import 'package:swipe_to/swipe_to.dart';
 import '../../../../../../core/enums/messge_type.dart';
@@ -126,42 +127,151 @@ class _MyMessageCardState extends State<MyMessageCard> {
                         },
                         child: Stack(
                           children: [
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxWidth: context.width(0.6),
-                                maxHeight: 600,
+                            FocusedMenuHolder(
+                              animateMenuItems: true,
+                              menuOffset: 8,
+                              duration : const Duration(milliseconds: 300),
+                              menuBoxDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
+                                color: Colors.white, // Change the background color as needed
                               ),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
-                                decoration: BoxDecoration(
-                                  gradient: (widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video)
-                                      ? const LinearGradient(
-                                    colors: [Colors.transparent, Colors.transparent], // Define your gradient colors
-                                    begin: Alignment.topLeft, // Adjust the gradient's start position
-                                    end: Alignment.bottomRight, // Adjust the gradient's end position
-                                  )
-                                      : const LinearGradient(
-                                    stops: [
-                                      0,
-                                      1,
-                                      2
-                                    ],
-                                    colors: [AppColorss.myMessageColor2,AppColorss.myMessageColor1, AppColorss.myMessageColor], // Define your gradient colors
-                                    begin: Alignment.topLeft, // Adjust the gradient's start position
-                                    end: Alignment.bottomRight, // Adjust the gradient's end position
-                                  ),
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: const Radius.circular(20),
-                                    bottomLeft: const Radius.circular(20),
-                                    bottomRight: widget.isLast ? const Radius.circular(20) : const Radius.circular(5),
-                                    topRight: widget.isFirst ? const Radius.circular(20) : const Radius.circular(5),
-                                  ),
-                                ),
-                                child: GestureDetector(
-                                  onLongPress: () {
-                                    _showMessageMenu(context);
+                              menuWidth: MediaQuery.of(context).size.width * 0.4,
+                              menuItems: <FocusedMenuItem>[
+                                if(widget.message.isLiked)
+                                FocusedMenuItem(
+                                  backgroundColor : AppColorss.thirdColor,
+                                  trailingIcon: Icon(FluentIcons.heart_broken_24_regular, color: AppColorss.iconsColors),
+                                  title: Text(AppStringss.unlike),
+                                  onPressed: () async {
+                                      final firestore = FirebaseFirestore.instance;
+                                      final userId = widget.message.senderId;
+                                      final chatId = widget.message.receiverId;
+                                      await firestore
+                                          .collection('users')
+                                          .doc(userId)
+                                          .collection('chats')
+                                          .doc(chatId)
+                                          .collection('messages')
+                                          .doc(widget.message.messageId)
+                                          .update({
+                                        'isLiked': false,
+                                      });
+                                      final userId2 = widget.message.receiverId;
+                                      final chatId2 = widget.message.senderId;
+                                      await firestore
+                                          .collection('users')
+                                          .doc(userId2)
+                                          .collection('chats')
+                                          .doc(chatId2)
+                                          .collection('messages')
+                                          .doc(widget.message.messageId)
+                                          .update({
+                                        'isLiked': false,
+                                      });
                                   },
-
+                                ),
+                                if(widget.message.messageType == MessageType.text)
+                                FocusedMenuItem(
+                                  backgroundColor : AppColorss.thirdColor,
+                                  trailingIcon: Icon(FluentIcons.copy_24_regular, color: AppColorss.iconsColors),
+                                  title: Text(AppStringss.copyMessage),
+                                  onPressed: () {
+                                    _copyMessageText(context, widget.message.text);
+                                  },
+                                ),
+                                if(widget.message.messageType == MessageType.text)
+                                FocusedMenuItem(
+                                  backgroundColor : AppColorss.thirdColor,
+                                  trailingIcon: Icon(FluentIcons.edit_24_regular, color: AppColorss.iconsColors),
+                                  title: Text(AppStringss.editMessage),
+                                  onPressed: () {
+                                    _editMessage(context);
+                                  },
+                                ),
+                                FocusedMenuItem(
+                                  backgroundColor : AppColorss.thirdColor,
+                                  trailingIcon: const Icon(FluentIcons.delete_24_regular, color: Colors.red),
+                                  title: Text(AppStringss.deleteMessage),
+                                  onPressed: () {
+                                    _deleteMessage(context);
+                                  },
+                                ),
+                                // Add more items as needed
+                              ],
+                              onPressed: (){},
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxWidth: context.width(0.6),
+                                  maxHeight: 600
+                                ),
+                                child:
+                                widget.message.isLiked &&
+                                    widget.message.messageType
+                                        == MessageType.text
+                                || widget.message.isLiked && widget.message.messageType == MessageType.audio
+                                    ?
+                                AnimatedContainer(
+                                  padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
+                                  decoration: BoxDecoration(
+                                    image:  const DecorationImage(
+                                      image: AssetImage("assets/images/mylovedmessage.gif"),
+                                      fit: BoxFit.cover
+                                    ),
+                                    gradient: const LinearGradient(
+                                      stops: [
+                                        0,
+                                        1,
+                                        2
+                                      ],
+                                      colors: [AppColorss.myMessageColor2,AppColorss.myMessageColor1, AppColorss.myMessageColor], // Define your gradient colors
+                                      begin: Alignment.topLeft, // Adjust the gradient's start position
+                                      end: Alignment.bottomRight, // Adjust the gradient's end position
+                                    ),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: const Radius.circular(20),
+                                      bottomLeft: const Radius.circular(20),
+                                      bottomRight: widget.isLast ? const Radius.circular(20) : const Radius.circular(5),
+                                      topRight: widget.isFirst ? const Radius.circular(20) : const Radius.circular(5),
+                                    ),
+                                  ),
+                                  duration: const Duration(milliseconds: 500),
+                                  child: GestureDetector(
+                                    onLongPress: () {
+                                     // _showMessageMenu(context);
+                                    },
+                                    child: MessageContent(
+                                        message: widget.message,
+                                        isMe: true,
+                                        isLast : widget.isLast
+                                    ),
+                                  ),
+                                ):
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
+                                  decoration: BoxDecoration(
+                                    gradient: (widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video)
+                                        ? const LinearGradient(
+                                      colors: [Colors.transparent, Colors.transparent], // Define your gradient colors
+                                      begin: Alignment.topLeft, // Adjust the gradient's start position
+                                      end: Alignment.bottomRight, // Adjust the gradient's end position
+                                    )
+                                        : const LinearGradient(
+                                      stops: [
+                                        0,
+                                        1,
+                                        2
+                                      ],
+                                      colors: [AppColorss.myMessageColor2,AppColorss.myMessageColor1, AppColorss.myMessageColor], // Define your gradient colors
+                                      begin: Alignment.topLeft, // Adjust the gradient's start position
+                                      end: Alignment.bottomRight, // Adjust the gradient's end position
+                                    ),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: const Radius.circular(20),
+                                      bottomLeft: const Radius.circular(20),
+                                      bottomRight: widget.isLast ? const Radius.circular(20) : const Radius.circular(5),
+                                      topRight: widget.isFirst ? const Radius.circular(20) : const Radius.circular(5),
+                                    ),
+                                  ),
                                   child: MessageContent(
                                     message: widget.message,
                                     isMe: true,
@@ -170,63 +280,6 @@ class _MyMessageCardState extends State<MyMessageCard> {
                                 ),
                               ),
                             ),
-                            widget.message.isLiked ?
-                            const SizedBox(height: 53) : const SizedBox(),
-                            widget.message.isLiked ?
-                             Positioned(
-                              top: (widget.message.messageType ==
-                                  MessageType.image || widget.message.messageType ==
-                                  MessageType.video) ? 262 : 30,
-                                left: (widget.message.messageType ==
-                                    MessageType.image || widget.message.messageType ==
-                                    MessageType.video) ? 2.5 : 5.5,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: AppColorss.primaryColor
-                                  ),
-                                  padding: EdgeInsets.all(2),
-                                  child: Container(
-                                    width: 25,
-                                    padding: const EdgeInsets.all(3),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: AppColorss.senderMessageColor
-                                    ),
-                                      child: InkWell(
-                                          focusColor: Colors.transparent,
-                                          splashColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                        onTap: ()async{
-                                          final firestore = FirebaseFirestore.instance;
-                                          final userId = widget.message.senderId;
-                                          final chatId = widget.message.receiverId;
-                                          await firestore
-                                              .collection('users')
-                                              .doc(userId)
-                                              .collection('chats')
-                                              .doc(chatId)
-                                              .collection('messages')
-                                              .doc(widget.message.messageId)
-                                              .update({
-                                            'isLiked': false,
-                                          });
-                                          final userId2 = widget.message.receiverId;
-                                          final chatId2 = widget.message.senderId;
-                                          await firestore
-                                              .collection('users')
-                                              .doc(userId2)
-                                              .collection('chats')
-                                              .doc(chatId2)
-                                              .collection('messages')
-                                              .doc(widget.message.messageId)
-                                              .update({
-                                            'isLiked': false,
-                                          });
-                                        },
-                                          child: const Icon(FluentIcons.heart_24_filled, size: 15,color: Colors.red,))),
-                                )) : SizedBox()
                           ],
                         ),
                       ),
@@ -234,7 +287,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
                     ],
                   ),
                   widget.isLastForSeen  && widget.message.isSeen ?   Padding(
-                    padding:  EdgeInsets.only(right: 5, top: 4),
+                    padding:  const EdgeInsets.only(right: 5, top: 4),
                     child:  Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -254,50 +307,6 @@ class _MyMessageCardState extends State<MyMessageCard> {
     );
   }
 
-  void _showMessageMenu(BuildContext context) {
-    final isTextMessage = widget.message.messageType == MessageType.text;
-    final messageText = widget.message.text;
-    showModalBottomSheet(
-      backgroundColor: AppColorss.thirdColor,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
-      ),
-      context: context,
-      builder: (BuildContext context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (isTextMessage)
-              ListTile(
-                leading: Icon(Icons.copy, color: AppColorss.iconsColors),
-                title: Text(AppStringss.copyMessage, style: TextStyle(color:AppColorss.textColor1)),
-                onTap: () {
-                  Navigator.pop(context); // Close the bottom sheet
-                  _copyMessageText(context, messageText);
-                },
-              ),
-            if (isTextMessage)
-              ListTile(
-                leading: Icon(Icons.edit, color: AppColorss.iconsColors),
-                title: Text(AppStringss.editMessage, style: TextStyle(color: AppColorss.textColor1)),
-                onTap: () {
-                  Navigator.pop(context); // Close the bottom sheet
-                  _editMessage(context);
-                },
-              ),
-            ListTile(
-              leading: const Icon(Icons.delete, color: Colors.red),
-              title: Text(AppStringss.deleteMessage, style: TextStyle(color: AppColorss.textColor1)),
-              onTap: () {
-                Navigator.pop(context); // Close the bottom sheet
-                _deleteMessage(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   void _copyMessageText(BuildContext context, String messageText) {
     Clipboard.setData(ClipboardData(text: messageText));
@@ -380,7 +389,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
         return AlertDialog(
           backgroundColor:  AppColorss.thirdColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title:  Text(AppStringss.deleteMessage, style: TextStyle(color: Colors.red),),
+          title:  Text(AppStringss.deleteMessage, style: const TextStyle(color: Colors.red),),
           content: Text(AppStringss.confirmDelete, style: TextStyle(color: AppColorss.textColor1),),
           actions: [
             TextButton(
@@ -398,7 +407,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
               },
             ),
             TextButton(
-              child:  Text(AppStringss.deleteForAll , style : TextStyle(color: Colors.red)),
+              child:  Text(AppStringss.deleteForAll , style : const TextStyle(color: Colors.red)),
               onPressed: () {
                 _deleteMessageFromFirestoreForAll(context);
                 Navigator.pop(context); // Close the dialog

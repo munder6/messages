@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -298,7 +300,7 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                       });
 
                       await sendNotification(
-                        receiverId: widget.message.receiverId,
+                        receiverId: widget.message.senderId,
                         notificationTitle: 'Liked Message',
                         notificationBody: 'You received a liked message from ',
                       );
@@ -306,61 +308,22 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                     },
                     child: Stack(
                       children: [
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxWidth: context.width(0.6),
-                            maxHeight: 600,
+                        FocusedMenuHolder(
+                          animateMenuItems: true,
+                          menuOffset: 8,
+                          duration : const Duration(milliseconds: 300),
+                          menuBoxDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
+                            color: Colors.white, // Change the background color as needed
                           ),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
-                            decoration: BoxDecoration(
-                              color: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video
-                                  ? Colors.transparent
-                                  : AppColorss.senderMessageColor,
-                              borderRadius: BorderRadius.only(
-                                topRight:  const Radius.circular(20),
-                                bottomLeft: widget.isLast ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
-                                bottomRight: const Radius.circular(20),
-                                topLeft: widget.isFirst ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
-                              ),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-
-                                GestureDetector(
-                                  onLongPress: () {
-                                    _showMessageMenu(context);
-                                  },
-                                  child: MessageContent(message: widget.message, isMe: false, isLast: widget.isLast,),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        widget.message.isLiked ?
-                        const SizedBox(height: 53) : const SizedBox(),
-                        widget.message.isLiked ?
-                        Positioned(
-                            top: (widget.message.messageType ==
-                                MessageType.image || widget.message.messageType ==
-                                MessageType.video) ? 262 : 30,
-                            left: (widget.message.messageType ==
-                                MessageType.image || widget.message.messageType ==
-                                MessageType.video) ? 2.5 : 5.5,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: AppColorss.primaryColor
-                              ),
-                              padding: EdgeInsets.all(2),
-                              child: InkWell(
-                                focusColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                onTap: ()async{
+                          menuWidth: MediaQuery.of(context).size.width * 0.4,
+                          menuItems:  <FocusedMenuItem>[
+                            if(widget.message.isLiked)
+                              FocusedMenuItem(
+                                backgroundColor : AppColorss.thirdColor,
+                                trailingIcon: Icon(FluentIcons.heart_broken_24_regular, color: AppColorss.iconsColors),
+                                title: Text(AppStringss.unlike),
+                                onPressed: () async {
                                   final firestore = FirebaseFirestore.instance;
                                   final userId = widget.message.senderId;
                                   final chatId = widget.message.receiverId;
@@ -387,16 +350,58 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                                     'isLiked': false,
                                   });
                                 },
-                                child: Container(
-                                    width: 25,
-                                    padding: const EdgeInsets.all(3),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: AppColorss.senderMessageColor
-                                    ),
-                                    child: const Icon(FluentIcons.heart_24_filled, size: 15,color: Colors.red,)),
                               ),
-                            )) : SizedBox()
+                            if(widget.message.messageType == MessageType.text)
+                              FocusedMenuItem(
+                                backgroundColor : AppColorss.thirdColor,
+                                trailingIcon: Icon(FluentIcons.copy_24_regular, color: AppColorss.iconsColors),
+                                title: Text(AppStringss.copyMessage),
+                                onPressed: () {
+                                  _copyMessageText(context, widget.message.text);
+                                },
+                              ),
+                              FocusedMenuItem(
+                              backgroundColor : AppColorss.thirdColor,
+                              trailingIcon: const Icon(FluentIcons.delete_24_regular, color: Colors.red),
+                              title: Text(AppStringss.deleteMessage),
+                              onPressed: () {
+                                _deleteMessage(context);
+                              },
+                            ),
+                          ],
+                          onPressed: (){},
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxWidth: context.width(0.6),
+                              maxHeight: 600,
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
+                              decoration: BoxDecoration(
+                                color: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video
+                                    ? Colors.transparent
+                                    : AppColorss.senderMessageColor,
+                                borderRadius: BorderRadius.only(
+                                  topRight:  const Radius.circular(20),
+                                  bottomLeft: widget.isLast ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
+                                  bottomRight: const Radius.circular(20),
+                                  topLeft: widget.isFirst ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
+                                ),
+                                image: DecorationImage(
+                                    image: AssetImage( widget.message.isLiked ?  "assets/images/2MYJbKXE3g.gif" : "")
+                                )
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  MessageContent(message: widget.message, isMe: false, isLast: widget.isLast,),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+
                       ],
                     ),
                   ),

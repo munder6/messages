@@ -7,7 +7,7 @@ import 'image_widget.dart';
 import 'text_widget.dart';
 import 'video_palyer_widget.dart';
 
-class MessageContent extends StatelessWidget {
+class MessageContent extends StatefulWidget {
   final Message message;
   final bool isMe;
   final bool isLast;
@@ -20,20 +20,27 @@ class MessageContent extends StatelessWidget {
   });
 
   @override
+  State<MessageContent> createState() => _MessageContentState();
+
+}
+
+class _MessageContentState extends State<MessageContent> {
+
+  @override
   Widget build(BuildContext context) {
-    switch (message.messageType) {
+    switch (widget.message.messageType) {
       case MessageType.text:
-        return TextWidget(message: message, isMe: isMe, isLast : isLast);
+        return TextWidget(message: widget.message, isMe: widget.isMe, isLast : widget.isLast);
       case MessageType.image:
-        return ImageWidget(message: message, isMe: isMe);
+        return ImageWidget(message: widget.message, isMe: widget.isMe);
       case MessageType.video:
-        return VideoPlayerItem(message: message, isMe: isMe);
+        return VideoPlayerItem(message: widget.message, isMe: widget.isMe);
       case MessageType.audio:
         return SizedBox(
             width: 240,
-            child: AudioPlayerWidget(message: message, isMe: isMe));
+            child: AudioPlayerWidget(message: widget.message, isMe: widget.isMe));
       default:
-        return TextWidget(message: message, isMe: isMe, isLast: isLast,);
+        return TextWidget(message: widget.message, isMe: widget.isMe, isLast: widget.isLast,);
     }
   }
 }
