@@ -309,18 +309,19 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                     child: Stack(
                       children: [
                         FocusedMenuHolder(
+                          blurSize: 7,
                           animateMenuItems: true,
                           menuOffset: 8,
                           duration : const Duration(milliseconds: 300),
                           menuBoxDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
-                            color: Colors.white, // Change the background color as needed
+                            borderRadius: BorderRadius.circular(18.0), // Adjust the radius as needed
+                            color:AppColorss.thirdColor, // Change the background color as needed
                           ),
-                          menuWidth: MediaQuery.of(context).size.width * 0.4,
+                          menuWidth: MediaQuery.of(context).size.width * 0.48,
                           menuItems:  <FocusedMenuItem>[
                             if(widget.message.isLiked)
                               FocusedMenuItem(
-                                backgroundColor : AppColorss.thirdColor,
+                                backgroundColor : AppColorss.thirdColor2,
                                 trailingIcon: Icon(FluentIcons.heart_broken_24_regular, color: AppColorss.iconsColors),
                                 title: Text(AppStringss.unlike),
                                 onPressed: () async {
@@ -353,7 +354,7 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                               ),
                             if(widget.message.messageType == MessageType.text)
                               FocusedMenuItem(
-                                backgroundColor : AppColorss.thirdColor,
+                                backgroundColor : AppColorss.thirdColor2,
                                 trailingIcon: Icon(FluentIcons.copy_24_regular, color: AppColorss.iconsColors),
                                 title: Text(AppStringss.copyMessage),
                                 onPressed: () {
@@ -361,7 +362,7 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                                 },
                               ),
                               FocusedMenuItem(
-                              backgroundColor : AppColorss.thirdColor,
+                              backgroundColor : AppColorss.thirdColor2,
                               trailingIcon: const Icon(FluentIcons.delete_24_regular, color: Colors.red),
                               title: Text(AppStringss.deleteMessage),
                               onPressed: () {

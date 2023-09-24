@@ -5,10 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:message_me_app/core/extensions/time_extension.dart';
 import 'package:message_me_app/core/utils/constants/strings_manager.dart';
 import 'package:swipe_to/swipe_to.dart';
 import '../../../../../../core/enums/messge_type.dart';
 import '../../../../../../core/utils/thems/my_colors.dart';
+import '../../../../../../test.dart';
 import '/core/extensions/extensions.dart';
 import '../../../../../domain/entities/message.dart';
 import '../../../../controllers/chat_cubit/chat_cubit.dart';
@@ -128,18 +130,24 @@ class _MyMessageCardState extends State<MyMessageCard> {
                         child: Stack(
                           children: [
                             FocusedMenuHolder(
+                              blurSize: 9,
                               animateMenuItems: true,
                               menuOffset: 8,
                               duration : const Duration(milliseconds: 300),
                               menuBoxDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
-                                color: Colors.white, // Change the background color as needed
+                                borderRadius: BorderRadius.circular(18.0), // Adjust the radius as needed
+                                color:AppColorss.thirdColor, // Change the background color as needed
                               ),
-                              menuWidth: MediaQuery.of(context).size.width * 0.4,
-                              menuItems: <FocusedMenuItem>[
+                              menuWidth: MediaQuery.of(context).size.width * 0.48,
+                              menuItems: [
+                                FocusedMenuItem(
+                                  backgroundColor : AppColorss.thirdColor2,
+                                  title: Text(widget.message.timeSent.amPmMode),
+                                  onPressed: () {},
+                                ),
                                 if(widget.message.isLiked)
                                 FocusedMenuItem(
-                                  backgroundColor : AppColorss.thirdColor,
+                                  backgroundColor : AppColorss.thirdColor2,
                                   trailingIcon: Icon(FluentIcons.heart_broken_24_regular, color: AppColorss.iconsColors),
                                   title: Text(AppStringss.unlike),
                                   onPressed: () async {
@@ -172,7 +180,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
                                 ),
                                 if(widget.message.messageType == MessageType.text)
                                 FocusedMenuItem(
-                                  backgroundColor : AppColorss.thirdColor,
+                                  backgroundColor : AppColorss.thirdColor2,
                                   trailingIcon: Icon(FluentIcons.copy_24_regular, color: AppColorss.iconsColors),
                                   title: Text(AppStringss.copyMessage),
                                   onPressed: () {
@@ -181,7 +189,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
                                 ),
                                 if(widget.message.messageType == MessageType.text)
                                 FocusedMenuItem(
-                                  backgroundColor : AppColorss.thirdColor,
+                                  backgroundColor : AppColorss.thirdColor2,
                                   trailingIcon: Icon(FluentIcons.edit_24_regular, color: AppColorss.iconsColors),
                                   title: Text(AppStringss.editMessage),
                                   onPressed: () {
@@ -189,7 +197,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
                                   },
                                 ),
                                 FocusedMenuItem(
-                                  backgroundColor : AppColorss.thirdColor,
+                                  backgroundColor : AppColorss.thirdColor2,
                                   trailingIcon: const Icon(FluentIcons.delete_24_regular, color: Colors.red),
                                   title: Text(AppStringss.deleteMessage),
                                   onPressed: () {

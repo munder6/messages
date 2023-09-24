@@ -209,3 +209,66 @@
 // ) : const SizedBox(),
 // if (widget.message.isLiked)
 //   const SizedBox(height: 55,)
+
+
+
+
+// import 'package:flutter/material.dart';
+//
+// class CustomDividerMenuItem<T> extends StatelessWidget {
+//   final Widget title;
+//   final Function onPressed;
+//   final double dividerWidth;
+//
+//   CustomDividerMenuItem({
+//     required this.title,
+//     required this.onPressed,
+//     this.dividerWidth = 1.0, // Set your desired divider width here
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         ListTile(
+//           title: title,
+//           onTap: () {
+//             onPressed();
+//           },
+//         ),
+//         Divider(
+//           thickness: dividerWidth,
+//           color: Colors.black,
+//           height: 0,
+//         ),
+//       ],
+//     );
+//   }
+// }
+//
+// void main() {
+//   runApp(MyApp());
+// }
+//
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text('Custom Divider Menu'),
+//         ),
+//         body: Center(
+//           child: CustomDividerMenuItem(
+//             title: Text('Item 1'),
+//             onPressed: () {
+//               // Handle item 1 tap
+//             },
+//             dividerWidth: 2.0, // Set the divider width for this item
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+//

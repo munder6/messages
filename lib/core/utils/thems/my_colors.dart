@@ -37,10 +37,12 @@ class MyColors {
 class AppColorss {
   static bool get isWhite =>
       WidgetsBinding.instance.window.platformBrightness == Brightness.light;
-
+  static final Color thirdColor23 = const Color.fromARGB(255, 255, 255, 255);
   static final Color primaryColor = isWhite ? Colors.white : Colors.black;
   static final Color secondaryColor = isWhite ? Colors.white70 : Colors.grey.shade800;
+  static final Color focusMenuColor = isWhite ? Colors.white70 : const Color.fromARGB(255, 239, 239, 239);
   static final Color thirdColor = isWhite ? const Color.fromARGB(255, 239, 239, 239) : Color.fromARGB(255, 21, 20, 20);
+  static final Color thirdColor2 = isWhite ? const Color.fromARGB(255, 255, 255, 255) : Color.fromARGB(255, 50, 49, 49);
   static final Color back = isWhite ? Colors.grey.shade900 : Colors.grey.shade900;
   static const Color myMessageColor =   Color.fromARGB(255, 36, 120, 255) ;
   static const Color myMessageColor1 =   Color.fromARGB(255, 124, 71, 229) ;
