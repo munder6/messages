@@ -79,19 +79,6 @@ class _BottomChatWithIconState extends State<BottomChatWithIcon> {
                       cubit.toggleEmojiKeyboard(focusNode),
                 ),
               ),
-              // Offstage(
-              //   offstage: !cubit.isShowEmoji,
-              //   child: BlocBuilder<ChatCubit, ChatState>(
-              //     builder: (context, state) {
-              //       return EmojiPickerWidget(
-              //         messageController: messageController,
-              //         onGifButtonTap: () {
-              //           selectGif(ChatCubit.get(context));
-              //         },
-              //       );
-              //     },
-              //   ),
-              // ),
             ],
           ),
           onWillPop: () {
@@ -106,21 +93,6 @@ class _BottomChatWithIconState extends State<BottomChatWithIcon> {
       },
     );
   }
-
-  // void selectGif(ChatCubit cubit) async {
-  //   final gif = await pickGif(context);
-  //   sendGifMessage(gif, cubit);
-  // }
-
-  // void sendGifMessage(GiphyGif? gif, ChatCubit cubit) {
-  //   if (gif != null) {
-  //     cubit.sendGifMessage(
-  //       receiverId: widget.receiverId,
-  //       gifUrl: gif.url!,
-  //     );
-  //   }
-  // }
-
   @override
   void dispose() {
     super.dispose();

@@ -64,56 +64,7 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
       print('Error getting user image: $e');
     }
   }
-  void _showMessageMenu(BuildContext context) {
-    final messageText = widget.message.text;
-    showModalBottomSheet(
-      backgroundColor: AppColorss.thirdColor,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(20),
-          topLeft: Radius.circular(20),
-        ),
-      ),
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                leading: Icon(
-                  Icons.copy,
-                  color: AppColorss.iconsColors,
-                ),
-                title: Text(
-                  AppStringss.copyMessage,
-                  style: TextStyle(color: AppColorss.textColor1),
-                ),
-                onTap: () {
-                  _copyMessageText( context,  messageText);
-                  Navigator.pop(context); // Close the bottom sheet
-                },
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                ),
-                title: Text(
-                  AppStringss.deleteMessage,
-                  style: TextStyle(color: AppColorss.textColor1),
-                ),
-                onTap: () {
-                  Navigator.pop(context); // Close the bottom sheet
-                  _deleteMessage(context);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
+
 
   void _copyMessageText(BuildContext context, String messageText) {
     Clipboard.setData(ClipboardData(text: messageText));
@@ -324,6 +275,19 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                               backgroundColor : AppColorss.thirdColor2,
                               title: Text(widget.message.timeSent.foucesdMenueCard, style: TextStyle(color: AppColorss.textColor2),),
                               onPressed: () {},
+                            ),
+                            FocusedMenuItem(
+                              backgroundColor : AppColorss.thirdColor2,
+                              trailingIcon: Icon(FluentIcons.arrow_reply_24_regular, color: AppColorss.iconsColors),
+                              title: Text(AppStringss.reply),
+                              onPressed: () async {
+                                ChatCubit.get(context).onMessageSwipe(
+                                  message: widget.message.text,
+                                  isMe: false,
+                                  messageType: widget.message.messageType,
+                                  repliedTo: widget.message.senderName,
+                                );
+                              },
                             ),
                             if(widget.message.isLiked)
                               FocusedMenuItem(

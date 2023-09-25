@@ -178,6 +178,19 @@ class _MyMessageCardState extends State<MyMessageCard> {
                                       });
                                   },
                                 ),
+                                FocusedMenuItem(
+                                  backgroundColor : AppColorss.thirdColor2,
+                                  trailingIcon: Icon(FluentIcons.arrow_reply_24_regular, color: AppColorss.iconsColors),
+                                  title: Text(AppStringss.reply),
+                                  onPressed: () async {
+                                    ChatCubit.get(context).onMessageSwipe(
+                                      message: widget.message.text,
+                                      isMe: true,
+                                      messageType: widget.message.messageType,
+                                      repliedTo: widget.message.senderName,
+                                    );
+                                  },
+                                ),
                                 if(widget.message.messageType == MessageType.text)
                                 FocusedMenuItem(
                                   backgroundColor : AppColorss.thirdColor2,

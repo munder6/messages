@@ -53,11 +53,6 @@ Future<void> main() async {
   //   print('Failed to get token: $error');
   // });
   //
-  // FirebaseMessaging.instance.subscribeToTopic('chats').then((value) {
-  //   print('Subscribed to topic: chats');
-  // }).catchError((error) {
-  //   print('Failed to subscribe to topic: $error');
-  // });
   //
   // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
   //   print('Received a foreground message: ${message.messageId}');
@@ -70,10 +65,7 @@ Future<void> main() async {
   //     );
   //   }
   // });
-  //
-  // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-  //   print('Opened app from background notification: ${message.messageId}');
-  // });
+
 
    await requestNotificationPermission();
 

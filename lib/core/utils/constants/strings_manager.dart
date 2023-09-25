@@ -126,6 +126,7 @@ class AppStringss {
   static String chats = isEnglish ? "Chats" : "المحادثات";
   static String edit = isEnglish ? "Edit" : "تعديل";
   static String search = isEnglish ? "Search" : "بحث";
+  static String reply = isEnglish ? "Reply" : "رد";
   static String unlike = isEnglish ? "Unlike Message" : "الفاء الاعجاب";
   static String call = isEnglish ? "Call" : "اتصال";
   static String video = isEnglish ? "Video" : "مكالمة فيديو";

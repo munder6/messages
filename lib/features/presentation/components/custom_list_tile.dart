@@ -116,7 +116,7 @@ class CustomListTile extends StatelessWidget {
               ],
             ),
           ),
-        Divider(color: AppColorss.textColor1.withOpacity(0.3),height: 0,indent: 79,),
+        //Divider(color: AppColorss.textColor1.withOpacity(0.3),height: 0,indent: 79,),
       ],
     );
   }

@@ -86,7 +86,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
            Row(
             children: [
               const SizedBox(width: 15),
-              Text(AppStringss.chats, style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+              Text(AppStringss.chats, style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),),
             ],
           ),
           Padding(
@@ -161,7 +161,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
           //   ),
           // ),
           // Divider(color: AppColorss.textColor1.withOpacity(0.4),height: 0,indent: 89,),
-          StoryWidget(),
+          //StoryWidget(),
           Expanded(
             child: ContactsChatPage(searchQuery: _searchController.text),
           ),

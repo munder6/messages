@@ -155,7 +155,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 15),
                   ],
                 ),
               ),
@@ -230,7 +230,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               Container(
                 width: MediaQuery.of(context).size.width - 18,
                 margin: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
@@ -379,7 +379,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Container(
                 width: MediaQuery.of(context).size.width - 18,
                 margin: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
@@ -483,7 +483,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Container(
                 width: MediaQuery.of(context).size.width - 18,
                 margin: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
