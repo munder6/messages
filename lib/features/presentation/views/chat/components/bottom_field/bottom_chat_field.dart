@@ -154,6 +154,8 @@ class _BottomChatFieldState extends State<BottomChatField> {
                     },
                   ),
                 ],
+                leftSide: 0,
+                  rightSide: 0,
                 child: const Padding(
                   padding:  EdgeInsets.only(right: 12.0),
                   child:  Icon(

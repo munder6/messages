@@ -8,6 +8,7 @@ class ContactChat extends Equatable {
   final DateTime timeSent;
   final String phoneNumber;
 
+
   const ContactChat({
     required this.name,
     required this.profilePic,
@@ -15,6 +16,7 @@ class ContactChat extends Equatable {
     required this.lastMessage,
     required this.timeSent,
     required this.phoneNumber,
+
   });
 
   // Add a factory method to create a ContactChat object from JSON
@@ -26,6 +28,7 @@ class ContactChat extends Equatable {
       lastMessage: json['lastMessage'] as String,
       timeSent: DateTime.parse(json['timeSent'] as String),
       phoneNumber: json['phoneNumber'] as String,
+
     );
   }
 

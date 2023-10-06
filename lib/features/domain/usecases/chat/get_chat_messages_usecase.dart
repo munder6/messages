@@ -17,16 +17,13 @@ class GetChatMessagesUseCase extends StreamBaseUseCase<List<Message>, GetChatMes
 
 class GetChatMessagesParameters extends Equatable {
   final String receiverId;
-  final int limit;
 
   const GetChatMessagesParameters({
     required this.receiverId,
-    required this.limit,
   });
 
   @override
   List<Object?> get props => [
     receiverId,
-    limit,
   ];
 }

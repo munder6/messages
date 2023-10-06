@@ -173,11 +173,10 @@ class ChatCubit extends Cubit<ChatState> {
     return _getContactsChatUseCase(map);
   }
 
-  Stream<List<Message>> getChatMessages(String receiverId, int limit) {
+  Stream<List<Message>> getChatMessages(String receiverId) {
     return _getChatMessagesUseCase(
       GetChatMessagesParameters(
         receiverId: receiverId,
-        limit: limit,
       ),
     );
   }

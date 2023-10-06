@@ -18,6 +18,8 @@ class FocusedMenuHolder extends StatefulWidget {
   final Color? blurBackgroundColor;
   final double? bottomOffsetHeight;
   final double? menuOffset;
+  final double? leftSide;
+  final double? rightSide;
   /// Open with tap insted of long press.
   final bool openWithTap;
 
@@ -35,7 +37,7 @@ class FocusedMenuHolder extends StatefulWidget {
         this.menuWidth,
         this.bottomOffsetHeight,
         this.menuOffset,
-        this.openWithTap = false})
+        this.openWithTap = false, required this.leftSide, required this.rightSide})
       : super(key: key);
 
   @override
@@ -44,7 +46,7 @@ class FocusedMenuHolder extends StatefulWidget {
 
 class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
   GlobalKey containerKey = GlobalKey();
-  Offset childOffset = Offset(0, 0);
+  Offset childOffset = const Offset(0, 0);
   Size? childSize;
 
   getOffset(){
@@ -80,7 +82,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
     await Navigator.push(
         context,
         PageRouteBuilder(
-            transitionDuration: widget.duration ?? Duration(milliseconds: 100),
+            transitionDuration: widget.duration ?? const Duration(milliseconds: 100),
             pageBuilder: (context, animation, secondaryAnimation) {
               animation = Tween(begin: 0.0, end: 1.0).animate(animation);
               return FadeTransition(
@@ -98,6 +100,8 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
                     animateMenu: widget.animateMenuItems ?? true,
                     bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
                     menuOffset: widget.menuOffset ?? 0,
+                    leftSide: widget.leftSide ?? 0,
+                    rightSide: widget.rightSide ?? 0,
                   ));
             },
             fullscreenDialog: true,
@@ -118,10 +122,14 @@ class FocusedMenuDetails extends StatelessWidget {
   final Color? blurBackgroundColor;
   final double? bottomOffsetHeight;
   final double? menuOffset;
+  final double leftSide;
+  final double rightSide;
+
 
   const FocusedMenuDetails(
-      {Key? key, required this.menuItems, required this.child, required this.childOffset, required this.childSize,required this.menuBoxDecoration, required this.itemExtent,required this.animateMenu,required this.blurSize,required this.blurBackgroundColor,required this.menuWidth, this.bottomOffsetHeight, this.menuOffset})
+      {Key? key, required this.menuItems, required this.child, required this.childOffset, required this.childSize,required this.menuBoxDecoration, required this.itemExtent,required this.animateMenu,required this.blurSize,required this.blurBackgroundColor,required this.menuWidth, this.bottomOffsetHeight, this.menuOffset, required this.leftSide, required this.rightSide})
       : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +137,6 @@ class FocusedMenuDetails extends StatelessWidget {
 
     final maxMenuHeight = size.height * 0.45;
     final listHeight = menuItems.length * (itemExtent ?? 39.0);
-
     final maxMenuWidth = menuWidth??(size.width * 0.70);
     final menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
     final leftOffset = (childOffset.dx+maxMenuWidth ) < size.width ? childOffset.dx: (childOffset.dx-maxMenuWidth+childSize!.width);
@@ -154,7 +161,7 @@ class FocusedMenuDetails extends StatelessWidget {
               top: topOffset,
               left: leftOffset,
               child: TweenAnimationBuilder(
-                duration: Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 200),
                 builder: (BuildContext context, dynamic value, Widget? child) {
                   return Transform.scale(
                     scale: value,
@@ -164,20 +171,26 @@ class FocusedMenuDetails extends StatelessWidget {
                 },
                 tween: Tween(begin: 0.0, end: 1.0),
                 child: Container(
+                  margin:  EdgeInsets.only(
+                      bottom: 0.3,
+                      left: leftSide,
+                    right: rightSide,
+                  ),
+
                   width: maxMenuWidth,
                   height: menuHeight,
                   decoration: menuBoxDecoration ??
-                      BoxDecoration(
+                      const BoxDecoration(
                         //   color: Colors.grey.shade900,
-                          borderRadius: const BorderRadius.all(Radius.circular(18.0)),
-                          boxShadow: [const BoxShadow(color: Colors.black, blurRadius: 10, spreadRadius: 1)]),
+                          borderRadius: BorderRadius.all(Radius.circular(18.0)),
+                          boxShadow: [BoxShadow(color: Colors.black, blurRadius: 10, spreadRadius: 1)]),
                   child: ClipRRect(
 
                     borderRadius: const BorderRadius.all(Radius.circular(18.0)),
                     child: ListView.builder(
                       itemCount: menuItems.length,
                       padding: EdgeInsets.zero,
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         FocusedMenuItem item = menuItems[index];
                         Widget listItem = GestureDetector(

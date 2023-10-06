@@ -29,10 +29,10 @@ class ReplayMessageCard extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(20)),
       child: Container(
         padding: const EdgeInsets.only(
-          left: 10,
+          left: 5,
           right: 5,
-          top: 5,
-          bottom: 8,
+          top: 10,
+          bottom: 12,
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(0),
@@ -199,7 +199,9 @@ class ReplayMessageContent extends StatelessWidget {
         return Text(
           text,
           textDirection: TextDirection.rtl,
-          style:  TextStyle(color: AppColorss.textColor1.withOpacity(0.9), fontSize: 12, fontFamily: 'Arabic',   overflow: TextOverflow.visible,
+          style:  TextStyle(color: AppColorss.textColor1.withOpacity(0.9),
+            fontSize: 12, fontFamily: 'Arabic',   overflow: TextOverflow.visible,
+            height: 0.9
             ),
           maxLines: 3,
           overflow: TextOverflow.ellipsis,

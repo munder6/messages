@@ -207,196 +207,205 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
               padding: const EdgeInsets.only(
                 top: 2.3,
               ),
-              child: Row(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Padding(padding: EdgeInsets.symmetric(horizontal: 9)),
-                  widget.isLast
-                      ? MyCachedNetImage(
-                    imageUrl: profilePic,
-                    radius: 13,
-                  )
-                      : const Padding(padding: EdgeInsets.symmetric(horizontal: 13)),
-                  const SizedBox(width: 5),
-                  InkWell(
-                    focusColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    onDoubleTap: ()async{
-                      final firestore = FirebaseFirestore.instance;
-                      final userId = widget.message.senderId;
-                      final chatId = widget.message.receiverId;
-                      await firestore
-                          .collection('users')
-                          .doc(userId)
-                          .collection('chats')
-                          .doc(chatId)
-                          .collection('messages')
-                          .doc(widget.message.messageId)
-                          .update({
-                        'isLiked': true,
-                      });
-                      final userId2 = widget.message.receiverId;
-                      final chatId2 = widget.message.senderId;
-                      await firestore
-                          .collection('users')
-                          .doc(userId2)
-                          .collection('chats')
-                          .doc(chatId2)
-                          .collection('messages')
-                          .doc(widget.message.messageId)
-                          .update({
-                        'isLiked': true,
-                      });
-
-                      await sendNotification(
-                        receiverId: widget.message.senderId,
-                        notificationTitle: 'Liked Message',
-                        notificationBody: 'You received a liked message from ',
-                      );
-
-                    },
-                    child: Stack(
+                  FocusedMenuHolder(
+                    blurSize: 7,
+                    animateMenuItems: true,
+                    menuOffset: 8,
+                    duration : const Duration(milliseconds: 300),
+                    menuBoxDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18.0), // Adjust the radius as needed
+                      color:AppColorss.thirdColor, // Change the background color as needed
+                    ),
+                    menuWidth: MediaQuery.of(context).size.width * 0.48,
+                    menuItems:  <FocusedMenuItem>[
+                      FocusedMenuItem(
+                        backgroundColor : AppColorss.thirdColor2,
+                        title: Text(widget.message.timeSent.foucesdMenueCard, style: TextStyle(color: AppColorss.textColor2),),
+                        onPressed: () {},
+                      ),
+                      FocusedMenuItem(
+                        backgroundColor : AppColorss.thirdColor2,
+                        trailingIcon: Icon(FluentIcons.arrow_reply_24_regular, color: AppColorss.iconsColors),
+                        title: Text(AppStringss.reply),
+                        onPressed: () async {
+                          ChatCubit.get(context).onMessageSwipe(
+                            message: widget.message.text,
+                            isMe: false,
+                            messageType: widget.message.messageType,
+                            repliedTo: widget.message.senderName,
+                          );
+                        },
+                      ),
+                      if(widget.message.isLiked)
+                        FocusedMenuItem(
+                          backgroundColor : AppColorss.thirdColor2,
+                          trailingIcon: Icon(FluentIcons.heart_broken_24_regular, color: AppColorss.iconsColors),
+                          title: Text(AppStringss.unlike),
+                          onPressed: () async {
+                            final firestore = FirebaseFirestore.instance;
+                            final userId = widget.message.senderId;
+                            final chatId = widget.message.receiverId;
+                            await firestore
+                                .collection('users')
+                                .doc(userId)
+                                .collection('chats')
+                                .doc(chatId)
+                                .collection('messages')
+                                .doc(widget.message.messageId)
+                                .update({
+                              'isLiked': false,
+                            });
+                            final userId2 = widget.message.receiverId;
+                            final chatId2 = widget.message.senderId;
+                            await firestore
+                                .collection('users')
+                                .doc(userId2)
+                                .collection('chats')
+                                .doc(chatId2)
+                                .collection('messages')
+                                .doc(widget.message.messageId)
+                                .update({
+                              'isLiked': false,
+                            });
+                          },
+                        ),
+                      if(widget.message.messageType == MessageType.text)
+                        FocusedMenuItem(
+                          backgroundColor : AppColorss.thirdColor2,
+                          trailingIcon: Icon(FluentIcons.copy_24_regular, color: AppColorss.iconsColors),
+                          title: Text(AppStringss.copyMessage),
+                          onPressed: () {
+                            _copyMessageText(context, widget.message.text);
+                          },
+                        ),
+                      FocusedMenuItem(
+                        backgroundColor : AppColorss.thirdColor2,
+                        trailingIcon: const Icon(FluentIcons.delete_24_regular, color: Colors.red),
+                        title: Text(AppStringss.deleteMessage),
+                        onPressed: () {
+                          _deleteMessage(context);
+                        },
+                      ),
+                    ],
+                    onPressed: (){},
+                    leftSide: 50,
+                    rightSide: 0,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        FocusedMenuHolder(
-                          blurSize: 7,
-                          animateMenuItems: true,
-                          menuOffset: 8,
-                          duration : const Duration(milliseconds: 300),
-                          menuBoxDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18.0), // Adjust the radius as needed
-                            color:AppColorss.thirdColor, // Change the background color as needed
-                          ),
-                          menuWidth: MediaQuery.of(context).size.width * 0.48,
-                          menuItems:  <FocusedMenuItem>[
-                            FocusedMenuItem(
-                              backgroundColor : AppColorss.thirdColor2,
-                              title: Text(widget.message.timeSent.foucesdMenueCard, style: TextStyle(color: AppColorss.textColor2),),
-                              onPressed: () {},
-                            ),
-                            FocusedMenuItem(
-                              backgroundColor : AppColorss.thirdColor2,
-                              trailingIcon: Icon(FluentIcons.arrow_reply_24_regular, color: AppColorss.iconsColors),
-                              title: Text(AppStringss.reply),
-                              onPressed: () async {
-                                ChatCubit.get(context).onMessageSwipe(
-                                  message: widget.message.text,
-                                  isMe: false,
-                                  messageType: widget.message.messageType,
-                                  repliedTo: widget.message.senderName,
-                                );
-                              },
-                            ),
-                            if(widget.message.isLiked)
-                              FocusedMenuItem(
-                                backgroundColor : AppColorss.thirdColor2,
-                                trailingIcon: Icon(FluentIcons.heart_broken_24_regular, color: AppColorss.iconsColors),
-                                title: Text(AppStringss.unlike),
-                                onPressed: () async {
-                                  final firestore = FirebaseFirestore.instance;
-                                  final userId = widget.message.senderId;
-                                  final chatId = widget.message.receiverId;
-                                  await firestore
-                                      .collection('users')
-                                      .doc(userId)
-                                      .collection('chats')
-                                      .doc(chatId)
-                                      .collection('messages')
-                                      .doc(widget.message.messageId)
-                                      .update({
-                                    'isLiked': false,
-                                  });
-                                  final userId2 = widget.message.receiverId;
-                                  final chatId2 = widget.message.senderId;
-                                  await firestore
-                                      .collection('users')
-                                      .doc(userId2)
-                                      .collection('chats')
-                                      .doc(chatId2)
-                                      .collection('messages')
-                                      .doc(widget.message.messageId)
-                                      .update({
-                                    'isLiked': false,
-                                  });
-                                },
-                              ),
-                            if(widget.message.messageType == MessageType.text)
-                              FocusedMenuItem(
-                                backgroundColor : AppColorss.thirdColor2,
-                                trailingIcon: Icon(FluentIcons.copy_24_regular, color: AppColorss.iconsColors),
-                                title: Text(AppStringss.copyMessage),
-                                onPressed: () {
-                                  _copyMessageText(context, widget.message.text);
-                                },
-                              ),
-                              FocusedMenuItem(
-                              backgroundColor : AppColorss.thirdColor2,
-                              trailingIcon: const Icon(FluentIcons.delete_24_regular, color: Colors.red),
-                              title: Text(AppStringss.deleteMessage),
-                              onPressed: () {
-                                _deleteMessage(context);
-                              },
-                            ),
-                          ],
-                          onPressed: (){},
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxWidth: context.width(0.6),
-                              maxHeight: 600,
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
-                              decoration: BoxDecoration(
-                                color: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video
-                                    ? Colors.transparent
-                                    : AppColorss.senderMessageColor,
-                                borderRadius: BorderRadius.only(
-                                  topRight:  const Radius.circular(20),
-                                  bottomLeft: widget.isLast ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
-                                  bottomRight: const Radius.circular(20),
-                                  topLeft: widget.isFirst ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
+                        const Padding(padding: EdgeInsets.symmetric(horizontal: 9)),
+                        widget.isLast
+                            ? MyCachedNetImage(
+                          imageUrl: profilePic,
+                          radius: 13,
+                        )
+                            : const Padding(padding: EdgeInsets.symmetric(horizontal: 13)),
+                        const SizedBox(width: 5),
+                        InkWell(
+                          focusColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          onDoubleTap: ()async{
+                            final firestore = FirebaseFirestore.instance;
+                            final userId = widget.message.senderId;
+                            final chatId = widget.message.receiverId;
+                            await firestore
+                                .collection('users')
+                                .doc(userId)
+                                .collection('chats')
+                                .doc(chatId)
+                                .collection('messages')
+                                .doc(widget.message.messageId)
+                                .update({
+                              'isLiked': true,
+                            });
+                            final userId2 = widget.message.receiverId;
+                            final chatId2 = widget.message.senderId;
+                            await firestore
+                                .collection('users')
+                                .doc(userId2)
+                                .collection('chats')
+                                .doc(chatId2)
+                                .collection('messages')
+                                .doc(widget.message.messageId)
+                                .update({
+                              'isLiked': true,
+                            });
+
+                            await sendNotification(
+                              receiverId: widget.message.senderId,
+                              notificationTitle: 'Liked Message',
+                              notificationBody: 'You received a liked message from ',
+                            );
+
+                          },
+                          child: Stack(
+                            children: [
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxWidth: context.width(0.6),
+                                  maxHeight: 600,
                                 ),
-                                // image: DecorationImage(
-                                //     image: AssetImage( widget.message.isLiked ?  "assets/images/2MYJbKXE3g.gif" : "")
-                                // )
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video ? 0 : 5),
+                                  decoration: BoxDecoration(
+                                    color: widget.message.messageType == MessageType.image || widget.message.messageType == MessageType.video
+                                        ? Colors.transparent
+                                        : AppColorss.senderMessageColor,
+                                    borderRadius: BorderRadius.only(
+                                      topRight:  const Radius.circular(20),
+                                      bottomLeft: widget.isLast ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
+                                      bottomRight: const Radius.circular(20),
+                                      topLeft: widget.isFirst ? Radius.circular(widget.message.messageType == MessageType.audio || widget.isFirst ? 20 : 20) : const Radius.circular(5),
+                                    ),
+                                    // image: DecorationImage(
+                                    //     image: AssetImage( widget.message.isLiked ?  "assets/images/2MYJbKXE3g.gif" : "")
+                                    // )
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      MessageContent(message: widget.message, isMe: false, isLast: widget.isLast,),
+                                    ],
+                                  ),
+                                ),
                               ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  MessageContent(message: widget.message, isMe: false, isLast: widget.isLast,),
-                                ],
-                              ),
-                            ),
+                              widget.message.isLiked ?
+                              Positioned(
+                                bottom: 0,
+                                right: 0, // Align to the left edge
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: AppColorss.primaryColor
+                                  ),
+                                  padding: const EdgeInsets.all(2),
+                                  child: Container(
+                                      width: 20,
+                                      padding: const EdgeInsets.all(3),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50),
+                                          color: AppColorss.senderMessageColor
+                                      ),
+                                      child: const Icon(FluentIcons.heart_28_filled, size: 12,color: Colors.red,)),
+                                ),
+                              ) : const SizedBox(),
+                              if (widget.message.isLiked)
+                                const SizedBox(height: 55,)
+                            ],
                           ),
                         ),
-                        widget.message.isLiked ?
-                        Positioned(
-                          bottom: 0,
-                          right: 0, // Align to the left edge
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: AppColorss.primaryColor
-                            ),
-                            padding: const EdgeInsets.all(2),
-                            child: Container(
-                                width: 20,
-                                padding: const EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: AppColorss.senderMessageColor
-                                ),
-                                child: const Icon(FluentIcons.heart_28_filled, size: 12,color: Colors.red,)),
-                          ),
-                        ) : const SizedBox(),
-                        if (widget.message.isLiked)
-                          const SizedBox(height: 55,)
+
                       ],
                     ),
                   ),
+
                 ],
               ),
             ),
