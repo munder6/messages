@@ -42,7 +42,7 @@ class _OnBoardingState extends State<OnBoarding> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              const SizedBox(height: 170),
+              const SizedBox(height: 110),
               Expanded(
                 child: PageView.builder(
                   onPageChanged: (index){

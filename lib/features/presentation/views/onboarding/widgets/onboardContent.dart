@@ -27,7 +27,7 @@ class OnboardContent extends StatelessWidget {
             textAlign: TextAlign.center,
             style:
             Theme.of(context).textTheme.headlineSmall?.copyWith
-              (color: AppColorss.textColor2, fontWeight: FontWeight.w500, fontSize: 18)),
+              (color: AppColorss.textColor2, fontWeight: FontWeight.w500, fontSize: 12)),
         const Spacer()
       ],
     );

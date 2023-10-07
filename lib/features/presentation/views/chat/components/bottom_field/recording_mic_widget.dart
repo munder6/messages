@@ -315,18 +315,36 @@ class _RecordingMicWidgetState extends State<RecordingMicWidget>
               longPressUpdate(longPressData);
             },
 
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius:  BorderRadius.circular(25),
-                color: AppColorss.thirdColor,
-              ),
-              width: 55,
-              height: 48,
-              child: Icon(
-                isVerticalActionComplete ? FluentIcons.send_24_regular : FluentIcons.mic_24_regular,
-                color:  Color.fromARGB(255, 157, 46, 220),
-                size: 30,
-              ),
+            child: Row(
+              children: [
+
+                Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color:
+                        const Color.fromARGB(255, 157, 46, 220),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      // height: 37,
+                      // width: 43,
+                      // decoration: BoxDecoration(
+                      //   borderRadius:  BorderRadius.circular(25),
+                      //   color: AppColorss.thirdColor,
+                      // ),
+                      width: 37,
+                      height: 37,
+                      child: Icon(
+                        isVerticalActionComplete ? FluentIcons.send_24_filled : FluentIcons.mic_24_filled,
+                        color:  Colors.white,
+                        size: 28,
+                      ),
+                    ),
+                    SizedBox(height: 5.2),
+                  ],
+                ),
+                SizedBox(width: 4.1),
+              ],
             ),
           ),
         ),

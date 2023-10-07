@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -6,9 +7,11 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:lottie/lottie.dart';
 import 'package:message_me_app/core/extensions/time_extension.dart';
 import 'package:message_me_app/core/utils/constants/strings_manager.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:swipe_to/swipe_to.dart';
 import 'package:message_me_app/core/enums/messge_type.dart';
 import '../../../../../../core/extensions/extensions.dart';
@@ -193,6 +196,7 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
             ],
           ),
         SwipeTo(
+          iconOnRightSwipe: FluentIcons.arrow_hook_up_right_24_filled,
           onRightSwipe: () {
             ChatCubit.get(context).onMessageSwipe(
               message: widget.message.text,
@@ -226,9 +230,27 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
                         title: Text(widget.message.timeSent.foucesdMenueCard, style: TextStyle(color: AppColorss.textColor2),),
                         onPressed: () {},
                       ),
+                      if(widget.message.messageType == MessageType.image)
+                        FocusedMenuItem(
+                            backgroundColor : AppColorss.thirdColor2,
+                            title: Text(AppStringss.save),
+                            trailingIcon: const Icon(FluentIcons.arrow_circle_down_24_regular),
+                            onPressed: (){
+                              _SaveImage(context);
+                            }
+                        ),
+                      if(widget.message.messageType == MessageType.video)
+                        FocusedMenuItem(
+                            backgroundColor : AppColorss.thirdColor2,
+                            title: Text(AppStringss.save),
+                            trailingIcon: const Icon(FluentIcons.arrow_circle_down_24_regular),
+                            onPressed: (){
+                              _saveVideo();
+                            }
+                        ),
                       FocusedMenuItem(
                         backgroundColor : AppColorss.thirdColor2,
-                        trailingIcon: Icon(FluentIcons.arrow_reply_24_regular, color: AppColorss.iconsColors),
+                        trailingIcon: Icon(FluentIcons.arrow_hook_up_right_24_filled, color: AppColorss.iconsColors),
                         title: Text(AppStringss.reply),
                         onPressed: () async {
                           ChatCubit.get(context).onMessageSwipe(
@@ -455,8 +477,68 @@ class _SenderMessageCardState extends State<SenderMessageCard> {
       print('Failed to send notification: $e');
     }
   }
+  void _SaveImage(BuildContext context) async {
+    var cacheManager = DefaultCacheManager();
+    var file = await cacheManager.getSingleFile(widget.message.text);
+
+    final directory = await getTemporaryDirectory();
+    final imagePath = '${directory.path}/${DateTime.now().millisecondsSinceEpoch}.png';
+    final savedFile = await file.copy(imagePath);
+
+    final result = await ImageGallerySaver.saveFile(savedFile.path);
+    if (result['isSuccess']) {
+      Fluttertoast.showToast(
+        msg: 'Saved',
+        toastLength: Toast.LENGTH_LONG,
+        textColor: AppColorss.textColor1,
+        backgroundColor: AppColorss.secondaryColor,
+        gravity: ToastGravity.CENTER,
+      );
+    }else {
+      Fluttertoast.showToast(
+        msg: 'Fail to save Image',
+        toastLength: Toast.LENGTH_LONG,
+        textColor: AppColorss.textColor1,
+        backgroundColor: AppColorss.secondaryColor,
+        gravity: ToastGravity.CENTER,
+      );
+    }
+
+  }
+  void _saveVideo() async {
+    var cacheManager = DefaultCacheManager();
+    var file = await cacheManager.getSingleFile(widget.message.text);
+
+    final directory = await getTemporaryDirectory();
+    final videoPath = '${directory.path}/${DateTime.now().millisecondsSinceEpoch}.mp4';
+    final savedFile = await file.copy(videoPath);
+
+    final result = await ImageGallerySaver.saveFile(savedFile.path, isReturnPathOfIOS: false);
+    if (result['isSuccess']) {
+      Fluttertoast.showToast(
+        msg: 'Video Saved',
+        toastLength: Toast.LENGTH_LONG,
+        textColor: AppColorss.textColor1,
+        backgroundColor: AppColorss.secondaryColor,
+        gravity: ToastGravity.CENTER,
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: 'Fail to save video',
+        toastLength: Toast.LENGTH_LONG,
+        textColor: AppColorss.textColor1,
+        backgroundColor: AppColorss.secondaryColor,
+        gravity: ToastGravity.CENTER,
+      );
+    }
+  }
 
 }
+
+
+
+
+
 Future<void> _sendNotification(Map<String, dynamic> notificationPayload) async {
   // Replace 'YOUR_SERVER_KEY' with your FCM server key
   String serverKey = 'AAAA5Ax2QCU:APA91bGlbVkZh6kdV1LDNM42PgOMEy1K3YWdVXSlg3d1WwpAbvegRfb8wUpk8G0wsiQ1y1L2pf3brbHxEbexbhW_HKma9cS0QFLb5h4cwGKb2krzaEu2QSpssB1C1HktDFu6mX7gVxrd';
@@ -622,6 +704,8 @@ class _TypingMessageCardState extends State<TypingMessageCard> {
       ],
     );
   }
+
+
 }
 
 

@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: AppColorss.primaryColor,
           //appBar: const LoginAppBar(),
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
+            padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 8),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -50,13 +50,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       "Your Phone",
                     style: TextStyle(color:AppColorss.textColor1, fontSize: 28),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 0),
                   Text(
                     "Please confirm your country code\nand enter your phone number.",
                     style: TextStyle(color:AppColorss.textColor2, fontWeight: FontWeight.normal, fontSize: 15),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                   SizedBox(
                     width: context.width(0.7),
                     child: Column(
@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onTap: () {
                                   showCountryPicker(
                                     countryListTheme: CountryListThemeData(
-                                      bottomSheetHeight: 700,
+                                      bottomSheetHeight: 500,
                                       backgroundColor: AppColorss.thirdColor,
                                       textStyle:  TextStyle(color: AppColorss.textColor1),
                                       searchTextStyle:  TextStyle(color: AppColorss.textColor1),
@@ -197,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     enabledBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
                                     hintText:  "Your Phone Number ",
-                                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.3))
+                                    hintStyle: TextStyle(color: AppColorss.textColor2)
                                   ),
                                 ),
                               ),

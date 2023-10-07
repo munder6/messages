@@ -67,7 +67,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 ),
                 const SizedBox(height: 20),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(6.0),
                   child: OtpTextField(
                     cursorColor: AppColorss.textColor1,
                     textStyle:
@@ -77,7 +77,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         fontFamily: 'Default',
                         fontSize: 18
                     ),
-                    fieldWidth: 50,
+                    fieldWidth: 45,
                     disabledBorderColor: Colors.grey[900]!,
                     filled: true,
                     fillColor: AppColorss.primaryColor,

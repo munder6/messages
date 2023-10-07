@@ -156,12 +156,15 @@ class _BottomChatFieldState extends State<BottomChatField> {
                 ],
                 leftSide: 0,
                   rightSide: 0,
-                child: const Padding(
-                  padding:  EdgeInsets.only(right: 12.0),
-                  child:  Icon(
-                     FluentIcons.attach_24_regular),
+                child:
+                const Padding(
+                  padding:  EdgeInsets.only(right: 10.0),
+                  child:  Center(
+                    child: Icon(
+                       FluentIcons.attach_24_regular),
+                  ),
                 )
-                ),
+                ) ,
 
               // Container(
               //   color: AppColorss.thirdColor,
@@ -238,7 +241,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
               //     ),
               //   ),
               // ),
-             // if (messageController.text.isEmpty || messageController.text.isNotEmpty)
+
               InkWell(
                 onTap:  () {
                     ChatCubit.get(context).sendTextMessage(
@@ -247,15 +250,13 @@ class _BottomChatFieldState extends State<BottomChatField> {
                     widget.messageController.clear();
                     setState(() {
                     widget.messageController.clear();});},
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 500), // Adjust the duration as needed
-                  curve: Curves.easeInOut, // Adjust the animation curve as needed
+                child: Container(
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 157, 46, 220),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   height: 37,
-                  width: 47,
+                  width: 37,
                   child: const Column(
                     children: [
                       SizedBox(height: 4),

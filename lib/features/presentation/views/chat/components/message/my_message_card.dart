@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:message_me_app/core/extensions/time_extension.dart';
 import 'package:message_me_app/core/utils/constants/strings_manager.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:swipe_to/swipe_to.dart';
 import '../../../../../../core/enums/messge_type.dart';
 import '../../../../../../core/utils/thems/my_colors.dart';
@@ -76,6 +79,8 @@ class _MyMessageCardState extends State<MyMessageCard> {
             ],
           ),
         SwipeTo(
+          iconOnLeftSwipe: FluentIcons.arrow_hook_up_left_24_filled,
+          animationDuration: Duration(milliseconds: 200),
           onLeftSwipe: () {
             ChatCubit.get(context).onMessageSwipe(
               message: widget.message.text,
@@ -107,6 +112,24 @@ class _MyMessageCardState extends State<MyMessageCard> {
                         title: Text(widget.message.timeSent.foucesdMenueCard, style: TextStyle(color: AppColorss.textColor2),),
                         onPressed: () {},
                       ),
+                      if(widget.message.messageType == MessageType.image)
+                        FocusedMenuItem(
+                            backgroundColor : AppColorss.thirdColor2,
+                            title: Text(AppStringss.save),
+                            trailingIcon: const Icon(FluentIcons.arrow_circle_down_24_regular),
+                            onPressed: (){
+                              _SaveImage(context);
+                            }
+                        ),
+                      if(widget.message.messageType == MessageType.video)
+                        FocusedMenuItem(
+                            backgroundColor : AppColorss.thirdColor2,
+                            title: Text(AppStringss.save),
+                            trailingIcon: const Icon(FluentIcons.arrow_circle_down_24_regular),
+                            onPressed: (){
+                              _saveVideo();
+                            }
+                        ),
                       if(widget.message.isLiked)
                         FocusedMenuItem(
                           backgroundColor : AppColorss.thirdColor2,
@@ -142,7 +165,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
                         ),
                       FocusedMenuItem(
                         backgroundColor : AppColorss.thirdColor2,
-                        trailingIcon: Icon(FluentIcons.arrow_reply_24_regular, color: AppColorss.iconsColors),
+                        trailingIcon: Icon(FluentIcons.arrow_hook_up_left_24_filled, color: AppColorss.iconsColors),
                         title: Text(AppStringss.reply),
                         onPressed: () async {
                           ChatCubit.get(context).onMessageSwipe(
@@ -182,7 +205,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
                       // Add more items as needed
                     ],
                     onPressed: (){},
-                    leftSide: 200,
+                    leftSide: MediaQuery.of(context).size.width / 2.07,
                     rightSide: 0,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -536,6 +559,62 @@ class _MyMessageCardState extends State<MyMessageCard> {
         gravity: ToastGravity.CENTER,
       );
       print('Error updating message: $e');
+    }
+  }
+
+  void _SaveImage(BuildContext context) async {
+    var cacheManager = DefaultCacheManager();
+    var file = await cacheManager.getSingleFile(widget.message.text);
+
+    final directory = await getTemporaryDirectory();
+    final imagePath = '${directory.path}/${DateTime.now().millisecondsSinceEpoch}.png';
+    final savedFile = await file.copy(imagePath);
+
+    final result = await ImageGallerySaver.saveFile(savedFile.path);
+    if (result['isSuccess']) {
+      Fluttertoast.showToast(
+        msg: 'Saved',
+        toastLength: Toast.LENGTH_LONG,
+        textColor: AppColorss.textColor1,
+        backgroundColor: AppColorss.secondaryColor,
+        gravity: ToastGravity.CENTER,
+      );
+    }else {
+      Fluttertoast.showToast(
+        msg: 'Fail to save Image',
+        toastLength: Toast.LENGTH_LONG,
+        textColor: AppColorss.textColor1,
+        backgroundColor: AppColorss.secondaryColor,
+        gravity: ToastGravity.CENTER,
+      );
+    }
+
+  }
+  void _saveVideo() async {
+    var cacheManager = DefaultCacheManager();
+    var file = await cacheManager.getSingleFile(widget.message.text);
+
+    final directory = await getTemporaryDirectory();
+    final videoPath = '${directory.path}/${DateTime.now().millisecondsSinceEpoch}.mp4';
+    final savedFile = await file.copy(videoPath);
+
+    final result = await ImageGallerySaver.saveFile(savedFile.path, isReturnPathOfIOS: false);
+    if (result['isSuccess']) {
+      Fluttertoast.showToast(
+        msg: 'Video Saved',
+        toastLength: Toast.LENGTH_LONG,
+        textColor: AppColorss.textColor1,
+        backgroundColor: AppColorss.secondaryColor,
+        gravity: ToastGravity.CENTER,
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: 'Fail to save video',
+        toastLength: Toast.LENGTH_LONG,
+        textColor: AppColorss.textColor1,
+        backgroundColor: AppColorss.secondaryColor,
+        gravity: ToastGravity.CENTER,
+      );
     }
   }
 }
