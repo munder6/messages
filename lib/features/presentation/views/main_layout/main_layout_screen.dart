@@ -115,6 +115,8 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
                         fontFamily: 'Arabic',
                       ),
                       cursorColor: AppColorss.iconsColors,
+                      cursorWidth: 0.6,
+                      cursorHeight: 17,
                       decoration:  InputDecoration(
                         prefixIcon: Icon(
                           FluentIcons.search_24_regular,
@@ -123,10 +125,10 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
                         ),
                         hintText: AppStringss.search,
                         hintStyle: TextStyle(
-                          color: AppColorss.textColor3,
+                          color: AppColorss.textColor3.withOpacity(0.2),
                           fontFamily: 'Arabic',
-                          fontSize: 17,
-                           height: 1.029),
+                          fontSize: 16,
+                           height: 1.045),
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
@@ -139,30 +141,30 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
               ),
             ),
           ),
-          // const SizedBox(height: 5),
-          //  Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       Text(AppStringss.broadcast, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),),
-          //       Text(AppStringss.newGroup, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),)
-          //     ],
-          //   ),
-          // ),
-          //Divider(color: AppColorss.textColor1.withOpacity(0.4),height: 0,indent: 0,),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 34.0, vertical: 10),
-          //   child: Row(
-          //     children: [
-          //       Icon(FluentIcons.archive_28_filled, color: Colors.grey.shade600, size: 22,),
-          //       const SizedBox(width: 20),
-          //       Text(AppStringss.archived, style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: AppColorss.textColor1),),
-          //     ],
-          //   ),
-          // ),
-          // Divider(color: AppColorss.textColor1.withOpacity(0.4),height: 0,indent: 89,),
-          //StoryWidget(),
+          const SizedBox(height: 5),
+           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(AppStringss.broadcast, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),),
+                Text(AppStringss.newGroup, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),)
+              ],
+            ),
+          ),
+          Divider(color: AppColorss.textColor1.withOpacity(0.4),height: 0,indent: 0,),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 34.0, vertical: 10),
+            child: Row(
+              children: [
+                Icon(FluentIcons.archive_28_filled, color: Colors.grey.shade600, size: 22,),
+                const SizedBox(width: 20),
+                Text(AppStringss.archived, style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: AppColorss.textColor1),),
+              ],
+            ),
+          ),
+          Divider(color: AppColorss.textColor1.withOpacity(0.4),height: 0,indent: 89,),
+          // StoryWidget(),
           Expanded(
             child: ContactsChatPage(searchQuery: _searchController.text),
           ),

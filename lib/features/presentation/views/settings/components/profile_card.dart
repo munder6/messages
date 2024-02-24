@@ -21,27 +21,24 @@ class ProfileCard extends StatelessWidget {
       builder: (context,snapshot){
         if (snapshot.connectionState == ConnectionState.done) {
             UserEntity user = AuthCubit.get(context).userEntity!;
-              return InkWell(
-              onTap: () {
-                navigateTo(context, Routes.profileRoute, arguments: user);
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
-                child: Container(
-                  height: 82,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      //set border radius more than 50% of height and width to make circle
-                    ),
-                    elevation: 0,
-                    color:  AppColorss.thirdColor,
+              return Center(
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () {
+                  navigateTo(context, Routes.profileRoute, arguments: user);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+                  child: Container(
                     child: Padding(
-                      padding: const EdgeInsets.all(16.5),
-                      child: Row(
+                      padding: const EdgeInsets.all(8.5),
+                      child: Column(
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
+                            borderRadius: BorderRadius.circular(100),
                             child:  CachedNetworkImage(
                               imageUrl: user.profilePic,
                               placeholder: (context, url) => Stack(
@@ -51,63 +48,64 @@ class ProfileCard extends StatelessWidget {
                               ),
                               errorWidget: (context, url, error) =>
                                   Image.asset(AppImage.genericProfileImage),
-                              //height: 180.0,
+                              height: 120.0,
                               fit: BoxFit.cover,
                             ),
                           ),
                           const SizedBox(
                             width: 16,
                           ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  user.name,
-                                  style: TextStyle(color:AppColorss.textColor1, fontSize: 20),
-                                ),
-                                // const SizedBox(
-                                //   height: 5,
-                                // ),
-                                Text(
-                                  user.status,
-                                  style: TextStyle(color: AppColorss.textColor3),
-                                  overflow: TextOverflow.ellipsis,
-                                )
-                              ],
-                            ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 15),
+                              Text(
+                                user.name,
+                                style: TextStyle(color:AppColorss.textColor1, fontSize: 20),
+                              ),
+                              // const SizedBox(
+                              //   height: 5,
+                              // ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    user.phoneNumber,
+                                    style: TextStyle(color: AppColorss.textColor3),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const SizedBox(width : 5),
+                                  CircleAvatar(
+                                    radius: 2.5,
+                                    backgroundColor: AppColorss.textColor3,
+                                  ),
+                                  const SizedBox(width : 5),
+                                  Text(
+                                    user.status,
+                                    style: TextStyle(color: AppColorss.textColor3),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const SizedBox(height: 15),
+
+                                ],
+                              )
+                            ],
                           ),
                           //const Spacer(),
-                          CircleAvatar(
-                            radius: 18,
-                            backgroundColor: AppColorss.primaryColor,
-                            child: Image.asset(
-                              AppImage.qrCode,
-                              width: 20,
-                              color:  Colors.blue[400],
-                            ),
-                          ),
+
                         ],
                       ),
                     ),
                   ),
                 ),
-              ),
-            );
-        }
-        return  Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              //set border radius more than 50% of height and width to make circle
             ),
-            elevation: 0,
-            color:  AppColorss.thirdColor,
+              );
+        }
+        return  SizedBox(
+          height: 201,
+          child: Center(
             child: SizedBox(
-              height: 74,
-              width: 500,
-              child: Lottie.asset("assets/images/loading.json", width: 10),
+              child: Lottie.asset("assets/images/loading.json", width: 30),
             ),
           ),
         );

@@ -87,8 +87,13 @@ class _ContactsChatPageState extends State<ContactsChatPage> {
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
-        return ChatContactCard(
-          chatContact: contacts[index],
+        return Column(
+          children: [
+            ChatContactCard(
+              chatContact: contacts[index],
+            ),
+            Divider(indent: 88, height: 0.1,color: AppColorss.dividersColor.withOpacity(0.5),),
+          ],
         );
       },
     );

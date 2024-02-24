@@ -28,36 +28,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   bool _isSwitchedOn = true;
 
-  List<Map<String, dynamic>> settingsItems = [
-    {
-      'title': 'Notifications',
-      'icon': FluentIcons.alert_28_regular,
-    },
-    {
-      'title': 'Privacy',
-      'icon': FluentIcons.lock_closed_24_regular,
-    },
-    {
-      'title': 'Chats',
-      'icon': FluentIcons.chat_24_regular,
-    },
-    {
-      'title': 'Storage and data',
-      'icon': FluentIcons.data_area_24_regular,
-    },
-    {
-      'title': 'App language',
-      'icon': FluentIcons.local_language_24_regular,
-    },
-    {
-      'title': 'Help',
-      'icon': FluentIcons.chat_help_24_regular,
-    },
-    {
-      'title': 'Logout',
-      'icon': FluentIcons.sign_out_24_regular,
-    },
-  ];
 
   @override
   void initState() {
@@ -79,7 +49,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> filteredItems = List.from(settingsItems);
     final AuthCubit cubit = AuthCubit.get(context);
 
     return Scaffold(
@@ -88,7 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         elevation: 0,
         backgroundColor: AppColorss.primaryColor,
         //title: Text(AppStrings.settings, style: TextStyle(color: AppColorss.textColor1)),
-        centerTitle: false,
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -104,62 +73,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                height: 35,
-                decoration: BoxDecoration(
-                  color: AppColorss.thirdColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            filteredItems = settingsItems
-                                .where((item) =>
-                                item['title']
-                                    .toLowerCase()
-                                    .contains(value.toLowerCase()))
-                                .toList();
-                          });
-                        },
-                        textAlignVertical: TextAlignVertical.center,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: AppColorss.textColor1,
-                          fontSize: 15,
-                          fontFamily: 'Arabic',
-                        ),
-                        cursorColor: AppColorss.iconsColors,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            FluentIcons.search_24_regular,
-                            color: AppColorss.textColor3,
-                            size: 23,
-                          ),
-                          hintText: AppStringss.search,
-                          hintStyle: TextStyle(
-                            color: AppColorss.textColor3,
-                            fontFamily: 'Arabic',
-                            fontSize: 17,
-                            height: 1.029,
-                          ),
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          enabled: true,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                  ],
-                ),
-              ),
+              const SizedBox(height: 8),
               const ProfileCard(),
+              const SizedBox(height: 0),
+
               Container(
                 margin: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
                 decoration: BoxDecoration(
@@ -247,12 +164,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           borderRadius: BorderRadius.circular(10)),
                       width: MediaQuery.of(context).size.width - 18,
                       child: InkWell(
-                        // onTap: (){
-                        //   Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(builder: (context) => const Test()),
-                        //   );
-                        // },
                         child: Card(
                           elevation: 0,
                           color: AppColorss.thirdColor,
