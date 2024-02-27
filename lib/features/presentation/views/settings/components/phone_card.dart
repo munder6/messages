@@ -15,22 +15,38 @@ class PhoneCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 30),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: AppColorss.thirdColor
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(width: 35),
+             Text("Phone Number", style: TextStyle(color: AppColorss.textColor2),),
+          ],
         ),
-        child: ListTile(
-          leading:  Icon(FluentIcons.call_24_regular, color: AppColorss.iconsColors),
-          title:  Text(
-            user.phoneNumber,
-            style: TextStyle(color:AppColorss.textColor1, fontSize: 20),
+        SizedBox(height: 8),
+        Container(
+          height: 45,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: AppColorss.thirdColor
+          ),
+          child:   Row(
+            children: [
+              const SizedBox(width: 10),
+              const Icon(FluentIcons.call_24_regular),
+              const SizedBox(width: 10),
+
+              Text(
+                  user.phoneNumber,
+                  style: TextStyle(color:AppColorss.textColor1, fontSize: 20),
+
+              ),
+            ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

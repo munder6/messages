@@ -78,7 +78,7 @@ class _OnBoardingState extends State<OnBoarding> {
                   height: 50, width: 450,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 157, 46, 220),
+                          backgroundColor: AppColorss.red,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0))
                       ),

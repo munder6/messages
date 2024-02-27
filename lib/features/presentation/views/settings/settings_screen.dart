@@ -53,20 +53,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       backgroundColor: AppColorss.primaryColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: AppColorss.primaryColor,
-        //title: Text(AppStrings.settings, style: TextStyle(color: AppColorss.textColor1)),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   automaticallyImplyLeading: false,
+      //   backgroundColor: AppColorss.primaryColor,
+      //   //title: Text(AppStrings.settings, style: TextStyle(color: AppColorss.textColor1)),
+      // ),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 50),
                Row(
                 children: [
-                  const SizedBox(width: 21),
+                  IconButton(onPressed: () {
+                    Navigator.pop(context);
+                  },
+                      icon: const Icon(Icons.arrow_back_ios)
+                  ),
+                  const SizedBox(width: 2),
                   Text(
                     AppStringss.settings,
                     style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
@@ -75,8 +81,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               const SizedBox(height: 8),
               const ProfileCard(),
-              const SizedBox(height: 0),
-
+              const SizedBox(height: 10),
+              // Container(
+              //   height: 50,
+              //   margin: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 12),
+              //   decoration: BoxDecoration(
+              //       color: AppColorss.thirdColor,
+              //       borderRadius: BorderRadius.circular(10)),
+              //   width: MediaQuery.of(context).size.width - 18,
+              //   child: InkWell(
+              //     child: Card(
+              //       elevation: 0,
+              //       color: AppColorss.thirdColor,
+              //       child: Padding(
+              //         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              //         child: Row(
+              //           crossAxisAlignment: CrossAxisAlignment.center,
+              //           mainAxisAlignment: MainAxisAlignment.start,
+              //           children: [
+              //             Container(
+              //               decoration: BoxDecoration(
+              //                   color: Colors.blue,
+              //                   borderRadius: BorderRadius.circular(5)),
+              //               height: 30,
+              //               width: 27,
+              //               padding: const EdgeInsets.all(0),
+              //               child: const Icon(
+              //                 FluentIcons.lock_closed_24_regular,
+              //                 size: 20,
+              //                 color: Colors.white,
+              //               ),
+              //             ),
+              //             const SizedBox(width: 10), // Adjust the spacing as needed
+              //             Text(
+              //               AppStringss.privacy,
+              //               style: const TextStyle(fontSize: 15),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              const EditCard(),
               Container(
                 margin: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
                 decoration: BoxDecoration(

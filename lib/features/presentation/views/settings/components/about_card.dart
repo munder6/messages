@@ -104,27 +104,35 @@ class _AboutCardState extends State<AboutCard> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(width: 35),
+            Text("Status", style: TextStyle(color: AppColorss.textColor2),),
+          ],
+        ),
+        SizedBox(height: 8),
         InkWell(
           onTap: _showAboutDialog,
           child: Container(
+            height: 45,
+            margin: const EdgeInsets.symmetric(horizontal: 20),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: AppColorss.thirdColor
             ),
-            margin: const EdgeInsets.symmetric(horizontal: 30),
-            child: ListTile(
-              leading:  Icon(FluentIcons.info_24_regular, color: AppColorss.iconsColors),
-              title:   Text(
-                widget.user.status,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color:AppColorss.textColor1, fontSize: 20),
-              ),
-              trailing: Icon(
-                FluentIcons.edit_24_regular,
-                color: AppColorss.iconsColors,
-              ),
+            child:   Row(
+              children: [
+                const SizedBox(width: 10),
+                const Icon(FluentIcons.status_24_regular),
+                const SizedBox(width: 10),
 
+                Text(
+                  widget.user.status,
+                  style: TextStyle(color:AppColorss.textColor1, fontSize: 20),
+
+                ),
+              ],
             ),
           ),
         ),
@@ -132,3 +140,5 @@ class _AboutCardState extends State<AboutCard> {
     );
   }
 }
+
+

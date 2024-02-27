@@ -39,7 +39,7 @@ class CustomListTile extends StatelessWidget {
             child: Column(
               children: <Widget> [
                 SizedBox(
-                  height: 70,
+                  height: 60,
                   child: ListTile(
                     contentPadding: const EdgeInsets.only(left: 10, right: 10, bottom: 6),
                     onTap: onTap,
@@ -95,15 +95,15 @@ class CustomListTile extends StatelessWidget {
                                 maxLines: 1,
                               ),
                             ),
-                            if ( numOfMessageNotSeen >0 )
+                            if ( numOfMessageNotSeen > 0 )
                               CircleAvatar(
                                 radius: 10,
-                                backgroundColor: AppColorss.myMessageColor2,
+                                backgroundColor: AppColorss.red,
                                 child: Padding(
                                   padding: const EdgeInsets.all(1.0),
                                   child: Text(
                                     numOfMessageNotSeen.toString(),
-                                    style: const TextStyle(color: Colors.white, fontSize: 15),
+                                    style: const TextStyle(color: Colors.white, fontSize: 12),
                                   ),
                                 ),
                               ),

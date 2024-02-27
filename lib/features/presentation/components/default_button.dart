@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/utils/thems/my_colors.dart';
+
 class DefaultButton extends StatelessWidget {
   final String text;
   final VoidCallback onPress;
@@ -18,7 +20,7 @@ class DefaultButton extends StatelessWidget {
       height: 50, width: 450,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromRGBO(71, 62, 102, 1.0),
+            backgroundColor: AppColorss.red,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0))
         ),

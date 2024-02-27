@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import '../../../core/utils/thems/my_colors.dart';
 import '../controllers/auth_cubit/auth_cubit.dart';
 import '/core/extensions/extensions.dart';
 import '../../../core/functions/navigator.dart';
@@ -11,7 +12,7 @@ import '../../../core/utils/constants/strings_manager.dart';
 
 Future<void> showUpdateProfilePicModelBottomSheet(BuildContext context) {
   return showModalBottomSheet(
-    backgroundColor: Colors.grey[900],
+    backgroundColor: AppColorss.thirdColor,
     context: context,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(

@@ -64,6 +64,7 @@ dependencies:
   restart_app: ^1.2.1
   url_launcher: ^6.1.14
   rxdart: ^0.27.7
+  shrink_sidemenu: ^2.0.0+2-null-safety
 
 
 

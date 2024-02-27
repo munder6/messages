@@ -106,24 +106,25 @@ class _NameCardState extends State<NameCard> {
       onTap: _showNameDialog,
       child: Column(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: AppColorss.thirdColor
-            ),
-            margin: const EdgeInsets.symmetric(horizontal: 30),
-            child: ListTile(
-              leading: Icon(FluentIcons.person_24_regular, color: AppColorss.iconsColors),
-              title: Text(
-                widget.user.name,
-                style: TextStyle(color: AppColorss.textColor1, fontSize: 20),
+          Divider(indent: 8,),
+          Row(
+            children: [
+              SizedBox(width: 8),
+              Container(
+                child: Text("${widget.user.name}", textAlign: TextAlign.start,),
+
+                // child: ListTile(
+                //   leading: Icon(FluentIcons.person_24_regular, color: AppColorss.iconsColors),
+                //   title: Text(
+                //     widget.user.name,
+                //     style: TextStyle(color: AppColorss.textColor1, fontSize: 20),
+                //   ),
+                // ),
               ),
-              trailing: Icon(
-                FluentIcons.edit_24_regular,
-                color: AppColorss.iconsColors,
-              ),
-            ),
+            ],
           ),
+          Divider(indent: 8,),
+
         ],
       ),
     );

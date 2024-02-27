@@ -245,9 +245,11 @@ class _BottomChatFieldState extends State<BottomChatField> {
 
               InkWell(
                 onTap:  () {
-                    ChatCubit.get(context).sendTextMessage(
+                    if (widget.messageController.text.isNotEmpty) {
+                      ChatCubit.get(context).sendTextMessage(
                     text: widget.messageController.text.trim(),
                     receiverId: widget.receiverId);
+                    }
                     widget.messageController.clear();
                     setState(() {
                     widget.messageController.clear();});},

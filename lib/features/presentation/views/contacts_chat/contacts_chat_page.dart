@@ -92,7 +92,19 @@ class _ContactsChatPageState extends State<ContactsChatPage> {
             ChatContactCard(
               chatContact: contacts[index],
             ),
-            Divider(indent: 88, height: 0.1,color: AppColorss.dividersColor.withOpacity(0.5),),
+           // // Divider(indent: 88, height: 0.1,color: AppColorss.dividersColor.withOpacity(0.5),),
+           //  ChatContactCard(
+           //    chatContact: contacts[index],
+           //  ),
+           // // Divider(indent: 88, height: 0.1,color: AppColorss.dividersColor.withOpacity(0.5),),
+           //  ChatContactCard(
+           //    chatContact: contacts[index],
+           //  ),
+           // // Divider(indent: 88, height: 0.1,color: AppColorss.dividersColor.withOpacity(0.5),),
+           //  ChatContactCard(
+           //    chatContact: contacts[index],
+           //  ),
+           // // Divider(indent: 88, height: 0.1,color: AppColorss.dividersColor.withOpacity(0.5),),
           ],
         );
       },
@@ -116,6 +128,7 @@ class ChatContactCard extends StatelessWidget {
           return Dismissible(
             key: Key(chatContact.contactId),
             background: Container(
+              height: 60,
               color: Colors.red,
               child: const Icon(Icons.delete_outline, color: Colors.white, size: 30,),
               alignment: Alignment.centerLeft,
@@ -140,6 +153,7 @@ class ChatContactCard extends StatelessWidget {
                 subTitle: chatContact.lastMessage,
                 time: chatContact.timeSent.chatContactTime,
                 numOfMessageNotSeen: snapshot.data ?? 0, // Replace with the actual count of unseen messages
+                //numOfMessageNotSeen: 99, // Replace with the actual count of unseen messages
                 leading: Hero(
                   tag: chatContact.contactId,
                   child: InkWell(

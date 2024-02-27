@@ -46,8 +46,8 @@ class AppStrings {
   //login profile info
   static const String profileInfo = 'Profile info';
   static const String pleaseProvideYourName =
-      'Please provide your Name';
-  static const String typeYourNameHere = 'Type your name here';
+      'Please provide your Name & Profile photo';
+  static const String typeYourNameHere = 'your name ...';
   static const String profilePhoto = 'Profile photo';
   static const String camera = 'Camera';
   static const String gallery = 'Gallery';
@@ -123,9 +123,9 @@ class AppStrings {
 class AppStringss {
   static bool isEnglish = true;
 
-  static String chats = isEnglish ? "Chats" : "المحادثات";
+  static String chats = isEnglish ? "MessageMe" : "المحادثات";
   static String edit = isEnglish ? "Edit" : "تعديل";
-  static String search = isEnglish ? "Search" : "بحث";
+  static String search = isEnglish ? "Search messages" : "بحث";
   static String reply = isEnglish ? "Reply" : "رد";
   static String unlike = isEnglish ? "Unlike Message" : "الفاء الاعجاب";
   static String call = isEnglish ? "Call" : "اتصال";
@@ -136,6 +136,7 @@ class AppStringss {
   static String settings = isEnglish ? "Settings" : "الإعدادات";
   static String notifications = isEnglish ? "Notifications" : "الإشعارات";
   static String privacy = isEnglish ? "Privacy" : "الخصوصية";
+  static String editProfile = isEnglish ? "Change Name, Status, Profile Picture" : "تغيير الاسم ، الحالة ، الصورة الشخصية";
   static String storeData = isEnglish ? "Storage and data" : "البيانات والتخزين";
   static String lang = isEnglish ? "App language" : "لغة التطبيق";
   static String help = isEnglish ? "Help" : "الحصول على مساعدة";

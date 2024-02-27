@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:message_me_app/features/presentation/views/main_layout/main_layout_screen.dart';
 import 'package:message_me_app/features/presentation/views/onboarding/screens/onboarding.dart';
 import 'package:message_me_app/features/presentation/views/wallpaper/wallpaper_screen.dart';
 import 'package:message_me_app/main_home_screen.dart';
@@ -71,7 +72,7 @@ class AppRoutes {
         );
       case Routes.mainLayoutRoute:
         return MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
+          builder: (_) => const MainLayoutScreen(),
         );
       case Routes.selectContactRoute:
         return MaterialPageRoute(

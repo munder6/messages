@@ -69,6 +69,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             Expanded(
                               child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
                                 onTap: () {
                                   showCountryPicker(
                                     countryListTheme: CountryListThemeData(
@@ -92,20 +96,30 @@ class _LoginScreenState extends State<LoginScreen> {
                                     },
                                   );
                                 },
-                                child: Container(
-                                  padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
-                                  decoration: BoxDecoration(
-                                    color: AppColorss.thirdColor,
-                                    borderRadius: BorderRadius.circular(8)
-                                  ),
-                              
-                                  child: Text(
-                                    cubit.country == null
-                                        ? "Choose a country"
-                                        : "${cubit.country!.flagEmoji} ${cubit.country!.name}",
-                                    textAlign: TextAlign.start,
-                                    style: context.displaySmall!.copyWith(color:AppColorss.myMessageColor, fontWeight: FontWeight.normal, fontSize: 18),
-                                  ),
+                                child: Column(
+                                  children: [
+                                    Divider(color: AppColorss.secondaryColor,),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.only(top: 0, bottom: 0, left: 10),
+                                          decoration: BoxDecoration(
+                                            color: AppColorss.primaryColor,
+                                            borderRadius: BorderRadius.circular(8)
+                                          ),
+
+                                          child: Text(
+                                            cubit.country == null
+                                                ? "Choose a country"
+                                                : "${cubit.country!.flagEmoji} ${cubit.country!.name}",
+                                            textAlign: TextAlign.start,
+                                            style: context.displaySmall!.copyWith(color:AppColorss.red, fontWeight: FontWeight.normal, fontSize: 18),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Divider(color: AppColorss.secondaryColor,),
+                                  ],
                                 ),
                               ),
                             ),
@@ -135,74 +149,83 @@ class _LoginScreenState extends State<LoginScreen> {
                         //   thickness: 0.2,
                         //   color: AppColorss.dividersColor,
                         // ),
-                        const SizedBox(height: 10),
-                        Container(
-                          height: 52,
-                          padding: const EdgeInsets.only(left: 15,right: 5, top: 5, bottom: 5),
-                          decoration: BoxDecoration(
-                            color: AppColorss.thirdColor,
-                            borderRadius: BorderRadius.circular(10)
-                          ),
-                         
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: AppSize.s60,
-                                child: TextField(
-                                  enabled: true,
-                                  keyboardAppearance: Brightness.dark,
-                                  keyboardType: TextInputType.number,
-                                  readOnly: true,
-                                  controller: countryCodeController,
-                                  style:  TextStyle(color: AppColorss.textColor1, fontSize: 18),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    prefix: Container(
-                                      margin: const EdgeInsets.only(right: 12),
-                                      width: 5,
-                                      alignment: Alignment.bottomLeft,
-                                      child: Text(
-                                        '+',
-                                        style: context.titleLarge!.copyWith(
-                                            color: AppColorss.textColor1,
-                                          fontSize: 18,
+                        const SizedBox(height: 0),
+                        Column(
+                          children: [
+                            Divider(color: AppColorss.secondaryColor,),
+                            Container(
+                              height: 44,
+                              padding: const EdgeInsets.only(left: 15,right: 5, top: 0, bottom: 0),
+                              decoration: BoxDecoration(
+                                color: AppColorss.primaryColor,
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: AppSize.s60,
+                                    child: TextField(
+                                      enabled: true,
+                                      keyboardAppearance: Brightness.dark,
+                                      keyboardType: TextInputType.number,
+                                      readOnly: true,
+                                      controller: countryCodeController,
+                                      style:  TextStyle(color: AppColorss.textColor1, fontSize: 18, height: 0.88),
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        disabledBorder: InputBorder.none,
+                                        prefix: Container(
+                                          margin: const EdgeInsets.only(right: 12),
+                                          width: 5,
+                                          alignment: Alignment.bottomLeft,
+                                          child: Text(
+                                            '+',
+                                            style: context.titleLarge!.copyWith(
+                                                color: AppColorss.textColor1,
+                                              fontSize: 18,
+                                              height: 0.89
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              // const SizedBox(
-                              //   width: 2,
-                              // ),
-                              Container(
-                                child: const SizedBox(child: Text(" "),),
-                                color: AppColorss.textColor1.withOpacity(0.5),
-                                height: 30,
-                                width: 0.4,
-                              ),
-                              const SizedBox(width: 7),
-
-                              Expanded(
-                                child: TextField(
-                                  controller: phoneController,
-                                  keyboardType: TextInputType.phone,
-                                  cursorColor: Colors.white70,
-                                  cursorHeight: 20,
-                                  style:  TextStyle(color: AppColorss.textColor1, fontSize: 18, height: 1.2),
-                                  decoration:  InputDecoration(
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    hintText:  "Your Phone Number ",
-                                    hintStyle: TextStyle(color: AppColorss.textColor2)
+                                  // const SizedBox(
+                                  //   width: 2,
+                                  // ),
+                                  Container(
+                                    child: const SizedBox(child: Text(" "),),
+                                    color: AppColorss.textColor1.withOpacity(0.5),
+                                    height: 20,
+                                    width: 0.4,
                                   ),
-                                ),
+                                  const SizedBox(width: 7),
+
+                                  Expanded(
+                                    child: TextField(
+                                      controller: phoneController,
+                                      keyboardType: TextInputType.phone,
+                                      cursorColor: Colors.white70,
+                                      cursorHeight: 18,
+                                      cursorWidth: 0.8,
+                                      style:  TextStyle(color: AppColorss.textColor1, fontSize: 18, height: 0.89),
+                                      decoration:  InputDecoration(
+                                        border: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        disabledBorder: InputBorder.none,
+                                        hintText:  "Your Phone Number ",
+                                        hintStyle: TextStyle(color: AppColorss.textColor2, height: 0.95, fontSize: 16)
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            Divider(color: AppColorss.secondaryColor,),
+
+                          ],
                         ),
                       ],
                     ),

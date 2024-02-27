@@ -1,7 +1,10 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:message_me_app/features/presentation/controllers/auth_cubit/auth_cubit.dart';
+import 'package:message_me_app/features/presentation/views/settings/components/name_card.dart';
 
+import '../../../../../core/utils/thems/my_colors.dart';
 import '../../../../domain/entities/user.dart';
 import '../../../components/my_cached_net_image.dart';
 import '../../../components/update_profile_pic_model_bottom_sheet.dart';
@@ -27,38 +30,52 @@ class ProfilePicCircleCard extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return Stack(
-          children: [
-            GestureDetector(
-              onTap: () {
-                showUpdateProfilePicModelBottomSheet(context);
-              },
-              child: Hero(
-                tag: user.uId,
-                child: MyCachedNetImage(
-                  imageUrl: newUser?.profilePic ?? user.profilePic,
-                  radius: 85,
-                ),
-              ),
-            ),
-             Positioned(
-              bottom: 0,
-              right: 0,
-              child: InkWell(
-                onTap: (){
-                  showUpdateProfilePicModelBottomSheet(context);
-                },
-                child: const CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Colors.blue,
-                  child: Icon(
-                    Icons.camera_alt_rounded,
-                    color: Colors.white,
+        return Container(
+          margin: const EdgeInsets.only(left: 20,right: 20),
+          decoration: BoxDecoration(
+            color: AppColorss.thirdColor,
+            borderRadius: BorderRadius.circular(10)
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  const SizedBox(width: 30),
+                  InkWell(
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    onTap: (){selectImageFromGallery(context);},
+                    child: Hero(
+                      tag: user.uId,
+                      child: MyCachedNetImage(
+                        imageUrl: newUser?.profilePic ?? user.profilePic,
+                        radius: 30,
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 10),
+                  Text("Enter Your name and add an optional\nprofile picture", textAlign: TextAlign.start, style: TextStyle(color: AppColorss.textColor2),)
+                ],
               ),
-            )
-          ],
+              const SizedBox(height: 8),
+               Row(
+                children: [
+                   const SizedBox(width: 48.7),
+                   InkWell(
+                     highlightColor: Colors.transparent,
+                     splashColor: Colors.transparent,
+                     focusColor: Colors.transparent,
+                     hoverColor: Colors.transparent,
+                     onTap: (){showUpdateProfilePicModelBottomSheet(context);},
+                       child: const Text("Edit", style: TextStyle(color: AppColorss.red),))
+                ],
+              ),
+              NameCard(user: user)
+            ],
+          ),
         );
       },
     );

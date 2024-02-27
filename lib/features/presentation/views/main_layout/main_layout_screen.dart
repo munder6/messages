@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:message_me_app/core/functions/navigator.dart';
 import 'package:message_me_app/core/utils/routes/routes_manager.dart';
 import 'package:message_me_app/core/utils/thems/my_colors.dart';
+import 'package:message_me_app/features/presentation/views/settings/settings_screen.dart';
 import '../../../../core/utils/constants/strings_manager.dart';
 import '../../controllers/auth_cubit/auth_cubit.dart';
 import '../contacts_chat/contacts_chat_page.dart';
@@ -62,22 +63,22 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
     return Scaffold(
       backgroundColor: AppColorss.primaryColor,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(40),
+        preferredSize: const Size.fromHeight(10),
         child: AppBar(
-          actions:  [
-          const Icon(FluentIcons.camera_24_regular, color: AppColorss.myMessageColor,),
-          const SizedBox(width: 13),
-            IconButton(
-                onPressed: () {navigateTo(context, Routes.selectContactRoute);},
-                icon : const Icon(FluentIcons.tab_add_24_regular,color: AppColorss.myMessageColor)),
-            const SizedBox(width: 15),
-          ],
+          // actions:  [
+          // //const Icon(FluentIcons.camera_24_regular, color: AppColorss.myMessageColor,),
+          // const SizedBox(width: 13),
+          //   IconButton(
+          //       onPressed: () {navigateTo(context, Routes.selectContactRoute);},
+          //       icon : const Icon(FluentIcons.tab_add_24_regular,color: AppColorss.myMessageColor)),
+          //   const SizedBox(width: 15),
+          // ],
           elevation: 0,
           centerTitle: false,
-          title:  Text(
-            AppStringss.edit,
-            style:  const TextStyle(fontSize: 16, fontWeight: FontWeight.normal, fontFamily: 'Arabic', color: AppColorss.myMessageColor),
-          ),
+          // title:  Text(
+          //   AppStringss.edit,
+          //   style:  const TextStyle(fontSize: 16, fontWeight: FontWeight.normal, fontFamily: 'Arabic', color: AppColorss.myMessageColor),
+          // ),
           backgroundColor: AppColorss.primaryColor,
         ),
       ),
@@ -85,18 +86,35 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
            Row(
+             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const SizedBox(width: 15),
-              Text(AppStringss.chats, style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),),
+              IconButton(
+                splashColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>  SettingsScreen()),
+                    );
+                },
+                  icon : const Icon(FluentIcons.settings_28_regular, color: AppColorss.red,),
+              ),
+              const SizedBox(width: 140),
+              Text(AppStringss.chats, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w300),),
+              IconButton(
+                  onPressed: () {navigateTo(context, Routes.selectContactRoute);},
+                  icon : const Icon(FluentIcons.tab_add_24_regular,color: AppColorss.red)),
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 11.5, right: 11.5, top: 8),
+            padding: const EdgeInsets.only(left: 11.5, right: 11.5, top: 4),
             child: Container(
-              height: 35,
+              height: 50,
               decoration: BoxDecoration(
                 color: AppColorss.thirdColor,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(50),
               ),
               child: Row(
                 children: [
@@ -142,28 +160,50 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
             ),
           ),
           const SizedBox(height: 5),
-           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(AppStringss.broadcast, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),),
-                Text(AppStringss.newGroup, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),)
-              ],
-            ),
-          ),
-          Divider(color: AppColorss.textColor1.withOpacity(0.4),height: 0,indent: 0,),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 34.0, vertical: 10),
-            child: Row(
-              children: [
-                Icon(FluentIcons.archive_28_filled, color: Colors.grey.shade600, size: 22,),
-                const SizedBox(width: 20),
-                Text(AppStringss.archived, style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: AppColorss.textColor1),),
-              ],
-            ),
-          ),
-          Divider(color: AppColorss.textColor1.withOpacity(0.4),height: 0,indent: 89,),
+          // InkWell(
+          //   onTap: () {navigateTo(context, Routes.selectContactRoute);},
+          //   child: Container(
+          //
+          //     decoration: BoxDecoration(
+          //         color: AppColorss.thirdColor,
+          //       borderRadius: BorderRadius.circular(50)
+          //     ),
+          //     margin: const EdgeInsets.only(left: 15, right: 15),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.start,
+          //       children: [
+          //         const SizedBox(width: 8),
+          //         IconButton(
+          //             onPressed: () {navigateTo(context, Routes.selectContactRoute);},
+          //             icon : const Icon(FluentIcons.tab_add_24_regular,color: AppColorss.myMessageColor)),
+          //         const Text("Add A New Chat", style: TextStyle(fontSize: 16),)
+          //
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          //  Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Text(AppStringss.broadcast, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),),
+          //       Text(AppStringss.newGroup, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: AppColorss.myMessageColor),)
+          //     ],
+          //   ),
+          // ),
+          // Divider(color: AppColorss.textColor1.withOpacity(0.4),height: 0,indent: 0,),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 34.0, vertical: 10),
+          //   child: Row(
+          //     children: [
+          //       Icon(FluentIcons.archive_28_filled, color: Colors.grey.shade600, size: 22,),
+          //       const SizedBox(width: 20),
+          //       Text(AppStringss.archived, style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: AppColorss.textColor1),),
+          //     ],
+          //   ),
+          // ),
+          // Divider(color: AppColorss.textColor1.withOpacity(0.4),height: 0,indent: 89,),
           // StoryWidget(),
           Expanded(
             child: ContactsChatPage(searchQuery: _searchController.text),
