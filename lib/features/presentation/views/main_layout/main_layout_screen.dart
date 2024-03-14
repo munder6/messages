@@ -9,6 +9,7 @@ import '../../../../core/utils/constants/strings_manager.dart';
 import '../../controllers/auth_cubit/auth_cubit.dart';
 import '../contacts_chat/contacts_chat_page.dart';
 import '../select_contact/components/new_group_contact_community_buttons_List.dart';
+import '../select_contact/select_contact_screen.dart';
 import 'components/sliver_appbar_actions.dart';
 import 'components/story_widget.dart';
 
@@ -104,7 +105,23 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
               const SizedBox(width: 140),
               Text(AppStringss.chats, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w300),),
               IconButton(
-                  onPressed: () {navigateTo(context, Routes.selectContactRoute);},
+                  // onPressed: () {navigateTo(context, Routes.selectContactRoute);},
+                onPressed: (){
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (builder){
+                        return new Container(
+                          decoration: new BoxDecoration(
+                              color: AppColorss.red, //could change this to Color(0xFF737373),
+
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
+                          ),
+                          //so you don't have to change MaterialApp canvasColor
+                          child: const SelectContactScreen(),
+                        );
+                      }
+                  );
+                },
                   icon : const Icon(FluentIcons.tab_add_24_regular,color: AppColorss.red)),
             ],
           ),

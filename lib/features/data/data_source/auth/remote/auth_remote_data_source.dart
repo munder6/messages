@@ -101,7 +101,7 @@ class AuthRemoteDataSource extends BaseAuthRemoteDataSource {
       fcmToken: parameters.fcmToken,
       name: parameters.name,
       uId: uId,
-      status: AppStrings.heyThere,
+      status: parameters.status ?? "Hi there",
       profilePic: photoUrl,
       phoneNumber: auth.currentUser!.phoneNumber!,
       isOnline: true,

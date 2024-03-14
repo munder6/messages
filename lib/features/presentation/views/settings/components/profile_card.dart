@@ -8,8 +8,6 @@ import '../../../../../core/functions/navigator.dart';
 import '../../../../../core/utils/constants/assets_manager.dart';
 import '../../../../../core/utils/routes/routes_manager.dart';
 import '../../../../domain/entities/user.dart';
-import '../../../components/loader.dart';
-import '../../../components/my_cached_net_image.dart';
 import '../../../controllers/auth_cubit/auth_cubit.dart';
 
 class ProfileCard extends StatelessWidget {
@@ -97,7 +95,7 @@ class ProfileCard extends StatelessWidget {
               );
         }
         return  SizedBox(
-          height: 201,
+          height: 263,
           child: Center(
             child: SizedBox(
               child: Lottie.asset("assets/images/loading.json", width: 30),
@@ -195,7 +193,6 @@ class SetProfilePhoto extends StatelessWidget {
           );
         }
         return  SizedBox(
-          height: 201,
           child: Center(
             child: SizedBox(
               child: Lottie.asset("assets/images/loading.json", width: 30),
@@ -270,8 +267,8 @@ class EditCard extends StatelessWidget {
             ),
           );
         }
-        return  SizedBox(
-         height: 62,
+        return const SizedBox(
+         height: 0,
         );
       },
     );

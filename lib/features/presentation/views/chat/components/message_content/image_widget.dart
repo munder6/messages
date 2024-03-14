@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -69,80 +71,98 @@ class ImageWidget extends StatelessWidget {
   void _openFullScreenImage(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
-          backgroundColor:  AppColorss.primaryColor,
-          body: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SizedBox(height: 30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.close_rounded, color: AppColorss.iconsColors, size: 30,),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: (){_SaveImage(context);},
-                          child: Text(
-                            "Save Image",
-                            style: TextStyle(color: AppColorss.textColor1, fontSize: 15),
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            FluentIcons.arrow_circle_down_24_regular,
-                            color: AppColorss.iconsColors,
-                          ),
-                          onPressed: () {
-                            _SaveImage(context);
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) {
+          return Stack(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  color: Colors.black.withOpacity(0.5), // Adjust the opacity as needed
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),  // Shadow color
-                        spreadRadius: 2,                      // Spread radius
-                        blurRadius: 100,                        // Blur radius
-                        offset: Offset(0, 3),                  // Offset in x and y direction
-                      ),
-                    ],
-                  ),
-                  height: MediaQuery.of(context).size.height - 140,
-                  child: Center(
-                    child: Hero(
-                      tag: message.text.hashCode,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: CachedNetworkImage(
-                          imageUrl: message.text,
-                          fit: BoxFit.contain,
-                          placeholder: (context, url) => const CircularProgressIndicator(),
+              ),
+              Center(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 4 , sigmaY: 4), // Adjust the blur intensity as needed
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Scaffold(
+                      backgroundColor: Colors.transparent,
+                      body: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            SizedBox(height: 30),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.close_rounded, color: AppColorss.iconsColors, size: 30,),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: (){_SaveImage(context);},
+                                      child: Text(
+                                        "Save Image",
+                                        style: TextStyle(color: AppColorss.textColor1, fontSize: 15),
+                                      ),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        FluentIcons.arrow_circle_down_24_regular,
+                                        color: AppColorss.iconsColors,
+                                      ),
+                                      onPressed: () {
+                                        _SaveImage(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Center(
+                                  child: Hero(
+                                    tag: message.text.hashCode,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: CachedNetworkImage(
+                                        imageUrl: message.text,
+                                        fit: BoxFit.contain,
+                                        placeholder: (context, url) => const CircularProgressIndicator(),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
                 ),
-
-              ],
-            ),
-          ),
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
+
 
   void _SaveImage(BuildContext context) async {
     var cacheManager = DefaultCacheManager();

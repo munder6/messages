@@ -23,7 +23,7 @@ class SelectContactScreen extends StatelessWidget {
         builder: (context, state) {
           SelectContactCubit cubit = SelectContactCubit.get(context);
           return Scaffold(
-            backgroundColor: AppColorss.primaryColor,
+            backgroundColor: AppColorss.thirdColor,
             appBar: SelectContactAppBar(
               numOfContacts:
                   cubit.contactOnWhats.length + cubit.contactNotOnMessageMe.length,

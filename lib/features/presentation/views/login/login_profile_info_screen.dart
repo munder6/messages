@@ -27,6 +27,7 @@ class LoginProfileInfoScreen extends StatefulWidget {
 
 class _LoginProfileInfoScreenState extends State<LoginProfileInfoScreen> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController statusController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +64,15 @@ class _LoginProfileInfoScreenState extends State<LoginProfileInfoScreen> {
                       Expanded(
                         child: Column(
                           children: [
-                            Divider(color: AppColorss.secondaryColor, height: 1,),
+                             Row(
+                              children: [
+                                Text("Enter Your Name", style: TextStyle(fontSize: 14, color: AppColorss.textColor1),),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Divider(color: AppColorss.thirdColor, height: 0,),
                             Container(
-                              height: 40,
+                              height: 50,
                               decoration: BoxDecoration(
                                 color: AppColorss.primaryColor,
                               ),
@@ -85,7 +92,48 @@ class _LoginProfileInfoScreenState extends State<LoginProfileInfoScreen> {
                                 ),
                               ),
                             ),
-                            Divider(color: AppColorss.secondaryColor, height: 1,),
+                            Divider(color: AppColorss.thirdColor, height: 0,),
+
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text("Enter Your Status", style: TextStyle(fontSize: 14, color: AppColorss.textColor1),),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Divider(color: AppColorss.thirdColor, height: 0,),
+                            Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: AppColorss.primaryColor,
+                              ),
+                              child: TextField(
+                                style:  TextStyle(color: AppColorss.textColor1, fontSize: 18),
+                                cursorHeight: 20,
+                                controller: statusController,
+                                decoration:  InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    filled: false,
+                                    hintStyle: TextStyle(fontSize: 15, color: AppColorss.textColor3, ),
+                                    hintText: 'your status ...',
+                                    enabledBorder: InputBorder.none,
+                                    fillColor: AppColorss.thirdColor
+                                ),
+                              ),
+                            ),
+                            Divider(color: AppColorss.thirdColor, height: 0,),
 
                           ],
                         ),
@@ -107,6 +155,7 @@ class _LoginProfileInfoScreenState extends State<LoginProfileInfoScreen> {
                           cubit.saveUserDataToFirebase(
                             name: nameController.text,
                             fcmToken: "fcmToken",
+                            status: statusController.text
                           );
                         }
                       },

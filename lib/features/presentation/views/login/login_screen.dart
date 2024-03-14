@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 },
                                 child: Column(
                                   children: [
-                                    Divider(color: AppColorss.secondaryColor,),
+                                    Divider(color: AppColorss.thirdColor,),
                                     Row(
                                       children: [
                                         Container(
@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                       ],
                                     ),
-                                    Divider(color: AppColorss.secondaryColor,),
+                                    Divider(color: AppColorss.thirdColor,),
                                   ],
                                 ),
                               ),
@@ -152,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 0),
                         Column(
                           children: [
-                            Divider(color: AppColorss.secondaryColor,),
+                            Divider(color: AppColorss.thirdColor,),
                             Container(
                               height: 44,
                               padding: const EdgeInsets.only(left: 15,right: 5, top: 0, bottom: 0),
@@ -223,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ],
                               ),
                             ),
-                            Divider(color: AppColorss.secondaryColor,),
+                            Divider(color: AppColorss.thirdColor,),
 
                           ],
                         ),

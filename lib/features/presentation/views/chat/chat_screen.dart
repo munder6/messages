@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:message_me_app/core/utils/routes/routes_manager.dart';
 import '../../../../core/utils/thems/my_colors.dart';
@@ -34,7 +36,22 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColorss.primaryColor,
-      appBar: ChatAppBar(name: widget.name, receiverId: widget.uId),
+      appBar: PreferredSize(
+          preferredSize: Size(MediaQuery.of(context).size.width, 43),
+          child: Container(
+            child: ClipRRect(
+                child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                    child: Container(
+                      child: ChatAppBar(name: widget.name, receiverId: widget.uId),
+                      //   width: MediaQuery.of(context).size.width,
+                      //  height: MediaQuery.of(context).padding.top,
+                      color: Colors.transparent,
+                    ))),
+            ),
+          ),
+         // child: ChatAppBar(name: widget.name, receiverId: widget.uId)
+
       body: Stack(
         children: [
           Column(

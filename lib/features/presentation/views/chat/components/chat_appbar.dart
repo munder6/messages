@@ -30,6 +30,11 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           UserEntity userdata = snapshot.data!;
           return AppBar(
             elevation: 0,
+            leading:  IconButton(onPressed: () {
+              Navigator.pop(context);
+            },
+                icon: const Icon(Icons.arrow_back_ios)
+            ),
               clipBehavior: Clip.antiAliasWithSaveLayer,
               shadowColor: AppColorss.iconsColors,
               iconTheme:  IconThemeData(color: AppColorss.iconsColors),

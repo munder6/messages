@@ -38,7 +38,7 @@ class UserModel extends UserEntity {
       fcmToken: map['fcmToken'] ?? '',
       name: map['name'] ?? '',
       uId: map['uId'] ?? '',
-      status: map['status'] ?? '',
+      status: map['status'] ?? 'Hi there',
       profilePic: map['profilePic'] ?? '',
       phoneNumber: map['phoneNumber'],
       isOnline: map['isOnline'] ?? false,

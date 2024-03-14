@@ -43,6 +43,7 @@ class _OtpScreenState extends State<OtpScreen> {
       listener: (context, state) {
         if (state is VerifyOtpSuccessState) {
           navigateAndRemove(context, Routes.loginProfileInfoRoute);
+
         }
       },
       builder: (context, state) {

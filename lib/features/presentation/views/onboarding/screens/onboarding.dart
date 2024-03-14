@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:message_me_app/core/functions/navigator.dart';
 import 'package:message_me_app/core/utils/routes/routes_manager.dart';
 import 'package:message_me_app/core/utils/thems/my_colors.dart';
@@ -37,65 +38,70 @@ class _OnBoardingState extends State<OnBoarding> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:  AppColorss.primaryColor,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 110),
-              Expanded(
-                child: PageView.builder(
-                  onPageChanged: (index){
-                    setState(() {
-                      _pageIndex = index;
-                    });
-                  },
-                  itemCount: demoData.length,
-                  controller: _pageController,
-                    itemBuilder: (context, index) =>
-                        OnboardContent(
-                      image: demoData[index].image,
-                      title: demoData[index].title,
-                      description: demoData[index].description,
-                    )
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
+        children: [
+         // Lottie.asset("assets/images/loading1123.json"),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
                 children: [
-                  ...List.generate(demoData.length, (index) =>
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: DotIndicator(isActive: index == _pageIndex,),
-                      )),
+                  const SizedBox(height: 110),
+                  Expanded(
+                    child: PageView.builder(
+                      onPageChanged: (index){
+                        setState(() {
+                          _pageIndex = index;
+                        });
+                      },
+                      itemCount: demoData.length,
+                      controller: _pageController,
+                        itemBuilder: (context, index) =>
+                            OnboardContent(
+                          image: demoData[index].image,
+                          title: demoData[index].title,
+                          description: demoData[index].description,
+                        )
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ...List.generate(demoData.length, (index) =>
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: DotIndicator(isActive: index == _pageIndex,),
+                          )),
+                    ],
+                  ),
+                 // const Spacer(),
+                  const SizedBox(height: 100),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: SizedBox(
+                      height: 50, width: 450,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColorss.red,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0))
+                          ),
+                          onPressed: () {
+                            navigateAndReplace(context, Routes.loginRoute);
+                            print('FCM Token: ${FirebaseService.fcmToken}');
+                          },
+                          child:  const Text(
+                            "Start Messaging",
+                            style: TextStyle(fontFamily: 'Default', fontWeight: FontWeight.w500, fontSize: 20),)
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10)
                 ],
               ),
-             // const Spacer(),
-              const SizedBox(height: 100),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: SizedBox(
-                  height: 50, width: 450,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColorss.red,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0))
-                      ),
-                      onPressed: () {
-                        navigateAndReplace(context, Routes.loginRoute);
-                        print('FCM Token: ${FirebaseService.fcmToken}');
-                      },
-                      child:  const Text(
-                        "Start Messaging",
-                        style: TextStyle(fontFamily: 'Default', fontWeight: FontWeight.w500, fontSize: 20),)
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10)
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

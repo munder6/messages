@@ -53,32 +53,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       backgroundColor: AppColorss.primaryColor,
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   automaticallyImplyLeading: false,
-      //   backgroundColor: AppColorss.primaryColor,
-      //   //title: Text(AppStrings.settings, style: TextStyle(color: AppColorss.textColor1)),
-      // ),
+      appBar: AppBar(
+        centerTitle: false,
+        elevation: 0,
+        leading:  IconButton(onPressed: () {
+          Navigator.pop(context);
+        },
+            icon: const Icon(Icons.arrow_back_ios)
+        ),
+        titleSpacing: 0,
+        iconTheme: IconThemeData(color: AppColorss.iconsColors, size: 30),
+        backgroundColor: AppColorss.primaryColor,
+        title: Text(AppStrings.settings, style: TextStyle(color: AppColorss.textColor1, fontSize: 30, fontWeight: FontWeight.bold)),
+      ),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 50),
-               Row(
-                children: [
-                  IconButton(onPressed: () {
-                    Navigator.pop(context);
-                  },
-                      icon: const Icon(Icons.arrow_back_ios)
-                  ),
-                  const SizedBox(width: 2),
-                  Text(
-                    AppStringss.settings,
-                    style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
+              // const SizedBox(height: 50),
+              //  Row(
+              //   children: [
+              //     IconButton(onPressed: () {
+              //       Navigator.pop(context);
+              //     },
+              //         icon: const Icon(Icons.arrow_back_ios)
+              //     ),
+              //     const SizedBox(width: 2),
+              //     Text(
+              //       AppStringss.settings,
+              //       style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              //     ),
+              //   ],
+              // ),
               const SizedBox(height: 8),
               const ProfileCard(),
               const SizedBox(height: 10),

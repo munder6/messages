@@ -106,6 +106,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => di.sl<ThemeCubit>()),
       ],
       child: MaterialApp(
+
         title: AppStrings.appName,
         debugShowCheckedModeBanner: false,
         theme: isDarkMode ? ThemeData.dark() : ThemeData.light(),

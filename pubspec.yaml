@@ -65,6 +65,7 @@ dependencies:
   url_launcher: ^6.1.14
   rxdart: ^0.27.7
   shrink_sidemenu: ^2.0.0+2-null-safety
+  flutter_local_notifications: ^16.3.2
 
 
 

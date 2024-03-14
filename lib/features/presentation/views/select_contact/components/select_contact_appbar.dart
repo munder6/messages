@@ -18,9 +18,9 @@ class SelectContactAppBar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      iconTheme: IconThemeData(color: AppColorss.iconsColors),
+      automaticallyImplyLeading : false,
       elevation: 0,
-      backgroundColor: AppColorss.primaryColor,
+      backgroundColor: AppColorss.thirdColor,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

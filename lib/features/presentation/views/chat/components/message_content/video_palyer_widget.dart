@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -54,83 +56,174 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
     });
   }
 
-  void _openFullScreenVideo() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
-          backgroundColor:  AppColorss.primaryColor,
-          body: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SizedBox(height: 30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.close_rounded, color: AppColorss.iconsColors, size: 30,),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: (){_saveVideo;},
-                          child: Text(
-                            "Save video",
-                            style: TextStyle(color: AppColorss.textColor1, fontSize: 15),
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            FluentIcons.arrow_circle_down_24_regular,
-                            color: AppColorss.iconsColors,
-                          ),
-                          onPressed: () {
-                            _saveVideo();
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height - 160,
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),  // Shadow color
-                        spreadRadius: 2,                      // Spread radius
-                        blurRadius: 100,                        // Blur radius
-                        offset: Offset(0, 3),                  // Offset in x and y direction
-                      ),
-                    ],
-                  ),
-                  child: GestureDetector(
-                    onTap: _togglePlay,
-                    child: Center(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: AspectRatio(
-                          aspectRatio: videoPlayerController.value.aspectRatio,
-                          child: Container(
-                            child: VideoPlayer(videoPlayerController),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
 
-              ],
+  void _openFullScreenVideo() {
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+            opaque: false,
+            pageBuilder: (BuildContext context, _, __) {
+              return Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      color: Colors.black.withOpacity(0.5), // Adjust the opacity as needed
+                    ),
+                  ),
+                  Center(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 4 , sigmaY: 4), // Adjust the blur intensity as needed
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        child: Scaffold(
+                          backgroundColor: Colors.transparent,
+                          body: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                SizedBox(height: 30),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(Icons.close_rounded, color: AppColorss.iconsColors, size: 30,),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: (){_saveVideo();},
+                                          child: Text(
+                                            "Save Video",
+                                            style: TextStyle(color: AppColorss.textColor1, fontSize: 15),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            FluentIcons.arrow_circle_down_24_regular,
+                                            color: AppColorss.iconsColors,
+                                          ),
+                                          onPressed: () {
+                                            _saveVideo();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: _togglePlay,
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: AspectRatio(
+                                    aspectRatio: videoPlayerController.value.aspectRatio,
+                                    child: Container(
+                                      child: VideoPlayer(videoPlayerController),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
+          ],
+              );}
       ),
-    );
+  );
   }
+  //
+  // void _openFullScreenVideo() {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute(
+  //       builder: (context) => Scaffold(
+  //         backgroundColor:  AppColorss.primaryColor,
+  //         body: Padding(
+  //           padding: const EdgeInsets.all(20.0),
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.end,
+  //             children: [
+  //               SizedBox(height: 30),
+  //               Row(
+  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                 children: [
+  //                   IconButton(
+  //                     icon: Icon(Icons.close_rounded, color: AppColorss.iconsColors, size: 30,),
+  //                     onPressed: () {
+  //                       Navigator.pop(context);
+  //                     },
+  //                   ),
+  //                   Row(
+  //                     children: [
+  //                       InkWell(
+  //                         onTap: (){_saveVideo;},
+  //                         child: Text(
+  //                           "Save video",
+  //                           style: TextStyle(color: AppColorss.textColor1, fontSize: 15),
+  //                         ),
+  //                       ),
+  //                       IconButton(
+  //                         icon: Icon(
+  //                           FluentIcons.arrow_circle_down_24_regular,
+  //                           color: AppColorss.iconsColors,
+  //                         ),
+  //                         onPressed: () {
+  //                           _saveVideo();
+  //                         },
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ],
+  //               ),
+  //               Container(
+  //                 height: MediaQuery.of(context).size.height - 160,
+  //                 decoration: BoxDecoration(
+  //                   boxShadow: [
+  //                     BoxShadow(
+  //                       color: Colors.grey.withOpacity(0.5),  // Shadow color
+  //                       spreadRadius: 2,                      // Spread radius
+  //                       blurRadius: 100,                        // Blur radius
+  //                       offset: Offset(0, 3),                  // Offset in x and y direction
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 child: GestureDetector(
+  //                   onTap: _togglePlay,
+  //                   child: Center(
+  //                     child: ClipRRect(
+  //                       borderRadius: BorderRadius.circular(20),
+  //                       child: AspectRatio(
+  //                         aspectRatio: videoPlayerController.value.aspectRatio,
+  //                         child: Container(
+  //                           child: VideoPlayer(videoPlayerController),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ),
+  //
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
 
   @override
