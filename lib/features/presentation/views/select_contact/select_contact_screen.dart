@@ -22,28 +22,38 @@ class SelectContactScreen extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           SelectContactCubit cubit = SelectContactCubit.get(context);
-          return Scaffold(
-            backgroundColor: AppColorss.thirdColor,
-            appBar: SelectContactAppBar(
-              numOfContacts:
-                  cubit.contactOnWhats.length + cubit.contactNotOnMessageMe.length,
-              state: state,
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
             ),
-            body: SingleChildScrollView(
-              physics: const ScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const NewGroupContactCommunityButtonsList(),
-                  SmallText(AppStringss.contactOnMessageMe),
-                  ContactsOnMessageMeList(
-                    contactOnWhats: cubit.contactOnWhats,
+            child: Scaffold(
+              backgroundColor: AppColorss.thirdColor,
+              appBar: SelectContactAppBar(
+                numOfContacts:
+                    cubit.contactOnWhats.length + cubit.contactNotOnMessageMe.length,
+                state: state,
+              ),
+              body: SingleChildScrollView(
+                physics: const ScrollPhysics(),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
                   ),
-                   SmallText(AppStringss.inviteToMessageMe),
-                  ContactsNotOnMessageMeList(
-                    contactNotMessageMe: cubit.contactNotOnMessageMe,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const NewGroupContactCommunityButtonsList(),
+                      SmallText(AppStringss.contactOnMessageMe),
+                      ContactsOnMessageMeList(
+                        contactOnWhats: cubit.contactOnWhats,
+                      ),
+                       SmallText(AppStringss.inviteToMessageMe),
+                      ContactsNotOnMessageMeList(
+                        contactNotMessageMe: cubit.contactNotOnMessageMe,
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           );

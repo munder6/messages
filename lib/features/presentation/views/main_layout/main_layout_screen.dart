@@ -110,13 +110,11 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
                   showModalBottomSheet(
                       context: context,
                       builder: (builder){
-                        return new Container(
-                          decoration: new BoxDecoration(
-                              color: AppColorss.red, //could change this to Color(0xFF737373),
-
+                        return Container(
+                          decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
                           ),
-                          //so you don't have to change MaterialApp canvasColor
+                          height: 900,
                           child: const SelectContactScreen(),
                         );
                       }

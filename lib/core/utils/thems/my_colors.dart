@@ -44,9 +44,9 @@ class AppColorss {
   static final Color thirdColor = isWhite ? const Color.fromARGB(255, 239, 239, 239) : Color.fromARGB(255, 47, 46, 46);
   static final Color thirdColor2 = isWhite ? const Color.fromARGB(255, 255, 255, 255) : Color.fromARGB(255, 50, 49, 49);
   static final Color back = isWhite ? Colors.grey.shade900 : Colors.grey.shade900;
-  static const Color myMessageColor =   Color.fromARGB(255, 36, 120, 255) ;
-  static const Color myMessageColor1 =   Color.fromARGB(255, 124, 71, 229) ;
-  static const Color myMessageColor2 =  Color.fromARGB(255, 157, 46, 220);
+  static const Color myMessageColor =   Color.fromARGB(255, 255, 36, 36) ;
+  static const Color myMessageColor1 =   Color.fromARGB(255, 243, 72, 72) ;
+  static const Color myMessageColor2 =  Color.fromARGB(255, 169, 6, 6);
   static final Color senderMessageColor = isWhite ? const Color.fromARGB(255, 239, 239, 239) : const Color.fromARGB(255, 38, 38, 38);
   static const Color replyMessageColor = Color.fromARGB(255, 239, 239, 239);
   static final Color textColor1 = isWhite ? Colors.black : Colors.white;

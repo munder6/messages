@@ -255,7 +255,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
                     widget.messageController.clear();});},
                 child: Container(
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 157, 46, 220),
+                    color: const Color.fromARGB(255, 255, 36, 36),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   height: 37,
