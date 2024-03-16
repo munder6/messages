@@ -11,45 +11,38 @@ class NewGroupContactCommunityButtonsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CustomListTile(
-          subTitle: "Add A New contact",
-          onTap: () {
-            FlutterContacts.openExternalInsert();
-          },
-          leading: CircleAvatar(
-            backgroundColor: AppColorss.iconsColors2,
-            child:  Icon(
-              FluentIcons.add_24_regular,
-              color: Colors.grey.shade900,
-            ),
+    return Container(
+      padding: const EdgeInsets.all(2),
+      decoration: BoxDecoration(
+          color: AppColorss.thirdColor,
+          borderRadius: BorderRadius.circular(15)
+      ),
+      margin: const EdgeInsets.only(top: 5, right: 15, left: 15, bottom: 15),
+      child: CustomListTileForSelectContact(
+        subTitle: "Add A New contact",
+        onTap: () {
+          FlutterContacts.openExternalInsert();
+        },
+        leading: CircleAvatar(
+          backgroundColor: AppColorss.secondaryColor,
+          child: const Icon(
+            FluentIcons.person_add_24_regular,
+            color: AppColorss.red,
           ),
-          title: AppStringss.newContact,
-          // titleButton: GestureDetector(
-          //   onTap: () {
-          //   },
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(4.0),
-          //     child: Image.asset(
-          //       AppImage.qrCode,
-          //       color: AppColorss.iconsColors,
-          //     ),
-          //   ),
-          // ),
         ),
-        // CustomListTile(
-        //   onTap: () {},
-        //   leading: CircleAvatar(
-        //     backgroundColor: context.colorScheme.secondary,
-        //     child: const Icon(
-        //       Icons.groups,
-        //       color: Colors.white70,
+        title: AppStringss.newContact,
+        // titleButton: GestureDetector(
+        //   onTap: () {
+        //   },
+        //   child: Padding(
+        //     padding: const EdgeInsets.all(4.0),
+        //     child: Image.asset(
+        //       AppImage.qrCode,
+        //       color: AppColorss.iconsColors,
         //     ),
         //   ),
-        //   title: AppStrings.newCommunity,
         // ),
-      ],
+      ),
     );
   }
 }

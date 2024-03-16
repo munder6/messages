@@ -107,14 +107,20 @@ class _MainLayoutScreenState extends State<MainLayoutScreen>
               IconButton(
                   // onPressed: () {navigateTo(context, Routes.selectContactRoute);},
                 onPressed: (){
-                  showModalBottomSheet(
+                  showModalBottomSheet<dynamic>(
+                    backgroundColor: AppColorss.secondaryColor,
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(20),)
+                    ),
                       context: context,
                       builder: (builder){
                         return Container(
-                          decoration: BoxDecoration(
+                          height: 750,
+                          padding: const EdgeInsets.only(top: 5),
+                          decoration: const BoxDecoration(
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
                           ),
-                          height: 900,
                           child: const SelectContactScreen(),
                         );
                       }

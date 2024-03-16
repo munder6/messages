@@ -20,20 +20,29 @@ class ContactsNotOnMessageMeList extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        return CustomListTile(
-          title: contactNotMessageMe[index].displayName,
-          onTap: () {},
-          titleButton: TextButton(
-            onPressed: () {},
-            child: Text(
-              AppStrings.invite,
-              style: TextStyle(
-                color: AppColorss.textColor1,
-                fontWeight: FontWeightManager.medium,
+        return Container(
+
+          margin: const EdgeInsets.only(top: 2, right: 15, left: 15, bottom: 4),
+          decoration: BoxDecoration(
+              color: AppColorss.thirdColor,
+              borderRadius: BorderRadius.circular(15)
+          ),
+          child: CustomListTileForSelectContact(
+            title: contactNotMessageMe[index].displayName,
+            subTitle: 'Tap to invite ${contactNotMessageMe[index].displayName} to MessageMe',
+            onTap: () {},
+            titleButton: TextButton(
+              onPressed: () {},
+              child: Text(
+                AppStrings.invite,
+                style: TextStyle(
+                  color: AppColorss.textColor1,
+                  fontWeight: FontWeightManager.medium,
+                ),
               ),
             ),
+            onLeadingTap: () {},
           ),
-          onLeadingTap: () {},
         );
       },
     );

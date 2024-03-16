@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:message_me_app/core/utils/routes/routes_manager.dart';
 import '../../../../core/utils/thems/my_colors.dart';
@@ -7,6 +6,7 @@ import 'components/bottom_field/bottom_chat_with_icon.dart';
 import 'components/chat_appbar.dart';
 import 'components/message/messages_list.dart';
 import 'components/bottom_field/recording_mic.dart';
+
 
 class ChatScreen extends StatefulWidget {
   final String name;

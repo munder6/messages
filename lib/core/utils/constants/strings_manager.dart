@@ -145,7 +145,7 @@ class AppStringss {
   static String yes = isEnglish ? "yes" : "تسجيل الخروج";
   static String no = isEnglish ? "Cancle" : "إلغاء";
   static String save = isEnglish ? "Save" : "حفظ";
-  static String selectContact = isEnglish ? "Select Contact" : "اضافة مستخدم";
+  static String selectContact = isEnglish ? "New Chat" : "محادثة جديدة";
   static String newCont = isEnglish ? "New Contact" : "مستخدم جديد";
   static String contact = isEnglish ? "contact" : "جهة اتصال";
   static String contactOnMessageMe = isEnglish ? "Contact on Message Me" : "جهات اتصال يستخدمون التطبيق";

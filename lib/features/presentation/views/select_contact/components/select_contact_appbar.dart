@@ -20,9 +20,10 @@ class SelectContactAppBar extends StatelessWidget
     return AppBar(
       automaticallyImplyLeading : false,
       elevation: 0,
-      backgroundColor: AppColorss.thirdColor,
+      centerTitle: true,
+      backgroundColor: AppColorss.secondaryColor,
       title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             AppStringss.selectContact,
@@ -49,10 +50,6 @@ class SelectContactAppBar extends StatelessWidget
               ),
             ),
           ),
-        IconButton(
-          onPressed: () {},
-          icon:  Icon(Icons.search, color: AppColorss.iconsColors,),
-        ),
        IconButton(onPressed: (){
          SelectContactCubit.get(context).getAllContacts().then((value) {
            SelectContactCubit.get(context).getContactsOnMessageMe();

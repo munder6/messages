@@ -23,11 +23,11 @@ class SelectContactScreen extends StatelessWidget {
         builder: (context, state) {
           SelectContactCubit cubit = SelectContactCubit.get(context);
           return Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
             ),
             child: Scaffold(
-              backgroundColor: AppColorss.thirdColor,
+              backgroundColor: AppColorss.secondaryColor,
               appBar: SelectContactAppBar(
                 numOfContacts:
                     cubit.contactOnWhats.length + cubit.contactNotOnMessageMe.length,
@@ -36,7 +36,7 @@ class SelectContactScreen extends StatelessWidget {
               body: SingleChildScrollView(
                 physics: const ScrollPhysics(),
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
                   ),
                   child: Column(

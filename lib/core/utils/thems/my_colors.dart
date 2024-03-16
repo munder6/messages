@@ -39,9 +39,9 @@ class AppColorss {
       WidgetsBinding.instance.window.platformBrightness == Brightness.light;
   static const Color thirdColor23 = Color.fromARGB(255, 255, 255, 255);
   static final Color primaryColor = isWhite ? Colors.white : Colors.black;
-  static final Color secondaryColor = isWhite ? Colors.white70 : Colors.grey.shade800;
+  static final Color secondaryColor = isWhite ? Colors.white70 : Colors.grey.shade900;
   static final Color focusMenuColor = isWhite ? Colors.white70 : const Color.fromARGB(255, 239, 239, 239);
-  static final Color thirdColor = isWhite ? const Color.fromARGB(255, 239, 239, 239) : Color.fromARGB(255, 47, 46, 46);
+  static final Color thirdColor = isWhite ? const Color.fromARGB(255, 239, 239, 239) : Color.fromARGB(255, 40, 39, 39);
   static final Color thirdColor2 = isWhite ? const Color.fromARGB(255, 255, 255, 255) : Color.fromARGB(255, 50, 49, 49);
   static final Color back = isWhite ? Colors.grey.shade900 : Colors.grey.shade900;
   static const Color myMessageColor =   Color.fromARGB(255, 255, 36, 36) ;
@@ -65,7 +65,7 @@ class AppColorss {
   static final Color dialogColor = isWhite ? Colors.white70 : Colors.black54;
   static final Color timeSentColor = isWhite ? Colors.white70 : Colors.white70;
   static const Color red = Colors.red;
-  static const Color test = Color.fromARGB(255, 47, 46, 46);
+  static const Color test = Color.fromARGB(255, 40, 39, 39);
 }
 
 

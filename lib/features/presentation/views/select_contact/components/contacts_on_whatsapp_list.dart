@@ -22,29 +22,32 @@ class ContactsOnMessageMeList extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         var contact = contactOnWhats.values.toList()[index];
-        return Column(
-          children: [
-            CustomListTile(
-              title: contact['name'],
-              onTap: () {
-                navigateTo(
-                  context,
-                  Routes.chatRoute,
-                  arguments: {
-                    'uId': contact['uId'],
-                    'name': contact['name'],
-                  },
-                );
-              },
-              onLeadingTap: () {},
-              subTitle: contact['status'],
-              leading: MyCachedNetImage(
-                imageUrl: contact['profilePic'],
-                radius: 22,
-              ),
+        return Container(
+          padding: EdgeInsets.all(2),
+          decoration: BoxDecoration(
+            color: AppColorss.thirdColor,
+            borderRadius: BorderRadius.circular(15)
+          ),
+          margin: const EdgeInsets.only(top: 0, right: 15, left: 15, bottom: 15),
+          child: CustomListTileForSelectContact(
+            title: contact['name'],
+            onTap: () {
+              navigateTo(
+                context,
+                Routes.chatRoute,
+                arguments: {
+                  'uId': contact['uId'],
+                  'name': contact['name'],
+                },
+              );
+            },
+            onLeadingTap: () {},
+            subTitle: contact['status'],
+            leading: MyCachedNetImage(
+              imageUrl: contact['profilePic'],
+              radius: 20,
             ),
-            Divider(indent: 75, height: 0.1,color: AppColorss.dividersColor.withOpacity(0.5),),
-          ],
+          ),
         );
       },
     );
